@@ -1,9 +1,7 @@
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, request, redirect
 
 app = Flask(__name__)
 
-productos = []
-
 @app.route('/')
-def root():
+def home():
     return render_template('index.html')
