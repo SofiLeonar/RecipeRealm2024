@@ -1,6 +1,77 @@
-body{
-    background-color: aqua;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-h1{
-    font-size: 100px;
+
+body {
+    background-color: #E4FDE1;
+}
+
+.navbar {
+    background-color: #223490; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.navLinks {
+    display: flex;
+    list-style: none;
+}
+
+.navLinks li {
+    margin-right: 30px;
+}
+
+.navLinks a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navLinks a:hover {
+    text-decoration: underline;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+}
+
+.logo img {
+    height: 60px;
+}
+
+.botones {
+    display: flex;
+    gap: 10px;
+}
+
+.botones .btn {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.botones .iniciarSesion {
+    background-color: white;
+    color: #223490;
+    border: 2px solid #223490;
+}
+
+.botones .registro {
+    background-color: #2caf3d; 
+    color: white;
+    border: none;
+}
+
+.botones .btn:hover {
+    opacity: 0.8;
 }
