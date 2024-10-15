@@ -14,8 +14,19 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 25px 20px;
     position: relative;
+}
+.navbar::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1.5px; /* Ajusta el grosor de la línea */
+    background-color: #223490; /* Color de la línea */
+    position: absolute;
+    bottom: -8px; /* Ajusta la posición de la línea */
+    left: 0;
+    z-index: 1;
 }
 
 .navLinks {
@@ -41,10 +52,13 @@ body {
 .logo {
     position: absolute;
     left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
 }
 
 .logo img {
-    height: 60px;
+    height: 150px;
+    margin-top: 68px;
 }
 
 .botones {
