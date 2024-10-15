@@ -89,3 +89,12 @@ body {
 .botones .btn:hover {
     opacity: 0.8;
 }
+
+footer{
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+}
