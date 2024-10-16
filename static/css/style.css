@@ -15,16 +15,19 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 25px 20px;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
+
 .navbar::after {
     content: '';
     display: block;
     width: 100%;
-    height: 1.5px; /* Ajusta el grosor de la línea */
-    background-color: #223490; /* Color de la línea */
+    height: 1.5px;
+    background-color: #223490;
     position: absolute;
-    bottom: -8px; /* Ajusta la posición de la línea */
+    bottom: -8px;
     left: 0;
     z-index: 1;
 }
@@ -90,11 +93,94 @@ body {
     opacity: 0.8;
 }
 
-footer{
+.footerBlanco {
     background-color: white;
     text-align: center;
-    padding: 20px;
+    left: 0;
     bottom: 0;
-    position: fixed;
     width: 100%;
+}
+footer{
+    padding-top: 50px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+}
+
+.arbustos {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    margin-bottom: -5px;
+    left: 0;
+    bottom: 0;
+}
+
+.arbustos img {
+    width: 100%;
+    height: auto;
+}
+
+.contenido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 30px auto;
+    padding-bottom: 30px;
+    color: #2A3492;
+}
+
+.logoFooter {
+    margin: 20px 0 20px;
+    height: 250px;
+}
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.redes {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    
+    
+}
+.redes a{
+    text-decoration: none;
+    color: #2A3492;
+    margin-right: 10px;
+}
+
+.redes img {
+    margin-left: 30px;
+}
+
+.footer-nav {
+    margin-top: 20px;
+    display: flex;
+    justify-content: left;
+    gap: 15px;
+    padding: 30px;
+}
+
+.footer-nav a {
+    text-decoration: none;
+    color: rgb(51, 50, 50);
+    font-size: 14px;
+}
+
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+
+.copy{
+    display: flex;
+    justify-content: right;
+    padding: 30px;
+    font-size: 10px;
 }
