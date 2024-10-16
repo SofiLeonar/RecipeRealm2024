@@ -5,6 +5,13 @@
     box-sizing: border-box;
 }
 
+/*
+font-family: "Nova Mono", monospace; ------ Titulos (h1)
+font-family: "Nova Square", sans-serif; --- Subtitulos (h2)
+font-family: "Fira Code", monospace; ------ Textos
+font-family: "K2D", sans-serif; ----------- Nav/Footer
+*/
+
 body {
     background-color: #E4FDE1;
 }
@@ -13,6 +20,7 @@ body {
     background-color: #223490; 
     display: flex;
     justify-content: space-between;
+    font-family: "K2D", sans-serif;
     align-items: center;
     padding: 25px 20px;
     position: sticky;
@@ -131,6 +139,7 @@ footer{
     margin: 30px auto;
     padding-bottom: 30px;
     color: #2A3492;
+    font-family: "K2D", sans-serif;
 }
 
 .logoFooter {
@@ -183,4 +192,11 @@ footer{
     justify-content: right;
     padding: 30px;
     font-size: 10px;
+}
+.dialogo{
+    background-image: url(/static/img/dialogo.png);
+    color: black;
+    text-align: center;
+    font-family: "Fira Code", monospace;
+
 }
