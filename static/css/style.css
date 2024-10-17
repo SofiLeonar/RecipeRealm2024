@@ -79,7 +79,7 @@ body {
 
 .botones .btn {
     padding: 5px 15px;
-    border-radius: 20px;
+    border-radius: 5px;
     font-size: 14px;
     text-decoration: none;
     font-weight: bold;
@@ -93,13 +93,102 @@ body {
 
 .botones .registro {
     background-color: #2caf3d; 
+    border: 2px solid #2E6A27;
     color: white;
     border: none;
 }
 
-.botones .btn:hover {
-    opacity: 0.8;
+.registro:hover {
+    background-color: #2E6A27;
 }
+.iniciarSesion:hover {
+    background-color: #EF4423;
+}
+.btnRojo:hover {
+    background-color: #EF4423;
+}
+/*----------------------------------- CONTENIDO SECCIONES... que me pierdo entre tanto xd ------------------------------------*/
+.btnNosotros {
+    justify-content: center;
+
+}
+.btnVerdeNosotros {
+    height: 42px;
+    width: 212px;
+    margin-bottom: 5px;
+    margin-top: -8px;
+    border: #2E6A27;
+}
+.btnRojo {
+    background-color: #FFD8D2;
+    color: black;
+    border: 2px solid #F47878;
+}
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+section{
+    padding-top: 80px;
+}
+p{
+    font-size: 20px;
+    font-style: normal;
+    font-family: "Fira Code", monospace;
+
+}
+h1{
+    font-family: "Nova Square", sans-serif;
+}
+
+.dialogo {
+    background-image: url('/static/img/dialogo.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 160px;
+    width: 300px;
+    color: black;
+    text-align: center;
+    font-family: "Fira Code", monospace;
+    padding-top: 20px;
+    margin: 0 auto;
+    margin-bottom: -50px;
+
+}
+
+.sectionBlanco{
+    background-color: white;
+    display: flex;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    margin-bottom: 30px;
+    justify-content: space-between;
+    
+}
+
+.caja{
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    font-family: "Fira Code", monospace;
+    text-align: left;
+
+
+}
+
+.flex{
+    display: flex;
+}
+
+.flex img{
+    align-self: center;
+}
+
+
+/*-------------------------------------- FOOTER... que me pierdo entre tanto xd ---------------------------------------*/
 
 .footerBlanco {
     background-color: white;
@@ -140,7 +229,7 @@ footer{
     padding-bottom: 30px;
     color: #2A3492;
     font-family: "K2D", sans-serif;
-    border-top: 2px solid #2A3492;  /* Línea en la parte superior del footer */
+    border-top: 2px solid #2A3492;
     border-bottom: 2px solid #2A3492;
 }
 
@@ -198,14 +287,7 @@ footer{
     display: flex;
     justify-content: right;
     padding: 0 30px 30px;
-    font-size: 10px;
+    font-size: 10px !important;
     margin-top: -18px;
 }
 
-.dialogo{
-    background-image: url(/static/img/dialogo.png);
-    color: black;
-    text-align: center;
-    font-family: "Fira Code", monospace;
-
-}
