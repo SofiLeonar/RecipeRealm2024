@@ -156,7 +156,6 @@ h1{
     padding-top: 20px;
     margin: 0 auto;
     margin-bottom: -50px;
-
 }
 
 .sectionBlanco{
@@ -175,16 +174,18 @@ h1{
     max-width: 600px;
     font-family: "Fira Code", monospace;
     text-align: left;
-
-
 }
 
 .flex{
     display: flex;
 }
 
-.flex img{
+.flex a{
     align-self: center;
+}
+
+.flex a:hover{
+    transform: scale(1.1);
 }
 
 .preguntas{
@@ -244,6 +245,27 @@ textarea {
 
 .espacioAbajo{
     margin-bottom: 10px;
+}
+
+.cuadroCompras {
+    background-image: url(/static/img/cuadro.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 364px;
+    height: 310px;
+    color: black;
+}
+
+.pPequeño{
+    font-size: 18px;
+    max-width: 280px;
+}
+
+.cartelMadera{
+
 }
 /*-------------------------------------- FOOTER... que me pierdo entre tanto xd ---------------------------------------*/
 
