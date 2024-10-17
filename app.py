@@ -1,4 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
+import requests
+from config import JSONBIN_URL, HEADEARS  
 
 app = Flask(__name__)
 
