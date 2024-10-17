@@ -135,7 +135,7 @@ section{
     padding-top: 80px;
 }
 p{
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-family: "Fira Code", monospace;
 
@@ -181,6 +181,10 @@ h1{
 }
 
 .flex a{
+    align-self: center;
+}
+
+.flex img{
     align-self: center;
 }
 
@@ -260,13 +264,9 @@ textarea {
 }
 
 .pPequeño{
-    font-size: 18px;
     max-width: 280px;
 }
 
-.cartelMadera{
-
-}
 /*-------------------------------------- FOOTER... que me pierdo entre tanto xd ---------------------------------------*/
 
 .footerBlanco {
