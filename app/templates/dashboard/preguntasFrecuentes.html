@@ -1,34 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Preguntas frecuentes</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Nova+Square&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Nova+Mono&family=Nova+Square&display=swap" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar">
-        <ul class="navLinks">
-            <li><a href="{{ url_for('compras') }}">Compras</a></li>
-            <li><a href="{{ url_for('nosotros') }}">Nosotros</a></li>
-            <li><a href="{{ url_for('preguntas') }}">Preguntas frecuentes</a></li>
-        </ul>
-        <div class="logo">
-            <a href="{{ url_for('home') }}">
-                <img src="/static/img/Logo.png" alt="Logo">
-            </a>
-        </div>
-        <div class="botones">
-            <a href="#" class="btn iniciarSesion">Iniciar sesión</a>
-            <a href="#" class="btn registro">Registro</a>
-        </div>
-    </nav>
+{% extends "layout.html" %}
+
+{% block title %} Preguntas frecuentes {% endblock %}
+
+{% block content %}
+
 
     <section >
         <h1 class="dialogo">Preguntas frecuentes</h1>
@@ -105,43 +80,5 @@
                 <button class="enviar">Enviar</button>
             </div>
         </div>
-    </section>
-        <div class="arbustos">
-            <img src="/static/img/arbustos.png" alt="Arbustos">
-        </div>
-        <footer>
-            <div class="contenido footerBlanco">
-                <div>
-                    <img src="/static/img/Logo.png" alt="Logo" class="logoFooter">
-                </div>
-                <div class="footer-info">
-                    <div class="redes">
-                        <img src="/static/img/ubi.png" alt="direccion">
-                        <p>123 Av. Calle en Buenos Aires, Buenos Aires Charlottesville, CA, 12345</p>
-                    </div>
-                    <div class="redes">
-                        <img src="/static/img/telefono.png" alt="direccion">
-                        <p>+54 9 01123213</p>
-                    </div>
-                    <div class="redes">
-                    <p>Redes Sociales:</p>
-                        <a href="#"><img src="/static/img/facebook.png" alt=""></a>
-                        <a href="#"><img src="/static/img/twitter.png" alt=""></a>
-                        <a href="#"><img src="/static/img/youtube.png" alt=""></a>
-                        <a href="#"><img src="/static/img/instagram.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-nav">
-                <a href="#">Sobre Nosotros</a>
-                <a href="#">Contáctanos</a>
-                <a href="#">Ayuda</a>
-                <a href="#">Políticas de Privacidad</a>
-                <a href="#">Avisos</a>
-            </div>
-            <div>
-                <p class="copy">Copyright © 2024 - Delfino Constanza - Leonardelli Sofia - Sosa Nazarena</p>
-            </div>
-        </footer>
-</body>
-</html>
+
+{% endblock %}
