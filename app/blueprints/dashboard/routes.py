@@ -16,3 +16,11 @@ def compras():
 @dashboard_bp.route('/preguntas')
 def preguntas():
     return render_template('dashboard/preguntasFrecuentes.html')
+
+@dashboard_bp.route('/registro')
+def registro():
+    return render_template('auth/register.html')
+
+@dashboard_bp.route('/login')
+def login():
+    return render_template('auth/login.html')
