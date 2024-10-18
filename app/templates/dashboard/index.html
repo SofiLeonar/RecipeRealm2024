@@ -5,8 +5,87 @@
 {% block content %}
 
     <main>
-        bla bla bla
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas eius voluptas error earum enim! Mollitia voluptatem accusantium quae deserunt, sapiente commodi laudantium minima repudiandae ab atque nobis necessitatibus sint neque. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque perspiciatis minus repudiandae, earum expedita ad praesentium. Odit alias, non illum quo, pariatur soluta, reprehenderit eveniet optio repellendus sint iste laboriosam? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis voluptatum rem deleniti neque, magnam ab illo veritatis nobis quaerat quam libero fugit. Eligendi nobis nemo corporis. Inventore molestias nulla illum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, atque consequatur? Non praesentium ea earum voluptates dolorem? Praesentium porro fugit ipsa. Perspiciatis placeat ducimus deserunt mollitia. Dicta, ad quod. Totam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa temporibus laborum assumenda omnis? Labore amet maxime exercitationem, ex quod, fugiat culpa corporis error itaque adipisci minima soluta sequi enim cumque? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis eveniet voluptas consequatur eos suscipit sed ex voluptates ipsum fugit repellendus, sunt beatae officiis hic repudiandae vero voluptatibus maiores quibusdam? Ratione. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero eveniet beatae asperiores facilis ipsum ad minima ab. Aperiam soluta molestias sed laudantium, cupiditate fuga quos unde corrupti. Ad, itaque suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque provident maiores perspiciatis sed, explicabo tenetur et maxime, itaque culpa cumque sint. Natus sit, voluptatem et laudantium vero enim quidem non. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur error doloribus dicta quas, nostrum modi! Consectetur cumque at unde tempora. Libero unde pariatur beatae modi reprehenderit tenetur, ipsam recusandae quia? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis laboriosam, beatae voluptatum accusantium illum veniam. Quas, fuga expedita? Porro labore minus pariatur magnam, rerum impedit provident sunt iusto libero nulla? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores tempore fugiat quidem unde veniam enim explicabo suscipit, incidunt voluptate, nemo sint dolores similique ipsum. Sit odit impedit iure animi totam! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste aperiam hic explicabo! Reiciendis aspernatur, sunt sint inventore, perspiciatis error voluptatibus animi dolor, sapiente ut quibusdam illo magnam non similique quisquam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis, laudantium aperiam ratione magni a corrupti quod sunt quam, perspiciatis animi! Commodi dignissimos aliquam pariatur fuga asperiores. Facilis, eius suscipit. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi asperiores fugiat tenetur neque dolor praesentium quae aliquid? Reprehenderit accusantium deleniti consequuntur ea tempore id optio, autem inventore reiciendis delectus debitis?
+            <section>
+                <div class="barraBusqueda">
+                    <input type="text" placeholder="Buscar...">
+                    <button><img src="{{ url_for('static', filename='img/search-icon.png') }}" alt="Buscar" width="20px"></button>
+                </div>
+            </section>
+
+        
+            <section class="flex container supermercados">
+                <div>
+                    <a href="https://www.jumbo.com" target="_blank">
+                        <img src="/static/img/cartelMadera.png" alt="Jumbo" height="180px">
+                    </a>
+                    <p>Jumbo</p>
+                </div>
+                <div>
+                    <a href="https://www.coto.com" target="_blank">
+                        <img src="/static/img/cartelMadera.png" alt="Coto" height="180px">
+                    </a>
+                    <p>Coto</p>
+                </div>
+                <div>
+                    <a href="https://www.carrefour.com" target="_blank">
+                        <img src="/static/img/cartelMadera.png" alt="Carrefour" height="180px">
+                    </a>
+                    <p>Carrefour</p>
+                </div>
+            </section>
+            
+            <section class="sectionBlanco">
+                <div class="container">
+                    <h2>Lo más popular</h2>
+                <div class="popularReceta ">
+                    <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Receta1">
+                    <div>
+                        <h3>Title</h3>
+                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
+                        <button class="btnRojo btnDerecha">Ver más</button>
+                    </div>
+                </div>
+                <div class="popularReceta">
+                    <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Receta2">
+                    <div>
+                        <h3>Title</h3>
+                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
+                        <button class="btnRojo">Ver más</button>
+                    </div>
+                </div>
+                <div class="popularReceta">
+                    <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Receta3">
+                    <div>
+                        <h3>Title</h3>
+                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
+                        <button class="btnRojo">Ver más</button>
+                    </div>
+                </div>
+            </div>
+            </section>
+        
+            <!-- Sección "Cursos nuevos" -->
+            <section class="cursosNuevos container">
+                <h2>Cursos Nuevos</h2>
+                <div class="cursoTarjet">
+                    <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Curso1">
+                    <h3>Text</h3>
+                    <p>$0</p>
+                    <p>Body text.</p>
+                </div>
+                <div class="cursoTarjet">
+                    <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Curso2">
+                    <h3>Text</h3>
+                    <p>$0</p>
+                    <p>Body text.</p>
+                </div>
+                <div class="cursoTarjet">
+                    <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="Curso3">
+                    <h3>Text</h3>
+                    <p>$0</p>
+                    <p>Body text.</p>
+                </div>
+            </section>
     </main>
 
 

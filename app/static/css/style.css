@@ -108,6 +108,63 @@ body {
     background-color: #EF4423;
 }
 /*----------------------------------- CONTENIDO SECCIONES... que me pierdo entre tanto xd ------------------------------------*/
+.popular {
+    margin: 30px 0;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+}
+.popularReceta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.popularReceta img {
+    width: 120px;
+    height: 120px;
+}
+
+.cursosNuevos {
+    margin: 30px 0;
+}
+
+.cursosNuevos h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.cursoTarjet {
+    display: inline-block;
+    width: 30%;
+    text-align: left;
+    margin: 0 1%;
+    vertical-align: top;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.cursoTarjet:hover{
+    transform: scale(1.1);
+}
+
+.cursoTarjet img {
+    width: 100%;
+    height: auto;
+}
+
+.cursoTarjet h3 {
+    margin-top: 10px;
+}
+
+.cursoTarjet p {
+    margin: 5px 0;
+}
 .btnNosotros {
     justify-content: center;
 
@@ -123,6 +180,10 @@ body {
     background-color: #FFD8D2;
     color: black;
     border: 2px solid #F47878;
+    font-family: "Fira Code", monospace;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .container {
     max-width: 1000px;
@@ -178,18 +239,6 @@ h1{
 
 .flex{
     display: flex;
-}
-
-.flex a{
-    align-self: center;
-}
-
-.flex img{
-    align-self: center;
-}
-
-.flex a:hover{
-    transform: scale(1.1);
 }
 
 .preguntas{
@@ -266,6 +315,37 @@ textarea {
 .pPequeño{
     max-width: 280px;
 }
+
+.barraBusqueda {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    
+}
+
+.barraBusqueda input {
+    width: 40%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding-right: 40px;
+}
+
+.barraBusqueda button {
+    background-color: transparent;
+    border: none;
+}
+
+.supermercados {
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.supermercados a:hover img{
+    transform: scale(1.1);
+}
+
 
 /*-------------------------------------- FOOTER... que me pierdo entre tanto xd ---------------------------------------*/
 
