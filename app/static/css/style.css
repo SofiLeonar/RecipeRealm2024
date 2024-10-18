@@ -346,6 +346,69 @@ textarea {
     transform: scale(1.1);
 }
 
+/*-------------------------------------- REGISTRO Y LOGIN ---------------------------------------*/
+
+
+.containerRegistro {
+    display: flex;
+    justify-content: space-between; 
+    width: 50%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.formIzquierdaRegistro {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.formDerechaRegistro {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-left: 20px;
+}
+
+.formRegistro {
+    margin-bottom: 15px;
+}
+
+.formRegistro label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.formRegistro input[type="text"],
+.formRegistro input[type="email"],
+.formRegistro input[type="password"],
+.formRegistro input[type="file"],
+textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.textareaRegistro {
+    resize: none;
+    height: 330px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+.formRegistro label[for="aficionado"],
+.formRegistro label[for="chef"] {
+    margin-right: 20px;
+}
 
 /*-------------------------------------- FOOTER... que me pierdo entre tanto xd ---------------------------------------*/
 
