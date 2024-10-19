@@ -82,7 +82,6 @@ body {
     border-radius: 5px;
     font-size: 14px;
     text-decoration: none;
-    font-weight: bold;
 }
 
 .botones .iniciarSesion {
@@ -91,6 +90,7 @@ body {
     border: 2px solid rgba(255, 87, 87, 0.8);
     box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
     transition: all 0.2s ease-in-out; 
+    font-weight: bold;
 }
 
 .botones .registro {
@@ -100,6 +100,7 @@ body {
     border: none;
     box-shadow: 4px 4px 0px #2E6A27;
     transition: all 0.2s ease-in-out; 
+    font-weight: bold;
 }
 
 .registro:hover {
@@ -115,9 +116,6 @@ body {
 .registro:active{
     box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
     transform: translateY(2px);
-}
-.btnRojo:hover {
-    background-color: #EF4423;
 }
 /*----------------------------------- CONTENIDO SECCIONES... que me pierdo entre tanto xd ------------------------------------*/
 .popular {
@@ -185,8 +183,11 @@ h2 {
     height: 42px;
     width: 212px;
     margin-bottom: 10px;
+    font-family: "Fira Code", monospace;
     margin-top: -8px;
     border: #2E6A27;
+    cursor: pointer;
+    align-items: center;
     box-shadow: 4px 4px 0px #2E6A27;
     transition: all 0.2s ease-in-out; 
 }
@@ -206,7 +207,9 @@ h2 {
     box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
     transition: all 0.2s ease-in-out; 
 }
-
+.btnRojo:hover {
+    background-color: #EF4423;
+}
 .btnRojo:active {
     box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
     transform: translateY(2px);

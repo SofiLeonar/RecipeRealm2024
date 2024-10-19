@@ -43,10 +43,10 @@
         <div class="container">
             <img src="/static/img/carpinchoConGorrito.png" alt="">
             <div class="botones container btnNosotros">
-                <button class="registro btn btnVerdeNosotros">Registro</button>
+                <a href="{{ url_for('dashboard.registro') }}" class="registro btn btnVerdeNosotros">Registro</a>
             </div>
             <div class="botones container btnNosotros">
-                <button class="btnRojo btn">Iniciar sesión</button>
+                <a href="{{ url_for('dashboard.login') }}" class="btnRojo btn">Iniciar sesión</a>
             </div>
         </div>
     </section>
