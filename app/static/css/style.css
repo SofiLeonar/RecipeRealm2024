@@ -379,8 +379,6 @@ h1{
 }
 
 /*-------------------------------------- REGISTRO Y LOGIN ---------------------------------------*/
-
-
 .containerRegistro {
     justify-content: space-between; 
     width: 50%;
@@ -392,7 +390,6 @@ h1{
     box-shadow: 6px 6px 0px #F6EB14;
     margin-bottom: 50px;
 }
-
 
 .formIzquierdaRegistro {
     display: flex;
@@ -442,6 +439,47 @@ input[type="radio"] {
 .formRegistro label[for="aficionado"],
 .formRegistro label[for="chef"] {
     margin-right: 20px;
+}
+
+/*-------------------------------------- MY PERFIL ---------------------------------------*/
+.perfil {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.perfil img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-right: 20px;
+    margin-bottom: -30px;
+}
+
+.perfilInfo h2 {
+    margin: 0;
+    color: black;
+}
+.perfilInfo{
+    background-color: white;
+    padding: 10px;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.sobreMi {
+    position:absolute;
+    background-image: url(/static/img/dialogo.png);
+    background-repeat: no-repeat;
+    height: 60px;
+    width: 120px;
+    background-size: contain;
+    text-align: center;
+    font-family: "Fira Code", monospace;
+    margin: 0 auto;
+    padding-top: 4px;
 }
 
 /*-------------------------------------- FOOTER... que me pierdo entre tanto xd ---------------------------------------*/

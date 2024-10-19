@@ -24,3 +24,7 @@ def registro():
 @dashboard_bp.route('/login')
 def login():
     return render_template('auth/login.html')
+
+@dashboard_bp.route('/perfil')
+def perfil():
+    return render_template('dashboard/miPerfil.html')
