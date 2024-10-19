@@ -89,7 +89,6 @@ body {
     color: black;
     border: 2px solid rgba(255, 87, 87, 0.8);
     box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
-    transition: all 0.2s ease-in-out; 
     font-weight: bold;
 }
 
@@ -99,7 +98,6 @@ body {
     color: white;
     border: none;
     box-shadow: 4px 4px 0px #2E6A27;
-    transition: all 0.2s ease-in-out; 
     font-weight: bold;
 }
 
@@ -189,7 +187,6 @@ h2 {
     cursor: pointer;
     align-items: center;
     box-shadow: 4px 4px 0px #2E6A27;
-    transition: all 0.2s ease-in-out; 
 }
 
 .btnVerdeNosotros:active{
@@ -205,7 +202,6 @@ h2 {
     border-radius: 5px;
     cursor: pointer;
     box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
-    transition: all 0.2s ease-in-out; 
 }
 .btnRojo:hover {
     background-color: #EF4423;
@@ -320,7 +316,6 @@ h1{
     border-radius: 5px;
     cursor: pointer;
     box-shadow: 4px 4px 0px #2E6A27;
-    transition: all 0.2s ease-in-out; 
 }
 
 .enviar:active{
@@ -394,6 +389,8 @@ h1{
     border-radius: 10px;
     max-width: 1000px;
     margin: 0 auto;
+    box-shadow: 6px 6px 0px #F6EB14;
+    margin-bottom: 50px;
 }
 
 
