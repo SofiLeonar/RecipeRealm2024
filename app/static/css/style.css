@@ -86,9 +86,11 @@ body {
 }
 
 .botones .iniciarSesion {
-    background-color: white;
-    color: #223490;
-    border: 2px solid #223490;
+    background-color: #FFD8D2;
+    color: black;
+    border: 2px solid rgba(255, 87, 87, 0.8);
+    box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
+    transition: all 0.2s ease-in-out; 
 }
 
 .botones .registro {
@@ -96,13 +98,23 @@ body {
     border: 2px solid #2E6A27;
     color: white;
     border: none;
+    box-shadow: 4px 4px 0px #2E6A27;
+    transition: all 0.2s ease-in-out; 
 }
 
 .registro:hover {
-    background-color: #2E6A27;
+    background-color: #429638;
 }
 .iniciarSesion:hover {
     background-color: #EF4423;
+}
+.iniciarSesion:active{
+    box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
+    transform: translateY(2px);
+}
+.registro:active{
+    box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
+    transform: translateY(2px);
 }
 .btnRojo:hover {
     background-color: #EF4423;
@@ -172,9 +184,16 @@ h2 {
 .btnVerdeNosotros {
     height: 42px;
     width: 212px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     margin-top: -8px;
     border: #2E6A27;
+    box-shadow: 4px 4px 0px #2E6A27;
+    transition: all 0.2s ease-in-out; 
+}
+
+.btnVerdeNosotros:active{
+    box-shadow: 0px 0px 0px #2E6A27;
+    transform: translateY(2px);
 }
 .btnRojo {
     background-color: #FFD8D2;
@@ -184,6 +203,13 @@ h2 {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
+    transition: all 0.2s ease-in-out; 
+}
+
+.btnRojo:active {
+    box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
+    transform: translateY(2px);
 }
 .container {
     max-width: 1000px;
@@ -273,7 +299,7 @@ h1{
     align-items: flex-start;
 }
 
-textarea {
+.textareaPreguntas {
     width: 300px;
     height: 120px;
     padding: 10px;
@@ -290,10 +316,18 @@ textarea {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: 4px 4px 0px #2E6A27;
+    transition: all 0.2s ease-in-out; 
 }
 
+.enviar:active{
+    box-shadow: 0px 0px 0px #2E6A27;
+    transform: translateY(2px);
+}
+
+
 .enviar:hover {
-    background-color: #2E6A27;
+    background-color:  #429638;
 }
 
 .espacioAbajo{
