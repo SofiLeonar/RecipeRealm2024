@@ -350,7 +350,6 @@ textarea {
 
 
 .containerRegistro {
-    display: flex;
     justify-content: space-between; 
     width: 50%;
     background-color: white;
@@ -359,6 +358,7 @@ textarea {
     max-width: 1000px;
     margin: 0 auto;
 }
+
 
 .formIzquierdaRegistro {
     display: flex;
