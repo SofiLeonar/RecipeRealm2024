@@ -28,3 +28,7 @@ def login():
 @dashboard_bp.route('/perfil')
 def perfil():
     return render_template('dashboard/miPerfil.html')
+
+@dashboard_bp.route('/recetas')
+def recetas():
+    return render_template('dashboard/recetas.html')

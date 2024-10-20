@@ -482,6 +482,75 @@ input[type="radio"] {
     padding-top: 4px;
 }
 
+/*-------------------------------------- RECETAS / FILTROS ---------------------------------------*/
+
+.filtros {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+.filtro:hover{
+    transform: scale(1.1);
+}
+
+.filtro {
+    text-align: center;
+    cursor: pointer;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+}
+
+.filtroIcono {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f3f3f3;
+    display: block;
+    margin: 0 auto;
+    align-content: center;
+    margin-left: 30px;
+}
+.filtritos {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #f3f3f3;
+    display: block;
+    margin: 0 auto;
+    align-content: center;
+    margin-left: 30px;
+}
+
+
+.filtrosCuadro {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #b0d7ff;
+    background-image: url('/static/img/filtros/NubePixel.png');
+    background-repeat: repeat;
+    background-size: contain;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.filtroItem {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0px #ccc;
+    cursor: pointer;
+}
+
+.oculto {
+    display: none;
+}
+
 /*-------------------------------------- FOOTER... que me pierdo entre tanto xd ---------------------------------------*/
 
 .footerBlanco {
