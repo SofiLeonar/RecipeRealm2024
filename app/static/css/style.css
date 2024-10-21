@@ -531,8 +531,7 @@ input[type="radio"] {
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
-    background-color: #b0d7ff;
-    background-image: url('/static/img/filtros/NubePixel.png');
+    background-image: url('/static/img/fondoDesplegables.png');
     background-repeat: repeat;
     background-size: contain;
     max-width: 800px;
