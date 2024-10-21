@@ -36,3 +36,7 @@ def recetas():
 @dashboard_bp.route('/cursos')
 def cursos():
     return render_template('dashboard/cursos.html')
+
+@dashboard_bp.route('/vercursos')
+def vercursos():
+    return render_template('dashboard/vercursos.html')
