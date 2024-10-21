@@ -152,13 +152,14 @@ h2 {
     text-align: left;
     margin: 0 1%;
     vertical-align: top;
-    background-color: white;
+    background-color: #FFFCC0;
     padding: 30px;
     border-radius: 10px;
 }
 
 .cursoTarjet:hover{
     transform: scale(1.1);
+    background-color: #4FAF44;
 }
 
 .cursoTarjet img {
