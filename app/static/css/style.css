@@ -594,17 +594,6 @@ input[type="radio"] {
 
 /*-------------------------------------- VER CURSO ---------------------------------------*/
 
-.cursoDetalles {
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 20px;
-}
-
-.cursoDificultad {
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-}
-
 .cursoEstrellas img {
     width: 20px;
     height: 20px;
@@ -627,10 +616,6 @@ input[type="radio"] {
     max-width: 400px;
 }
 
-.cursoDetallesInfo p {
-    margin: 5px 0;
-}
-
 .cursoInstructor {
     display: flex;
     align-items: center;
@@ -644,14 +629,6 @@ input[type="radio"] {
     margin-right: 10px;
 }
 
-.cursoCupos {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.cursoComentarios {
-    margin-top: 20px;
-}
 
 .comentario {
     border-bottom: 1px solid #ccc;
