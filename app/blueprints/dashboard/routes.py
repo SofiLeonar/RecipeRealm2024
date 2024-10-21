@@ -40,3 +40,7 @@ def cursos():
 @dashboard_bp.route('/vercurso')
 def vercurso():
     return render_template('dashboard/verCurso.html')
+
+@dashboard_bp.route('/verreceta')
+def verreceta():
+    return render_template('dashboard/verReceta.html')
