@@ -594,10 +594,9 @@ input[type="radio"] {
 
 /*-------------------------------------- VER CURSO ---------------------------------------*/
 
-.cursoEstrellas img {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
+.espada img {
+    width: 30px;
+    height: 30px;
 }
 
 .cursoInfo {
