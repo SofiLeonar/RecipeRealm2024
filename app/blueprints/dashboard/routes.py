@@ -32,3 +32,7 @@ def perfil():
 @dashboard_bp.route('/recetas')
 def recetas():
     return render_template('dashboard/recetas.html')
+
+@dashboard_bp.route('/cursos')
+def cursos():
+    return render_template('dashboard/cursos.html')
