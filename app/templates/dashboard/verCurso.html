@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+{% block title %} Curso - bla bla bla {% endblock %}
+
+{% block content %}
+
+<section>
+    <section class="sectionBlanco">
+        
+        <div class="container">
+            <div>
+                <h1>Cursos</h1>
+            </div>
+
+
+            <div >
+                <h2>Taller de tapas españolas</h2>
+                <div class="flex preguntas">
+                    <span>Dificultad:</span> 
+                    <div class="espada">
+                        <img src="/static/img/espada.png" alt="Espada">
+                        <img src="/static/img/espada.png" alt="Espada">
+                        <img src="/static/img/espada.png" alt="Espada">
+                    </div>
+                    <p>3</p>
+                </div>
+
+                <div class="cursoInfo preguntas">
+                    <div class="cursoImagen">
+                        <img src="tapas.jpg" alt="Tapas españolas">
+                    </div>
+                    <div class="cursoDescripcion">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus libero ut ligula condimentum facilisis.</p>
+                    </div>
+                </div>
+
+                <div class="preguntas">
+                    <p><strong>Fecha:</strong> 17/08/2023</p>
+                    <p><strong>Hora:</strong> 10:00 AM</p>
+                    <p><strong>Lugar:</strong> Av. Alguna calle en Miami, 123</p>
+                    <p><strong>Precio:</strong> $10000.00</p>
+                </div>
+
+                <div class="cursoInstructor">
+                    <img src="/static/img/estrellaAmarilla.png" alt="Instructor">
+                    <p>Impartido por <strong>Ricardo Fort</strong></p>
+                </div>
+
+                <div>
+                    <p class="espacioAbajo">¡Apúrate! Quedan 6 cupos disponibles.</p>
+                    <button class="btnRojo">Inscribirme</button>
+                </div>
+            </div>
+
+            <div class="preguntas">
+                <h3>Comentarios</h3>
+                <div class="comentario">
+                    <p><strong>Tia Paola</strong></p>
+                    <div class="comentarioEstrellas">
+                        <img src="/static/img/estrellaAmarilla.png" alt="1 estrella">
+                        <img src="/static/img/estrellaAmarilla.png" alt="2 estrellas">
+                        <img src="/static/img/estrellaAmarilla.png" alt="3 estrellas">
+                        <img src="/static/img/estrellaAmarilla.png" alt="4 estrellas">
+                        <img src="/static/img/estrellaAmarilla.png" alt="5 estrellas">
+                    </div>
+                    <p>Tremendo curso. Me conseguí novia cocinando esto. Recomiendo.</p>
+                    <p class="comentarioFecha">28/07/2024</p>
+                </div>
+
+                <div class="comentario">
+                    <p><strong>Ricardo</strong></p>
+                    <div class="comentarioEstrellas">
+                        <img src="/static/img/estrellaAmarilla.png" alt="1 estrella">
+                        <img src="/static/img/estrellaAmarilla.png" alt="2 estrellas">
+                        <img src="/static/img/estrellaAmarilla.png" alt="3 estrellas">
+                    </div>
+                    <p>No me gustan las tapas españolas. Así que ni idea por qué hice este curso.</p>
+                    <p class="comentarioFecha">28/07/2024</p>
+                </div>
+            </div>
+
+            <div class="cursoResena preguntas">
+                <h4>Deja tu comentario</h4>
+                <textarea placeholder="Ingresa tu comentario..."></textarea>
+                <div class="cursoPuntaje">
+                    <p>Selecciona un puntaje</p>
+                    <div class="puntajeEstrellas">
+                        <img src="/static/img/estrellaGris.png" alt="1 estrella">
+                        <img src="/static/img/estrellaGris.png" alt="2 estrellas">
+                        <img src="/static/img/estrellaGris.png" alt="3 estrellas">
+                        <img src="/static/img/estrellaGris.png" alt="4 estrellas">
+                        <img src="/static/img/estrellaGris.png" alt="5 estrellas">
+                    </div>
+                </div>
+                <button class="enviar">Enviar</button>
+            </div>
+        </div>
+    </section>
+</section>
+
+<section class="cursosNuevos container">
+    <h2>Cursos Nuevos</h2>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso1">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso2">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+</section>
+
+{% endblock %}

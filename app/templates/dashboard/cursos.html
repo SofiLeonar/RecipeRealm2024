@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %} Compras {% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="barraBusqueda">
+        <input type="text" placeholder="Buscar...">
+        <button><img src="{{ url_for('static', filename='img/search-icon.png') }}" alt="Buscar" width="20px"></button>
+    </div>
+</section>
+
+<div class="container">
+    <h1 class="espacioAbajo">Cursos</h1>
+    <p>Elegí el nivel de dificultad</p>
+    <div class="filtros">
+        <div class="cursoNivel cursoPrincipiante">
+            <span>Principiante</span>
+            <img src="/static/img/espada.png" alt="espada">
+        </div>
+        <div class="cursoNivel cursoIntermedio">
+            <span>Intermedio</span>
+            <img src="/static/img/espada.png" alt="espada">
+            <img src="/static/img/espada.png" alt="espadas">
+        </div>
+        <div class="cursoNivel cursoAvanzado">
+            <span>Avanzado</span>
+            <img src="/static/img/espada.png" alt="espada">
+            <img src="/static/img/espada.png" alt="espadas">
+            <img src="/static/img/espada.png" alt="espadas">
+        </div>
+    </div>
+</div>
+
+
+<section class="cursosNuevos container">
+    <h2>Cursos Nuevos</h2>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso1">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso2">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+</section>
+
+    {% endblock %}
