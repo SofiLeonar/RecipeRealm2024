@@ -608,6 +608,36 @@ input[type="radio"] {
     display: none;
 }
 
+.recetaTarjet {
+    display: inline-block;
+    width: 20%;
+    text-align: left;
+    margin: 0 1%;
+    vertical-align: top;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+.recetaTarjet:hover{
+    transform: scale(1.1);
+}
+
+.recetaTarjet img {
+    width: 100%;
+    height: auto;
+}
+
+.recetaTarjet h3 {
+    margin-top: 10px;
+}
+
+.recetaTarjet p {
+    margin: 5px 0;
+}
+
 /* ------ CATEGORIAS DE "SUBIR RECETA" ------- */
 .custom-select {
     padding: 10px;
