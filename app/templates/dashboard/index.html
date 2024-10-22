@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %} RecipeRealm {% endblock %}
+
+{% block content %}
+
+    <main>
+            <section>
+                <div class="barraBusqueda">
+                    <input type="text" placeholder="Buscar...">
+                    <button><img src="{{ url_for('static', filename='img/search-icon.png') }}" alt="Buscar" width="20px"></button>
+                </div>
+            </section>
+
+        
+            <section class="flex container supermercados">
+                <div>
+                    <a href="https://www.jumbo.com" target="_blank">
+                        <img src="/static/img/cartelMadera.png" alt="Jumbo" height="180px">
+                    </a>
+                    <p>Jumbo</p>
+                </div>
+                <div>
+                    <a href="https://www.coto.com" target="_blank">
+                        <img src="/static/img/cartelMadera.png" alt="Coto" height="180px">
+                    </a>
+                    <p>Coto</p>
+                </div>
+                <div>
+                    <a href="https://www.carrefour.com" target="_blank">
+                        <img src="/static/img/cartelMadera.png" alt="Carrefour" height="180px">
+                    </a>
+                    <p>Carrefour</p>
+                </div>
+            </section>
+            
+            <section class="sectionBlanco">
+                <div class="container">
+                    <h2>Lo más popular</h2>
+                <div class="popularReceta ">
+                    <img src="/static/img/espada.png" alt="Receta1">
+                    <div>
+                        <h3>Title</h3>
+                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
+                        <button class="btnRojo btnDerecha">Ver más</button>
+                    </div>
+                </div>
+                <div class="popularReceta">
+                    <img src="/static/img/espada.png" alt="Receta2">
+                    <div>
+                        <h3>Title</h3>
+                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
+                        <button class="btnRojo">Ver más</button>
+                    </div>
+                </div>
+                <div class="popularReceta">
+                    <img src="/static/img/espada.png" alt="Receta3">
+                    <div>
+                        <h3>Title</h3>
+                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
+                        <button class="btnRojo">Ver más</button>
+                    </div>
+                </div>
+            </div>
+            </section>
+        
+            <section class="cursosNuevos container">
+                <h2>Cursos Nuevos</h2>
+                <div class="cursoTarjet">
+                    <img src="/static/img/espada.png" alt="Curso1">
+                    <h3>Text</h3>
+                    <p>$0</p>
+                    <p>Body text.</p>
+                </div>
+                <div class="cursoTarjet">
+                    <img src="/static/img/espada.png" alt="Curso2">
+                    <h3>Text</h3>
+                    <p>$0</p>
+                    <p>Body text.</p>
+                </div>
+                <div class="cursoTarjet">
+                    <img src="/static/img/espada.png" alt="Curso3">
+                    <h3>Text</h3>
+                    <p>$0</p>
+                    <p>Body text.</p>
+                </div>
+            </section>
+    </main>
+
+
+    {% endblock %}

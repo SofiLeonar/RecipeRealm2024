@@ -1,0 +1,354 @@
+{% extends "layout.html" %}
+
+{% block title %} Nosotros {% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="barraBusqueda">
+        <input type="text" placeholder="Buscar...">
+        <button><img src="{{ url_for('static', filename='img/search-icon.png') }}" alt="Buscar" width="20px"></button>
+    </div>
+</section>
+
+<section>
+    <div class="filtros container">
+        <div class="filtro" onclick="mostrarFiltros('dietas')">
+            <div class="filtroIcono">
+                <img src="/static/img/filtros/DietasPortada.png" alt="Dietas" width="80px">
+            </div>
+            <p>Dietas</p>
+        </div>
+        <div class="filtro" onclick="mostrarFiltros('tipos')">
+            <div class="filtroIcono">
+                <img src="/static/img/filtros/TiposPortada.png" alt="Tipos"  width="90px">
+            </div>
+            <p>Tipos</p>
+        </div>
+        <div class="filtro" onclick="mostrarFiltros('internacional')">
+            <div class="filtroIcono">
+                <img src="/static/img/filtros/ElMuntoPortada.png" alt="Internacional" width="90px">
+            </div>
+            <p>Internacional</p>
+        </div>
+    </div>
+    
+   <div id="filtros-dietas" class="filtrosCuadro oculto">
+    <!--
+    <div>
+        <h1 class="dialogo">Dietas</h1>
+    </div>
+     -->
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/Vegana.png" alt="Vegano" width="50px">
+        </div>
+        <p>Vegano</p>
+    </div> 
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/Vegetariana.png" alt="Vegetariano" width="50px">
+        </div>
+        <p>Vegetariano</p>
+    </div> 
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/Sintac.png" alt="Sin tacc" width="50px">
+        </div>
+        <p>Sin TACC</p>
+    </div> 
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/Keto.png" alt="Keto" width="50px">
+        </div>
+        <p>Keto</p>
+    </div> 
+</div>
+
+<div id="filtros-tipos" class="filtrosCuadro oculto">
+    <!--
+    <div>
+        <h1 class="dialogo">Tipos</h1>
+    </div>
+        -->
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/Desayuno.png" alt="Desayuno" width="50px">
+        </div>
+        <p>Desayuno</p>
+    </div> 
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/AlmuerzoSanguche.png" alt="Almuerzo" width="50px">
+        </div>
+        <p>Almuerzo</p>
+    </div> 
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/Merienda.png" alt="Merienda" width="50px">
+        </div>
+        <p>Merienda</p>
+    </div> 
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/Cena.png" alt="Cena" width="50px">
+        </div>
+        <p>Cena</p>
+    </div> 
+    <div class="filtro">
+        <div class="filtritos">
+            <img src="/static/img/filtros/Portres.png" alt="Postre" width="50px">
+        </div>
+        <p>Postre</p>
+    </div> 
+</div>
+
+<div id="filtros-internacional" class="filtrosCuadro oculto">
+    <!--
+    <div>
+        <h1 class="dialogo">Internacionales</h1>
+    </div>
+        -->
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/Argentina.png" alt="Argentina" width="50px">
+            </div>
+            <p>Argentina</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/Mexico.png" alt="Mexico" width="50px">
+            </div>
+            <p>Mexico</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/Brasil.png" alt="Brasil" width="50px">
+            </div>
+            <p>Brasil</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/China.png" alt="China" width="50px">
+            </div>
+            <p>China</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/Colombia.png" alt="Colombia" width="50px">
+            </div>
+            <p>Colombia</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/Corea.png" alt="Corea" width="50px">
+            </div>
+            <p>Corea</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/España.png" alt="España" width="50px">
+            </div>
+            <p>España</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/Francesa.png" alt="Francia" width="50px">
+            </div>
+            <p>Francia</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/India.png" alt="India" width="50px">
+            </div>
+            <p>India</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/Italia.png" alt="Italia" width="50px">
+            </div>
+            <p>Italia</p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/JApon.png" alt="Japon" width="50px">
+            </div>
+            <p>Japón
+            </p>
+        </div> 
+        <div class="filtro">
+            <div class="filtritos">
+                <img src="/static/img/filtros/Peruana.png" alt="Peru" width="50px">
+            </div>
+            <p>Perú</p>
+        </div> 
+</div>
+</section>
+
+<section class="espacioAbajo">
+    <h1 class="container espacioAbajo">Recetas</h1>
+</section>
+
+<section class="cursosNuevos container">
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+    <div class="recetaTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <div class="comentarioEstrellas flex">
+            <p>4</p>
+            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
+        </div>
+        <p class="comentarioFecha">Autor @fulanito</p>
+        <button class="btnRojo">Ver mas</button>
+    </div>
+</section>
+
+{% endblock %}

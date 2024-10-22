@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block title %} Curso - bla bla bla {% endblock %}
+
+{% block content %}
+
+    <section >            
+        <div class="container">
+            <div >
+                <h1>Spaghetti</h1>
+                <p>Autor: Fulanito</p>
+
+                <div class="cursoInfo preguntas">
+                    <div class="cursoImagen">
+                        <img src="tapas.jpg" alt="Tapas españolas">
+                    </div>
+                    <div class="cursoDescripcion">
+                        <p>Aca van los ingredientes pero me dio fiaca y tengo que salir en 20 minutos xd</p>
+                    </div>
+                </div>
+
+                <div class="preguntas">
+                    <h2>Procedimiento</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac augue sit amet purus consectetur consectetur. Nunc rhoncus tincidunt dui, eu dictum augue ullamcorper a. Maecenas auctor laoreet commodo. Morbi sit amet dui imperdiet, tincidunt lorem sit amet, accumsan nisi. Ut a lorem tincidunt sapien euismod porta non quis libero. Morbi facilisis facilisis magna, id commodo ex bibendum tempus. Pellentesque varius volutpat viverra. Donec in laoreet arcu, vitae malesuada nulla. Maecenas gravida sed odio ac placerat. Suspendisse vel aliquet lectus. Proin hendrerit mattis mi, eget convallis metus. Praesent nec est vulputate, varius ante ut, tempus ex. Vestibulum sit amet quam vel dui suscipit aliquam.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2 class="container preguntas">Comentarios</h2>
+    </section>
+    <section class="sectionBlanco container">    
+        <div class="preguntas">
+            <div class="comentario">
+                <p><strong>Tia Paola</strong></p>
+                <div class="comentarioEstrellas">
+                    <img src="/static/img/estrellaAmarilla.png" alt="1 estrella">
+                    <img src="/static/img/estrellaAmarilla.png" alt="2 estrellas">
+                    <img src="/static/img/estrellaAmarilla.png" alt="3 estrellas">
+                    <img src="/static/img/estrellaAmarilla.png" alt="4 estrellas">
+                    <img src="/static/img/estrellaAmarilla.png" alt="5 estrellas">
+                </div>
+                <p>Tremendo curso. Me conseguí novia cocinando esto. Recomiendo.</p>
+                <p class="comentarioFecha">28/07/2024</p>
+            </div>
+
+            <div class="comentario">
+                <p><strong>Ricardo</strong></p>
+                <div class="comentarioEstrellas">
+                    <img src="/static/img/estrellaAmarilla.png" alt="1 estrella">
+                    <img src="/static/img/estrellaAmarilla.png" alt="2 estrellas">
+                    <img src="/static/img/estrellaAmarilla.png" alt="3 estrellas">
+                </div>
+                <p>No me gustan las tapas españolas. Así que ni idea por qué hice este curso.</p>
+                <p class="comentarioFecha">28/07/2024</p>
+            </div>
+        </div>
+</section>
+<section class="container">
+        <div class="cursoResena preguntas">
+            <h4>Deja tu comentario</h4>
+            <textarea placeholder="Ingresa tu comentario..."></textarea>
+            <div class="cursoPuntaje">
+                <p>Selecciona un puntaje</p>
+                <div class="puntajeEstrellas">
+                    <img src="/static/img/estrellaGris.png" alt="1 estrella">
+                    <img src="/static/img/estrellaGris.png" alt="2 estrellas">
+                    <img src="/static/img/estrellaGris.png" alt="3 estrellas">
+                    <img src="/static/img/estrellaGris.png" alt="4 estrellas">
+                    <img src="/static/img/estrellaGris.png" alt="5 estrellas">
+                </div>
+            </div>
+            <button class="enviar">Enviar</button>
+        </div>
+    </div>
+</section>
+
+<section class="cursosNuevos container">
+    <h2>Cursos Nuevos</h2>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso1">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso2">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+    <div class="cursoTarjet">
+        <img src="/static/img/espada.png" alt="Curso3">
+        <h3>Text</h3>
+        <p>$0</p>
+        <p>Body text.</p>
+    </div>
+</section>
+
+
+{% endblock %}
