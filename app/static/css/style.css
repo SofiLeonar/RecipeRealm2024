@@ -212,6 +212,24 @@ h2 {
     box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
     transform: translateY(2px);
 }
+.btnAmarillo {
+    background-color: #ECF39B;
+    border: 2px solid #bcb72d;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 3px 8px;
+    box-shadow: 4px 4px 0px #bcb72d;
+    margin-top: 17px;
+}
+.btnAmarillo:hover {
+    background-color: #faf560;
+}
+.btnAmarillo:active {
+    box-shadow: 0px 0px 0px #bcb72d;
+    transform: translateY(2px);
+}
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -369,7 +387,45 @@ h1{
     background-color: transparent;
     border: none;
 }
+/*
+.custom_input {
+	align-items: center;
+	position: relative;
+	max-width: 100%;
+}
 
+.input {
+	font-size: 18px;
+	padding: 4px 23px;
+	width: 40%;
+	padding-right: 10px;
+    font-family: "Fira Code", monospace;
+	outline: none;
+	background: #FFFFFF;
+	color: #000000;
+	border: 1px solid #31B031;
+	border-radius: 4px;
+	transition: .3s ease;
+}
+
+.input:focus {
+	background: #F2F2F2;
+	border: 1px outset #31B031;
+	border-radius: 3px;
+}
+
+.input::placeholder {
+	color: #DDDDDD;
+}
+
+.svg_icon {
+	position: absolute;
+	right: 35px;
+	fill: #0B3011;
+	width: 18px;
+	height: 18px;
+}
+*/
 .supermercados {
     justify-content: center;
     align-items: center;
@@ -552,6 +608,28 @@ input[type="radio"] {
     display: none;
 }
 
+/* ------ CATEGORIAS DE "SUBIR RECETA" ------- */
+.custom-select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: "Fira Code", monospace;
+    appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"%3E%3Cpath fill="%23000000" d="M2 0L0 2h4zM0 3l2 2 2-2z"/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.custom-select:focus {
+    border-color: #aaa;
+    outline: none;
+}
 /*-------------------------------------- CURSOS ---------------------------------------*/
 
 .cursoNivel {
