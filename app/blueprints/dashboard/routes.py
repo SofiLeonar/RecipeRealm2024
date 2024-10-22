@@ -44,3 +44,7 @@ def vercurso():
 @dashboard_bp.route('/verreceta')
 def verreceta():
     return render_template('dashboard/verReceta.html')
+
+@dashboard_bp.route('/subirreceta')
+def subirreceta():
+    return render_template('dashboard/subirReceta.html')
