@@ -3,7 +3,7 @@ import requests
 
 auth_bp = Blueprint('auth', __name__)
 
-JSONBIN_URL = 'https://api.jsonbin.io/v3/b/67056a8fad19ca34f8b50970'  
+JSONBIN_URL = 'https://api.jsonbin.io/v3/b/67056a8fad19ca34f8b50970'
 HEADERS = {
     'Content-Type': 'application/json',
     'X-Master-Key': '$2a$10$1UFHJ7B89yDmWCd/HBP5xO1idjuzb0siHyQ2QNroWFWeO74FLn5Fi'
@@ -14,33 +14,70 @@ def cargar_users_jsonbin():
         response = requests.get(JSONBIN_URL, headers=HEADERS)
         if response.status_code == 200:
             data = response.json()
-            users = data.get('record', [])
-            return {user['email']: user['password'] for user in users}
+            users = data.get('record', {}).get('record', []) 
+            return users 
         else:
-            flash('Error al cargar usuarios desde JSONBin.')
-            return {}
+            flash('Error al cargar usuarios del JSONBin.')
+            return []
     except Exception as e:
         flash(f'Error al acceder a JSONBin: {str(e)}')
-        return {}
+        return []
 
-users = cargar_users_jsonbin()
+
+def guardar_usuario_jsonbin(nuevo_usuario):
+    try:
+        users = cargar_users_jsonbin()  
+        users.append(nuevo_usuario)
+        update_data = {'record': users} 
+        response = requests.put(JSONBIN_URL, headers=HEADERS, json=update_data)
+        if response.status_code == 200:
+            flash('Usuario registrado correctamente.')
+        else:
+            flash('Error al guardar el nuevo usuario.')
+    except Exception as e:
+        flash(f'Error al guardar usuario en JSONBin: {str(e)}')
+
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        users = cargar_users_jsonbin()
+
+      
+        for user in users: 
+            if user['email'] == email: 
+                flash('Este correo ya está registrado. Intenta con otro.')
+                return redirect(url_for('auth.register'))
+
+        nuevo_usuario = {
+            'email': email,
+            'password': password  
+        }
+
+        guardar_usuario_jsonbin(nuevo_usuario) 
+        return redirect(url_for('auth.login'))
+
+    return render_template('auth/register.html')
+
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        if email in users and users[email] == password:
-            session['email'] = email
-            return redirect(url_for('auth.protected'))
-        else:
-            flash('Correo o contraseña incorrectos.')
-            return redirect(url_for('auth.login'))
+
+        users = cargar_users_jsonbin()
+
+        for user in users: 
+            if user['email'] == email and user['password'] == password: 
+                session['email'] = email 
+                return redirect(url_for('auth.protected'))
+
+        flash('Correo o contraseña incorrectos.')
+        return redirect(url_for('auth.login'))
 
     return render_template('auth/login.html')
-
-@auth_bp.route('/register')
-def register():
-    return render_template('auth/register.html')
 
 @auth_bp.route('/protected')
 def protected():
