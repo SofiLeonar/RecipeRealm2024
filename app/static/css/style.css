@@ -666,6 +666,11 @@ input[type="radio"] {
     border-color: #aaa;
     outline: none;
 }
+
+#listaIngredientes, #listaCategorias{
+    height: 120px;
+    resize: none;
+}
 /*-------------------------------------- CURSOS ---------------------------------------*/
 
 .cursoNivel {

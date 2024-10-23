@@ -35,3 +35,35 @@ document.addEventListener('click', function(event) {
         });
     }
 });
+
+let ingredientes = [];
+let categorias = [];
+
+document.getElementById('agregarIngrediente').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    let ingrediente = document.getElementById('ingrediente').value;
+    let cantidad = document.getElementById('cantidad').value;
+    
+    if (ingrediente && cantidad) {
+        ingredientes.push(`${cantidad} de ${ingrediente}`);
+        
+        document.getElementById('listaIngredientes').value = ingredientes.join(', ');
+
+        document.getElementById('ingrediente').value = '';
+        document.getElementById('cantidad').value = '';
+    }
+});
+
+document.getElementById('agregarCategoria').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    let select = document.getElementById('categorias');
+    let categoriaTexto = select.options[select.selectedIndex].text;
+
+        if (categoriaTexto) {
+            categorias.push(categoriaTexto);
+            document.getElementById('listaCategorias').value = categorias.join(', ');
+            document.getElementById('categorias').selectedIndex = 0;
+        }
+    });
