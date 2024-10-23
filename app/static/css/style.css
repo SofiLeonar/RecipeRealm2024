@@ -644,6 +644,27 @@ input[type="radio"] {
     margin: 5px 0;
 }
 
+.tarjetLargo {
+    text-align: left;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.tarjetImg img {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-right: 30px;
+}
+.tarjetIconos {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 /* ------ CATEGORIAS DE "SUBIR RECETA" ------- */
 .custom-select {
     padding: 10px;
@@ -886,3 +907,6 @@ footer{
     margin-top: -18px;
 }
 
+.top{
+    margin-top: 20px;
+}
