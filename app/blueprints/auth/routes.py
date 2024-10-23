@@ -42,18 +42,27 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-
+        nombre = request.form['nombre']
+        usuario = request.form['usuario']
+        chef = request.form['chef']
+        bio = request.form['bio']
+        # falta foto de perfil 
         users = cargar_users_jsonbin()
 
-      
         for user in users: 
             if user['email'] == email: 
                 flash('Este correo ya está registrado. Intenta con otro.')
                 return redirect(url_for('auth.register'))
+            
+        is_chef = True if chef == 'True' else False
 
         nuevo_usuario = {
             'email': email,
-            'password': password  
+            'password': password,  
+            'nombre': nombre,
+            'usuario': usuario,
+            'chef': is_chef,
+            'bio': bio 
         }
 
         guardar_usuario_jsonbin(nuevo_usuario) 
