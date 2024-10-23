@@ -8,7 +8,7 @@
     <div class="dialogo">
         <h1>Registro</h1>
     </div>
-        <form class="containerRegistro flex" method="post" action="{{ url_for('auth.register') }}">
+        <form class="containerRegistro flex" method="post" action="{{ url_for('auth.register') }}" enctype="multipart/form-data">
             <div class="formDerechaRegistro" >
             <div class="formRegistro">
                 <label for="nombre">Nombre</label>
