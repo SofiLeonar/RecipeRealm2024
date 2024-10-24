@@ -1,23 +1,13 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash, Blueprint
 import requests
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 
 auth_bp = Blueprint('auth', __name__)
-#falta esconder las keys
+
 JSONBIN_URL = 'https://api.jsonbin.io/v3/b/67056a8fad19ca34f8b50970'
 HEADERS = {
     'Content-Type': 'application/json',
     'X-Master-Key': '$2a$10$1UFHJ7B89yDmWCd/HBP5xO1idjuzb0siHyQ2QNroWFWeO74FLn5Fi'
 }
-
-cloudinary.config( 
-    cloud_name = "dy6qn93sv", 
-    api_key = "584855744426521", 
-    api_secret = "4_eMIemyI3f04WuqopVeqdqMUKQ", 
-    secure=True
-)
 
 def cargar_users_jsonbin():
     try:
@@ -56,23 +46,15 @@ def register():
         usuario = request.form['usuario']
         chef = request.form['chef']
         bio = request.form['bio']
-        foto = request.files.get('foto')
-
-        if foto:
-            upload_result = cloudinary.uploader.upload(foto)
-            foto_url = upload_result['url']  
-        else:
-            foto_url = None 
-            
-        is_chef = True if chef == 'True' else False
-        
+        # falta foto de perfil 
         users = cargar_users_jsonbin()
+
         for user in users: 
             if user['email'] == email: 
                 flash('Este correo ya está registrado. Intenta con otro.')
                 return redirect(url_for('auth.register'))
             
-       
+        is_chef = True if chef == 'True' else False
 
         nuevo_usuario = {
             'email': email,
@@ -80,8 +62,7 @@ def register():
             'nombre': nombre,
             'usuario': usuario,
             'chef': is_chef,
-            'bio': bio,
-            'foto': foto_url
+            'bio': bio 
         }
 
         guardar_usuario_jsonbin(nuevo_usuario) 
