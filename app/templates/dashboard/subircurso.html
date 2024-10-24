@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %} Subir curso {% endblock %}
+
+{% block content %}
+
+<section class="">
+    <div class="dialogo">
+        <h1>Subir curso</h1>
+    </div>
+        <form class="containerRegistro flex">
+            <div class="formDerechaRegistro" >
+            <div class="formRegistro">
+                <label for="tituloCurso">Titulo</label>
+                <input type="text" id="tituloCurso" name="tituloCurso" placeholder="Como hervir huevos y sobrevivir">
+            </div>
+    
+            <div class="formRegistro flex">
+                <div>
+                    <label for="lugar">Lugar/Sitio web</label>
+                    <input type="text" id="lugar" name="lugar" placeholder="Avenida siempre viva 742">
+                </div>
+                <div>
+                    <label for="cupos">Cupos disponibles</label>
+                    <input type="text" id="cupos" name="cupos" placeholder="25">
+                </div>
+            </div>
+
+            <div class="formRegistro">
+                <label for="fecha">Fecha del curso</label>
+                <input type="date" id="fecha" name="fecha">
+            </div>
+            <div>
+                <label for="hora">Hora del curso</label>
+                <input type="time" id="hora" name="hora">
+            </div>
+            <div>
+                <label>Dificultad</label>
+                <div class="filtros">
+                    <input type="radio" class="cursoPrincipiante" id="principiante" name="dificultad" value="Principiante" hidden>
+                    <div class="dificultad cursoPrincipiante" data-value="principiante">
+                        <div>
+                            <span>Principiante</span>
+                        </div>
+                        <div>
+                            <img src="/static/img/espada.png" alt="espada">
+                        </div>
+                    </div>
+
+                    <input type="radio" class="cursoIntermedio" id="intermedio" name="dificultad" value="Intermedio" hidden>
+                    <div class="dificultad cursoIntermedio" data-value="intermedio">
+                        <div>
+                            <span>Intermedio</span>
+                        </div>
+                        <div>
+                            <img src="/static/img/espada.png" alt="espada">
+                            <img src="/static/img/espada.png" alt="espada">
+                        </div>
+                    </div>
+
+                    <input type="radio" class="cursoAvanzado" id="avanzado" name="dificultad" value="Avanzado" hidden>
+                    <div class="dificultad cursoAvanzado" data-value="avanzado">
+                        <div>
+                            <span>Avanzado</span>
+                        </div>
+                        <div>
+                            <img src="/static/img/espada.png" alt="espada">
+                            <img src="/static/img/espada.png" alt="espada">
+                            <img src="/static/img/espada.png" alt="espada">
+                        </div>
+                    </div>
+            </div>
+
+            </div>
+            
+
+            <div class="formRegistro">
+                <label for="foto">Foto ilustrativa</label>
+                <input type="file" id="foto" name="foto">
+            </div>
+            </div>
+    
+            <div  class="formDerechaRegistro">
+                <div>
+                    <label for="desCurso">Descripcion</label>
+                    <textarea id="desCurso" name="desCurso" placeholder="1- poner el agua a hervir" class="textareaRegistro"></textarea>
+                </div>
+
+        
+                <button type="submit" class="btnRojo">Subir receta</button>
+            </div>
+        </form>
+</section>
+
+{% endblock %}
