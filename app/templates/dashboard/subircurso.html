@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %} Subir curso {% endblock %}
+
+{% block content %}
+
+<section class="">
+    <div class="dialogo">
+        <h1>Subir curso</h1>
+    </div>
+        <form class="containerRegistro flex">
+            <div class="formDerechaRegistro" >
+            <div class="formRegistro">
+                <label for="tituloCurso">Titulo</label>
+                <input type="text" id="tituloCurso" name="tituloCurso" placeholder="Como hervir huevos y sobrevivir">
+            </div>
+    
+            <div class="formRegistro flex">
+                <div>
+                    <label for="lugar">Lugar/Sitio web</label>
+                    <input type="text" id="lugar" name="lugar" placeholder="Avenida siempre viva 742">
+                </div>
+                <div>
+                    <label for="cupos">Cupos disponibles</label>
+                    <input type="text" id="cupos" name="cupos" placeholder="25">
+                </div>
+            </div>
+
+            <div class="formRegistro">
+                <label for="fecha">Fecha del curso</label>
+                <input type="date" id="fecha" name="fecha">
+            </div>
+            <div>
+                <label for="hora">Hora del curso</label>
+                <input type="time" id="hora" name="hora">
+            </div>
+            </div>
+    
+            <div  class="formDerechaRegistro">
+                <div>
+                    <label for="desCurso">Descripcion</label>
+                    <textarea id="desCurso" name="desCurso" placeholder="1- poner el agua a hervir" class="textareaRegistro"></textarea>
+                </div>
+                <div class="formRegistro">
+                    <label for="foto">Foto del plato terminado</label>
+                    <input type="file" id="foto" name="foto">
+                </div>
+        
+                <button type="submit" class="btnRojo">Subir receta</button>
+            </div>
+        </form>
+</section>
+
+{% endblock %}
