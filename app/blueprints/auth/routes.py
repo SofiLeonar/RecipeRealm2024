@@ -110,7 +110,11 @@ def login():
 @auth_bp.route('/protected')
 def protected():
     if 'email' in session:
-        return render_template('protected.html', email=session['email'])
+        users = cargar_users_jsonbin()
+        usuario_logueado= next((user for user in users if user['email'] == session['email']), None)
+
+        if usuario_logueado:
+            return render_template('protected.html', email=session['email'])
     else:
         return redirect(url_for('auth.login'))
 
