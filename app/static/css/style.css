@@ -706,6 +706,7 @@ input[type="radio"] {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: "Fira Code", monospace;
 }
 
 .cursoNivel:hover {
@@ -737,11 +738,13 @@ input[type="radio"] {
 .dificultad{
     padding: 8px;
     border-radius: 15px;
-    font-weight: bold;
     margin-right: 10px;
+    font-weight: bold;
     margin-top: 10px;
     text-align: center;
     cursor: pointer;
+    font-family: "Fira Code", monospace;
+    font-size: 12px;
 }
 
 .cursoPrincipiante:active, .cursoIntermedio:active,.cursoAvanzado:active{
