@@ -1,8 +1,10 @@
-from flask import Flask, render_template, redirect, url_for, request, session, flash, Blueprint
+from flask import Flask, render_template, redirect, url_for, request, session, flash, Blueprint, jsonify
 import requests
 from . import dashboard_bp
 from app.blueprints.auth.routes import cargar_users_jsonbin
+from config import JSONBIN_URL, HEADERS
 
+dashboard_bp = Blueprint('dashboard_bp', __name__)
 
 @dashboard_bp.route('/')
 def home():
@@ -59,6 +61,40 @@ def verreceta():
 def subirreceta():
     return render_template('dashboard/subirReceta.html')
 
-@dashboard_bp.route('/subircurso')
+@dashboard_bp.route('/subircurso', methods=['POST', 'GET'])
 def subircurso():
+    if request.method == 'POST':
+        titulo_curso = request.form['titulo_curso']
+        lugar = request.form['lugar']
+        cupos = request.form['cupos']
+        precio = request.form['precio']
+        fecha = request.form['fecha']
+        hora = request.form['hora']
+        dificultad = request.form.get('dificultad', None)
+        desCurso = request.form['desCurso']
+
+        if not lugar or not titulo_curso or not cupos or not precio or not fecha or not hora or not dificultad or not desCurso:
+            return jsonify({'mensaje':'Los campos no pueden estar vacíos'}), 400
+        
+        response = requests.get(JSONBIN_URL, headers= HEADERS)
+        cursos = response.json().get('record', {}).get('record', [])
+
+        nuevoCurso = {
+            'titulo': titulo_curso,
+            'lugar': lugar,
+            'cupos_disponibles': cupos,
+            'precio': precio,
+            'fecha': fecha,
+            'descripcion': desCurso,
+            'hora': hora,
+            'dificultad': dificultad
+        }
+
+        cursos.append(nuevoCurso)
+        response = requests.put(JSONBIN_URL, json={'record':cursos}, headers=HEADERS)
+        if response.status_code==200:
+            return render_template("index.html")
+        else:
+            return jsonify({'mensaje': 'no se pudo añadir'}), 500
+
     return render_template('dashboard/subirCurso.html')
