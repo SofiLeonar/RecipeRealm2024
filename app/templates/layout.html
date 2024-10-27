@@ -14,18 +14,18 @@
 <body>
     <nav class="navbar">
         <ul class="navLinks">
-            <li><a href="{{ url_for('dashboard.compras') }}">Compras</a></li>
-            <li><a href="{{ url_for('dashboard.nosotros') }}">Nosotros</a></li>
-            <li><a href="{{ url_for('dashboard.preguntas') }}">Preguntas frecuentes</a></li>
+            <li><a href="{{ url_for('dashboard_bp.compras') }}">Compras</a></li>
+            <li><a href="{{ url_for('dashboard_bp.nosotros') }}">Nosotros</a></li>
+            <li><a href="{{ url_for('dashboard_bp.preguntas') }}">Preguntas frecuentes</a></li>
         </ul>
         <div class="logo">
-            <a href="{{ url_for('dashboard.home') }}">
+            <a href="{{ url_for('dashboard_bp.home') }}">
                 <img src="/static/img/Logo.png" alt="Logo">
             </a>
         </div>
         <div class="botones">
-            <a href="{{ url_for('dashboard.login') }}" class="btn iniciarSesion">Iniciar sesión</a>
-            <a href="{{ url_for('dashboard.registro') }}" class="btn registro">Registro</a>
+            <a href="{{ url_for('dashboard_bp.login') }}" class="btn iniciarSesion">Iniciar sesión</a>
+            <a href="{{ url_for('dashboard_bp.registro') }}" class="btn registro">Registro</a>
         </div>
     </nav>
 
