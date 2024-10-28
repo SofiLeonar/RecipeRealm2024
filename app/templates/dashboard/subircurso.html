@@ -8,17 +8,17 @@
     <div class="dialogo">
         <h1>Subir curso</h1>
     </div>
-        <form class="containerRegistro flex" action="{{ url_for('dashboard_bp.subircurso') }}" method="POST">
+        <form class="containerRegistro flex" action="{{ url_for('dashboard_bp.subircurso') }}" method="POST" enctype="multipart/form-data">
             <div class="formDerechaRegistro" >
             <div class="formRegistro">
                 <label for="tituloCurso">Titulo</label>
-                <input type="text" id="tituloCurso" name="titulo_curso" placeholder="Como hervir huevos y sobrevivir">
+                <input type="text" id="tituloCurso" name="titulo_curso" placeholder="Como hacer...">
             </div>
     
             <div class="formRegistro flex">
                 <div>
                     <label for="lugar">Lugar/Sitio web</label>
-                    <input type="text" id="lugar" name="lugar" placeholder="Avenida siempre viva 742">
+                    <input type="text" id="lugar" name="lugar" placeholder="Avenida ejemplo">
                 </div>
                 <div>
                     <label for="cupos">Cupos disponibles</label>
@@ -40,32 +40,52 @@
             </div>
             <div>
                 <label for="dificultad">Dificultad</label>
-    <div class="filtros">
-        <!-- Principiante -->
-        <input type="radio" id="principiante" name="dificultad" value="0" required>
-        <label for="principiante" class="dificultad">
-            <span>Principiante</span>
-            <img src="/static/img/espada.png" alt="Principiante">
-        </label>
+                <div>
+                    <div class="filtros">
+                        <!-- Principiante -->
+                        <input type="radio" class="cursoPrincipiante" id="principiante" name="dificultad" value="Principiante" hidden required>
+                        <div class="dificultad cursoPrincipiante" onclick="document.getElementById('principiante').checked = true;">
+                            <div>
+                                <span>Principiante</span>
+                            </div>
+                            <div>
+                                <img src="/static/img/espada.png" alt="espada">
+                            </div>
+                        </div>
+                    
+                        <!-- Intermedio -->
+                        <input type="radio" class="cursoIntermedio" id="intermedio" name="dificultad" value="Intermedio" hidden required>
+                        <div class="dificultad cursoIntermedio" onclick="document.getElementById('intermedio').checked = true;">
+                            <div>
+                                <span>Intermedio</span>
+                            </div>
+                            <div>
+                                <img src="/static/img/espada.png" alt="espada">
+                                <img src="/static/img/espada.png" alt="espada">
+                            </div>
+                        </div>
+                    
+                        <!-- Avanzado -->
+                        <input type="radio" class="cursoAvanzado" id="avanzado" name="dificultad" value="Avanzado" hidden required>
+                        <div class="dificultad cursoAvanzado" onclick="document.getElementById('avanzado').checked = true;">
+                            <div>
+                                <span>Avanzado</span>
+                            </div>
+                            <div>
+                                <img src="/static/img/espada.png" alt="espada">
+                                <img src="/static/img/espada.png" alt="espada">
+                                <img src="/static/img/espada.png" alt="espada">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Intermedio -->
-        <input type="radio" id="intermedio" name="dificultad" value="1" required>
-        <label for="intermedio" class="dificultad">
-            <span>Intermedio</span>
-            <img src="/static/img/espada.png" alt="Intermedio">
-            <img src="/static/img/espada.png" alt="Intermedio">
-        </label>
-
-        <!-- Avanzado -->
-        <input type="radio" id="avanzado" name="dificultad" value="2" required>
-        <label for="avanzado" class="dificultad">
-            <span>Avanzado</span>
-            <img src="/static/img/espada.png" alt="Avanzado">
-            <img src="/static/img/espada.png" alt="Avanzado">
-            <img src="/static/img/espada.png" alt="Avanzado">
-        </label>
             </div>
 
+            <div class="formRegistro">
+                <label for="foto">Foto ilustrativa</label>
+                <input type="file" id="foto" name="foto" accept="image/*">
+            </div>
             </div>
             
 
