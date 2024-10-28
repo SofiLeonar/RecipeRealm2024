@@ -36,24 +36,17 @@
 
 <section class="cursosNuevos container">
     <h2>Cursos Nuevos</h2>
+    {% for curso in cursosInfo %}
     <div class="cursoTarjet">
-        <img src="/static/img/espada.png" alt="Curso1">
-        <h3>Text</h3>
-        <p>$0</p>
-        <p>Body text.</p>
+        <a href="{{ url_for('dashboard_bp.get_curso_by_id', curso_id=curso.id) }}">
+            <img src="{{ curso.foto }}" alt="Curso imagen">
+        </a>
+        <h3>{{ curso.titulo }}</h3>
+        <p>${{ curso.precio }}</p>
+        <p>{{ curso.fecha }}</p>
+        <p>{{ curso.dificultad }}</p>
     </div>
-    <div class="cursoTarjet">
-        <img src="/static/img/espada.png" alt="Curso2">
-        <h3>Text</h3>
-        <p>$0</p>
-        <p>Body text.</p>
-    </div>
-    <div class="cursoTarjet">
-        <img src="/static/img/espada.png" alt="Curso3">
-        <h3>Text</h3>
-        <p>$0</p>
-        <p>Body text.</p>
-    </div>
+    {% endfor %}
 </section>
 
     {% endblock %}
