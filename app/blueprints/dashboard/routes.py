@@ -3,6 +3,16 @@ import requests
 from . import dashboard_bp
 from app.blueprints.auth.routes import cargar_users_jsonbin
 from config import JSONBIN_URL, HEADERS
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config( 
+    cloud_name = "dzjpeuzcn", 
+    api_key = "859251897787294", 
+    api_secret = "sxJLKRkscHL7ChM-xpbnSdpYUuc",
+    secure=True
+)
 
 dashboard_bp = Blueprint('dashboard_bp', __name__)
 
@@ -72,6 +82,13 @@ def subircurso():
         hora = request.form['hora']
         dificultad = request.form.get('dificultad', None)
         desCurso = request.form['desCurso']
+        foto = request.files.get('foto')
+
+        if foto:
+            upload_result = cloudinary.uploader.upload(foto)
+            foto_url = upload_result['url']  
+        else:
+            foto_url = None 
 
         if not lugar or not titulo_curso or not cupos or not precio or not fecha or not hora or not dificultad or not desCurso:
             return jsonify({'mensaje':'Los campos no pueden estar vacíos'}), 400
@@ -87,7 +104,8 @@ def subircurso():
             'fecha': fecha,
             'descripcion': desCurso,
             'hora': hora,
-            'dificultad': dificultad
+            'dificultad': dificultad,
+            'foto': foto_url
         }
 
         cursos.append(nuevoCurso)
