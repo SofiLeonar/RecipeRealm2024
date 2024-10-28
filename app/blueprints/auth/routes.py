@@ -64,7 +64,7 @@ def register():
         else:
             foto_url = None 
             
-        is_chef = True if chef == 'True' else False
+        is_chef = 'Chef' if chef == 'True' else 'Aficionado'
         
         users = cargar_users_jsonbin()
         for user in users: 
