@@ -1,8 +1,21 @@
-from flask import Flask, render_template, redirect, url_for, request, session, flash, Blueprint
+from flask import Flask, render_template, redirect, url_for, request, session, flash, Blueprint, jsonify
 import requests
 from . import dashboard_bp
 from app.blueprints.auth.routes import cargar_users_jsonbin
+from config import JSONBIN_URL, HEADERS
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import uuid
 
+cloudinary.config( 
+    cloud_name = "dzjpeuzcn", 
+    api_key = "859251897787294", 
+    api_secret = "sxJLKRkscHL7ChM-xpbnSdpYUuc",
+    secure=True
+)
+
+dashboard_bp = Blueprint('dashboard_bp', __name__)
 
 @dashboard_bp.route('/')
 def home():
@@ -45,10 +58,42 @@ def recetas():
 
 @dashboard_bp.route('/cursos')
 def cursos():
-    return render_template('dashboard/cursos.html')
+    response = requests.get(JSONBIN_URL, headers=HEADERS)
+    cursos = response.json().get('record', {}).get('record', []) 
+    return render_template('dashboard/cursos.html', cursosInfo=cursos)
+
+
+@dashboard_bp.route('/curso/<int:curso_id>', methods=['GET'])
+def get_curso_by_id(curso_id):
+    try:
+        response = requests.get(JSONBIN_URL, headers=HEADERS)
+
+        if response.status_code != 200:
+            print(f"Error al obtener datos de JSONBIN: {response.status_code} - {response.text}")
+            return jsonify({"error": "Error al obtener datos de JSONBIN"}), 500
+
+        data = response.json()
+
+        print("Contenido de la respuesta JSON:", data)
+
+        records = data.get('record', {}).get('record', [])
+
+        for curso in records:
+            if curso.get('id') == curso_id:
+                print(f"Curso encontrado: {curso}")
+                return render_template('dashboard/verCurso.html', curso=curso)
+        
+        print(f"Curso con ID {curso_id} no encontrado.")
+        return jsonify({"error": "Curso no encontrado"}), 404
+
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
 
 @dashboard_bp.route('/vercurso')
 def vercurso():
+
     return render_template('dashboard/verCurso.html')
 
 @dashboard_bp.route('/verreceta')
@@ -58,3 +103,79 @@ def verreceta():
 @dashboard_bp.route('/subirreceta')
 def subirreceta():
     return render_template('dashboard/subirReceta.html')
+
+def validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, desCurso):
+    if not lugar or not titulo_curso or not cupos or not precio or not fecha or not hora or not dificultad or not desCurso:
+        return jsonify({'mensaje': 'Todos los campos son obligatorios'}), 400
+
+    try:
+        cupos = int(cupos)
+        precio = float(precio) 
+    except ValueError:
+        return jsonify({'mensaje': 'Formato de datos inválido'}), 400
+
+    if len(titulo_curso) > 100:
+        return jsonify({'mensaje': 'El título del curso es demasiado largo'}), 400
+
+    return None, 200
+
+def guardar_curso(cursos, nuevoCurso):
+    cursos.append(nuevoCurso)
+    response = requests.put(JSONBIN_URL, json={'record': cursos}, headers=HEADERS)
+    if response.status_code == 200:
+        return render_template("dashboard/cursos.html")
+    else:
+        return jsonify({'mensaje': 'No se pudo añadir el curso'}), 500
+
+@dashboard_bp.route('/subircurso', methods=['POST', 'GET'])
+def subircurso():
+    if request.method == 'POST':
+        titulo_curso = request.form['titulo_curso']
+        lugar = request.form['lugar']
+        cupos = request.form['cupos']
+        precio = request.form['precio']
+        fecha = request.form['fecha']
+        hora = request.form['hora']
+        dificultad = request.form.get('dificultad', None)
+        desCurso = request.form['desCurso']
+        foto = request.files.get('foto')
+
+        if foto:
+            upload_result = cloudinary.uploader.upload(foto)
+            foto_url = upload_result['url']
+        else:
+            foto_url = None
+
+        
+        error, status_code = validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, desCurso)
+        if error:
+            return error, status_code
+
+        response = requests.get(JSONBIN_URL, headers=HEADERS)
+        try:
+            cursos = response.json().get('record', {}).get('record', [])
+        except ValueError:
+            return jsonify({"error": "Error al obtener los datos"}), 500
+
+
+        if cursos:
+            nuevo_id = max(int(curso.get('id', 0)) for curso in cursos if 'id' in curso) + 1
+        else:
+            nuevo_id = 1
+
+        nuevoCurso = {
+            'id': nuevo_id,
+            'titulo': titulo_curso,
+            'lugar': lugar,
+            'cupos_disponibles': cupos,
+            'precio': precio,
+            'fecha': fecha, 
+            'descripcion': desCurso,
+            'hora': hora,
+            'dificultad': dificultad,
+            'foto': foto_url
+        }
+
+        return guardar_curso(cursos, nuevoCurso)
+
+    return render_template('dashboard/subirCurso.html')
