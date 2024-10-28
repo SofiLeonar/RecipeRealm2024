@@ -14,9 +14,9 @@
 
 
             <div >
-                <h2>Taller de tapas españolas</h2>
+                <h2>{{curso.titulo}}</h2>
                 <div class="flex preguntas">
-                    <span>Dificultad:</span> 
+                    <span>Dificultad: {{ curso.dificultad}} </span> 
                     <div class="espada">
                         <img src="/static/img/espada.png" alt="Espada">
                         <img src="/static/img/espada.png" alt="Espada">
@@ -27,18 +27,18 @@
 
                 <div class="cursoInfo preguntas">
                     <div class="cursoImagen">
-                        <img src="tapas.jpg" alt="Tapas españolas">
+                        <img src="{{ curso.foto }}" alt="Tapas españolas">
                     </div>
                     <div class="cursoDescripcion">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus libero ut ligula condimentum facilisis.</p>
+                        <p>{{ curso.descripcion }}</p>
                     </div>
                 </div>
 
                 <div class="preguntas">
-                    <p><strong>Fecha:</strong> 17/08/2023</p>
-                    <p><strong>Hora:</strong> 10:00 AM</p>
-                    <p><strong>Lugar:</strong> Av. Alguna calle en Miami, 123</p>
-                    <p><strong>Precio:</strong> $10000.00</p>
+                    <p><strong>Fecha:</strong> {{ curso.fecha }}</p>
+                    <p><strong>Hora:</strong> {{ curso.hora }}</p>
+                    <p><strong>Lugar:</strong> {{ curso.lugar }}</p>
+                    <p><strong>Precio:</strong> ${{ curso.precio }}</p>
                 </div>
 
                 <div class="cursoInstructor">
@@ -47,7 +47,7 @@
                 </div>
 
                 <div>
-                    <p class="espacioAbajo">¡Apúrate! Quedan 6 cupos disponibles.</p>
+                    <p class="espacioAbajo">¡Apúrate! Quedan {{curso.cupos}} cupos disponibles.</p>
                     <button class="btnRojo">Inscribirme</button>
                 </div>
             </div>
