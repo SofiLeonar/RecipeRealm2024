@@ -75,3 +75,21 @@ document.getElementById('agregarCategoria').addEventListener('click', function(e
         alert("Por favor, seleccione una categoría válida.");
     }
     });
+
+    function alternarDesplegable() {
+        const menuUsuario = document.getElementById("menuUsuario");
+        menuUsuario.style.display = menuUsuario.style.display === "block" ? "none" : "block";
+    }
+    
+    window.onclick = function(event) {
+        if (!event.target.matches('.usuario')) {
+            const desplegables = document.getElementsByClassName("contenidoDesplegable");
+            for (let i = 0; i < desplegables.length; i++) {
+                const desplegableAbierto = desplegables[i];
+                if (desplegableAbierto.style.display === "block") {
+                    desplegableAbierto.style.display = "none";
+                }
+            }
+        }
+    };
+    
