@@ -30,7 +30,18 @@
         <div class="botones">
             <a href="{{ url_for('dashboard_bp.login') }}" class="btn iniciarSesion">Iniciar sesión</a>
             <a href="{{ url_for('dashboard_bp.registro') }}" class="btn registro">Registro</a>
-        </div>
+
+                <div class="desplegable">
+                    <button class="btn btnUser usuario" onclick="alternarDesplegable()">Usuario</button>
+                    <div id="menuUsuario" class="contenidoDesplegable">
+                        <a href="{{ url_for('dashboard_bp.perfil') }}">Mi perfil</a>
+                        <a href="{{ url_for('dashboard_bp.recetas') }}">Recetas</a>
+                        <a href="{{ url_for('dashboard_bp.subirreceta') }}">Subir receta</a>
+                        <a href="{{ url_for('dashboard_bp.cursos') }}">Cursos</a>
+                        <a href="{{ url_for('dashboard_bp.subircurso') }}">Subir curso</a>
+                    </div>
+                </div>
+            </div>
     </nav>
 
     <div class="content">
