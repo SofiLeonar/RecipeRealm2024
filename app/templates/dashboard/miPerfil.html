@@ -21,7 +21,7 @@ content %}
     <p>{{user.bio}}</p>
     <a href="{{ url_for('dashboard_bp.editarperfil') }}">
       <button class="btnRojo">Editar</button></a
-    >
+    ><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
   </div>
 </section>
 
