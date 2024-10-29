@@ -4,6 +4,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from config import JSONBIN_USERS_URL, HEADERS_USERS
+import uuid
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -52,6 +53,7 @@ def register():
         chef = request.form['chef']
         bio = request.form['bio']
         foto = request.files.get('foto')
+        user_id = str(uuid.uuid4())
 
         if foto:
             upload_result = cloudinary.uploader.upload(foto)
@@ -70,6 +72,7 @@ def register():
        
 
         nuevo_usuario = {
+            'user_id': user_id,
             'email': email,
             'password': password,  
             'nombre': nombre,
