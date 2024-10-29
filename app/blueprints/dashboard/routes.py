@@ -311,7 +311,7 @@ def guardar_receta(recetas, nuevaReceta):
     recetas.append(nuevaReceta)
     response = requests.put(JSONBIN_RECETAS_URL, json={'record': recetas}, headers=HEADERS_CURSOS)
     if response.status_code == 200:
-        return render_template("dashboard/recetas.html")
+        return redirect(url_for('dashboard_bp.recetas'))
     else:
         return jsonify({'mensaje': 'No se pudo añadir la receta'}), 500
 
@@ -381,7 +381,7 @@ def guardar_curso(cursos, nuevoCurso):
     cursos.append(nuevoCurso)
     response = requests.put(JSONBIN_CURSOS_URL, json={'record': cursos}, headers=HEADERS_CURSOS)
     if response.status_code == 200:
-        return render_template("dashboard/cursos.html")
+        return redirect(url_for('dashboard_bp.cursos'))
     else:
         return jsonify({'mensaje': 'No se pudo añadir el curso'}), 500
 
