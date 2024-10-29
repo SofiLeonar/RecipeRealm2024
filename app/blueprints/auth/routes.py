@@ -38,9 +38,9 @@ def guardar_usuario_jsonbin(nuevo_usuario):
         update_data = {'record': users} 
         response = requests.put(JSONBIN_USERS_URL, headers=HEADERS_USERS, json=update_data)
         if response.status_code == 200:
-            flash('Usuario registrado correctamente.')
+            print('Usuario registrado correctamente.')
         else:
-            flash('Error al guardar el nuevo usuario.')
+            print('Error al guardar el nuevo usuario.')
     except Exception as e:
         flash(f'Error al guardar usuario en JSONBin: {str(e)}')
 
@@ -158,11 +158,8 @@ def eliminarperfil():
             update_data = {'record': updated_users}
             response = requests.put(JSONBIN_USERS_URL, headers=HEADERS_USERS, json=update_data)
             if response.status_code == 200:
-                flash('Cuenta eliminada correctamente.')
                 session.pop('email', None) 
                 return redirect(url_for('auth.register')) 
-            else:
-                flash('Error al eliminar la cuenta.')
         except Exception as e:
             flash(f'Error al eliminar la cuenta: {str(e)}')
 
