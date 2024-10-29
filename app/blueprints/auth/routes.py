@@ -34,7 +34,7 @@ def guardar_usuario_jsonbin(nuevo_usuario):
         users = cargar_users_jsonbin()  
         users.append(nuevo_usuario)
         update_data = {'record': users} 
-        response = requests.put(JSONBIN_URL, headers=HEADERS, json=update_data)
+        response = requests.put(JSONBIN_USERS_URL, headers=HEADERS_USERS, json=update_data)
         if response.status_code == 200:
             flash('Usuario registrado correctamente.')
         else:
