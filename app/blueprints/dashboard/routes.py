@@ -145,6 +145,35 @@ def get_curso_by_id(curso_id):
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
+    
+
+@dashboard_bp.route('/eliminarcurso', methods=['POST', 'GET'])
+def eliminarcurso():
+    curso_id = request.form.get('curso_id')
+    if not curso_id:
+        flash('No se especificó el curso a eliminar.', 'error')
+        return redirect(url_for('dashboard_bp.cursos'))
+
+    try:
+        response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
+        data = response.json()
+        cursos = data.get('record', {}).get('record', []) 
+
+        updated_cursos = [curso for curso in cursos if str(curso.get('id')) != curso_id]
+
+        update_data = {'record': updated_cursos}
+        response = requests.put(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS, json=update_data)
+
+        if response.status_code == 200:
+            flash('Curso eliminado correctamente.', 'success')
+        else:
+            flash('Error al eliminar el curso.', 'error')
+
+    except Exception as e:
+        flash(f'Error al eliminar el curso: {str(e)}', 'error')
+
+    return redirect(url_for('dashboard_bp.cursos'))
+
 
 
 @dashboard_bp.route('/vercurso')
