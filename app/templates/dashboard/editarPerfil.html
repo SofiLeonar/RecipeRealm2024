@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %} Editar Perfil {% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h2>Editar Perfil</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" value="{{ user.nombre }}" required>
+            </div>
+            <div>
+                <label for="usuario">Usuario:</label>
+                <input type="text" id="usuario" name="usuario" value="{{ user.usuario }}" required>
+            </div>
+            <div>
+                <label for="bio">Descripción:</label>
+                <textarea id="bio" name="bio" required>{{ user.bio }}</textarea>
+            </div>
+            <div>
+                <label>¿Eres un chef profesional?</label>
+                <div>
+                    <input type="radio" id="aficionado" name="chef" value="Aficionado" required>
+                    <label for="aficionado">Aficionado</label>
+    
+                    <input type="radio" id="chef" name="chef" value="Chef" required>
+                    <label for="chef">Chef</label>
+            </div>
+            <div>
+                <label for="foto">Foto de perfil:</label>
+                <input type="file" id="foto" name="foto" accept="image/*">
+            </div>
+            <button type="submit" class="btnRojo">Actualizar</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
