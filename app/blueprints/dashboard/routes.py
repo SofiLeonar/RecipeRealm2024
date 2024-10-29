@@ -152,6 +152,25 @@ def vercurso():
 
     return render_template('dashboard/verCurso.html')
 
+@dashboard_bp.route('/miscursos')
+def miscursos():
+    if 'userid' in session:
+        response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
+        if response.status_code != 200:
+            flash('Error al obtener los cursos.')
+            return render_template('dashboard/misCursos.html', cursosInfo=[])
+
+        cursos = response.json().get('record', {}).get('record', [])
+
+        userid = session['userid']
+        cursos_usuario = [curso for curso in cursos if curso.get('userid') == userid]
+
+        return render_template('dashboard/misCursos.html', cursosInfo=cursos_usuario)
+
+    flash('Debes iniciar sesión para ver tus cursos.')
+    return redirect(url_for('auth.login'))
+
+
 @dashboard_bp.route('/verreceta')
 def verreceta():
     return render_template('dashboard/verReceta.html')
