@@ -5,6 +5,7 @@ import cloudinary.uploader
 import cloudinary.api
 from config import JSONBIN_USERS_URL, HEADERS_USERS
 import uuid
+import re
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -45,6 +46,13 @@ def guardar_usuario_jsonbin(nuevo_usuario):
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
+    error_nombre = None
+    error_usuario = None
+    error_email = None
+    error_password = None
+    error_bio = None
+    error_foto = None
+
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -55,20 +63,41 @@ def register():
         foto = request.files.get('foto')
         userid = str(uuid.uuid4())
 
+        # validaciones
+        if len(usuario) <= 3:
+            error_usuario = 'El pseudónimo debe tener más de 3 caracteres.'
+        
+        if len(bio) <= 10:
+            error_bio = 'La descripción debe tener más de 10 caracteres.'
+        
+        if len(nombre) <= 3:
+            error_nombre = 'El nombre debe tener más de 3 caracteres.'
+        
+        if len(password) < 8 or not re.search(r'[A-Z]', password):
+            error_password = 'La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula.'
+        
         if foto:
             upload_result = cloudinary.uploader.upload(foto)
-            foto_url = upload_result['url']  
+            foto_url = upload_result['url']
         else:
-            foto_url = None 
-            
+            foto_url = None
+        
         is_chef = 'Chef' if chef == 'True' else 'Aficionado'
         
         users = cargar_users_jsonbin()
         for user in users: 
             if user['email'] == email: 
-                flash('Este correo ya está registrado. Intenta con otro.')
-                return redirect(url_for('auth.register'))
-            
+                error_email = 'Este correo ya está registrado. Intenta con otro.'
+                break
+        
+        if error_nombre or error_usuario or error_email or error_password or error_bio:
+            return render_template('auth/register.html', 
+                                   error_nombre=error_nombre, 
+                                   error_usuario=error_usuario, 
+                                   error_email=error_email, 
+                                   error_password=error_password, 
+                                   error_bio=error_bio, 
+                                   error_foto=error_foto)
 
         nuevo_usuario = {
             'email': email,
@@ -79,13 +108,13 @@ def register():
             'bio': bio,
             'foto': foto_url,            
             'userid': userid,
-
         }
 
         guardar_usuario_jsonbin(nuevo_usuario) 
         return redirect(url_for('auth.login'))
 
     return render_template('auth/register.html')
+
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
