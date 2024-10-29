@@ -58,22 +58,29 @@ def editarperfil():
         print("Datos recibidos en POST:", request.form)
         print("Archivos recibidos:", request.files)
 
-        usuario_logueado = next((user for user in cargar_users_jsonbin() if user['email'] == session['email']), None)
-        
+        users = cargar_users_jsonbin()
+        usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
+
         if usuario_logueado:
             usuario_logueado['nombre'] = request.form['nombre']
             usuario_logueado['usuario'] = request.form['usuario']
             usuario_logueado['bio'] = request.form['bio']
             usuario_logueado['chef'] = 'Chef' if request.form['chef'] == 'True' else 'Aficionado'
-            
+
             foto = request.files.get('foto')
             if foto:
-                print("Subiendo foto...")
-                upload_result = cloudinary.uploader.upload(foto)
-                usuario_logueado['foto'] = upload_result['url']  
-                print("URL de la foto subida:", usuario_logueado['foto'])
+                try:
+                    print("Subiendo foto a Cloudinary...")
+                    upload_result = cloudinary.uploader.upload(foto)
+                    usuario_logueado['foto'] = upload_result['url'] 
+                    print("URL de la foto subida:", usuario_logueado['foto'])
+                except Exception as e:
+                    print(f"Error al subir la foto: {e}")
+                    flash('Error al subir la foto. Por favor, intenta de nuevo.')
+                    return redirect(url_for('dashboard_bp.editarperfil'))
 
-            guardar_usuario_jsonbin(usuario_logueado)
+          
+            guardar_usuario_jsonbin(users)  
             flash('Perfil actualizado correctamente.')
             return redirect(url_for('dashboard_bp.perfil'))  
         else:
@@ -83,7 +90,12 @@ def editarperfil():
     users = cargar_users_jsonbin()
     usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
     
+    if not usuario_logueado:
+        flash('No se pudo cargar el perfil del usuario.')
+        return redirect(url_for('auth.login'))
+
     return render_template('dashboard/editarPerfil.html', user=usuario_logueado)
+
 
 @dashboard_bp.route('/recetas')
 def recetas():
