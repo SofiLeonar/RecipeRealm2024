@@ -2,12 +2,12 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 import requests
 from . import dashboard_bp
 from app.blueprints.auth.routes import cargar_users_jsonbin, guardar_usuario_jsonbin
-from config import JSONBIN_CURSOS_URL, HEADERS_CURSOS
+from config import JSONBIN_CURSOS_URL, HEADERS_CURSOS, JSONBIN_USERS_URL, HEADERS_USERS
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import uuid
-
+#faltan alertas
 cloudinary.config( 
     cloud_name = "dzjpeuzcn", 
     api_key = "859251897787294", 
@@ -16,6 +16,25 @@ cloudinary.config(
 )
 
 dashboard_bp = Blueprint('dashboard_bp', __name__)
+def guardar_usuario_actualizado(email, usuario_actualizado):
+    try:
+        users = cargar_users_jsonbin()
+        usuario_existente = next((user for user in users if user['email'] == email), None)
+
+        if usuario_existente:
+            usuario_existente.update(usuario_actualizado)
+
+            update_data = {'record': users}
+            response = requests.put(JSONBIN_USERS_URL, headers=HEADERS_USERS, json=update_data)
+            if response.status_code == 200:
+                flash('Usuario actualizado correctamente.')
+            else:
+                flash('Error al actualizar el usuario.')
+        else:
+            flash('Usuario no encontrado.')
+
+    except Exception as e:
+        flash(f'Error al actualizar el usuario en JSONBin: {str(e)}')
 
 @dashboard_bp.route('/')
 def home():
@@ -55,41 +74,33 @@ def perfil():
 @dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
 def editarperfil():
     if request.method == 'POST':
-        print("Datos recibidos en POST:", request.form)
-        print("Archivos recibidos:", request.files)
-
         users = cargar_users_jsonbin()
         usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
 
         if usuario_logueado:
-            usuario_logueado['nombre'] = request.form['nombre']
-            usuario_logueado['usuario'] = request.form['usuario']
-            usuario_logueado['bio'] = request.form['bio']
-            usuario_logueado['chef'] = 'Chef' if request.form['chef'] == 'True' else 'Aficionado'
+            usuario_actualizado = {
+                'nombre': request.form['nombre'],
+                'usuario': request.form['usuario'],
+                'bio': request.form['bio'],
+                'chef': 'Chef' if request.form['chef'] == 'True' else 'Aficionado',
+            }
 
             foto = request.files.get('foto')
             if foto:
                 try:
-                    print("Subiendo foto a Cloudinary...")
                     upload_result = cloudinary.uploader.upload(foto)
-                    usuario_logueado['foto'] = upload_result['url'] 
-                    print("URL de la foto subida:", usuario_logueado['foto'])
+                    usuario_actualizado['foto'] = upload_result['url']
                 except Exception as e:
-                    print(f"Error al subir la foto: {e}")
-                    flash('Error al subir la foto. Por favor, intenta de nuevo.')
+                    flash('Error al subir la foto. Por favor, intentá de nuevo.')
                     return redirect(url_for('dashboard_bp.editarperfil'))
 
-          
-            guardar_usuario_jsonbin(users)  
-            flash('Perfil actualizado correctamente.')
-            return redirect(url_for('dashboard_bp.perfil'))  
-        else:
-            print("Usuario no encontrado en JSONBIN.")
-            flash('No se pudo encontrar el usuario.')
+            guardar_usuario_actualizado(usuario_logueado['email'], usuario_actualizado)
+
+            return redirect(url_for('dashboard_bp.perfil'))
 
     users = cargar_users_jsonbin()
     usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
-    
+
     if not usuario_logueado:
         flash('No se pudo cargar el perfil del usuario.')
         return redirect(url_for('auth.login'))
