@@ -3,14 +3,9 @@ import requests
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from config import JSONBIN_USERS_URL, HEADERS_USERS
 
 auth_bp = Blueprint('auth', __name__)
-#falta esconder las keys
-JSONBIN_URL = 'https://api.jsonbin.io/v3/b/67056a8fad19ca34f8b50970'
-HEADERS = {
-    'Content-Type': 'application/json',
-    'X-Master-Key': '$2a$10$1UFHJ7B89yDmWCd/HBP5xO1idjuzb0siHyQ2QNroWFWeO74FLn5Fi'
-}
 
 cloudinary.config( 
     cloud_name = "dy6qn93sv", 
@@ -21,7 +16,7 @@ cloudinary.config(
 
 def cargar_users_jsonbin():
     try:
-        response = requests.get(JSONBIN_URL, headers=HEADERS)
+        response = requests.get(JSONBIN_USERS_URL, headers=HEADERS_USERS)
         if response.status_code == 200:
             data = response.json()
             users = data.get('record', {}).get('record', []) 
