@@ -219,6 +219,7 @@ def subircurso():
         else:
             nuevo_id = 1
 
+        userid = session.get('userid')
         nuevoCurso = {
             'id': nuevo_id,
             'titulo': titulo_curso,
@@ -229,7 +230,8 @@ def subircurso():
             'descripcion': desCurso,
             'hora': hora,
             'dificultad': dificultad,
-            'foto': foto_url
+            'foto': foto_url,
+            'userid': userid
         }
 
         return guardar_curso(cursos, nuevoCurso)
