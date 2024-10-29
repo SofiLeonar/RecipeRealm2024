@@ -273,6 +273,24 @@ def miscursos():
     flash('Debes iniciar sesión para ver tus cursos.')
     return redirect(url_for('auth.login'))
 
+@dashboard_bp.route('/misrecetas')
+def misrecetas():
+    if 'userid' in session:
+        response = requests.get(JSONBIN_RECETAS_URL, headers=HEADERS_CURSOS)
+        if response.status_code != 200:
+            flash('Error al obtener las recetas.')
+            return render_template('dashboard/misRecetas.html', recetasInfo=[])
+
+        recetas = response.json().get('record', {}).get('record', [])
+
+        userid = session['userid']
+        recetas_usuario = [receta for receta in recetas if receta.get('userid') == userid]
+
+        return render_template('dashboard/misRecetas.html', recetasInfo=recetas_usuario)
+
+    flash('Debes iniciar sesión para ver tus recetas.')
+    return redirect(url_for('auth.login'))
+
 
 @dashboard_bp.route('/verreceta')
 def verreceta():
