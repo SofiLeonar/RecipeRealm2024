@@ -174,6 +174,53 @@ def eliminarcurso():
     return redirect(url_for('dashboard_bp.cursos'))
 
 
+@dashboard_bp.route('/editarcurso/<int:curso_id>', methods=['GET', 'POST'])
+def editarcurso(curso_id):
+    response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
+    data = response.json()
+    cursos = data.get('record', {}).get('record', [])
+
+    curso = next((c for c in cursos if c['id'] == curso_id), None)
+    
+    if not curso:
+        flash('Curso no encontrado.')
+        return redirect(url_for('dashboard_bp.cursos'))
+
+    if request.method == 'POST':
+        curso_actualizado = {
+            'titulo': request.form['titulo_curso'],
+            'lugar': request.form['lugar'],
+            'cupos_disponibles': request.form['cupos'],
+            'precio': request.form['precio'],
+            'fecha': request.form['fecha'],
+            'descripcion': request.form['desCurso'],
+            'hora': request.form['hora'],
+            'dificultad': request.form['dificultad'],
+        }
+
+        foto = request.files.get('foto')
+        if foto:
+            try:
+                upload_result = cloudinary.uploader.upload(foto)
+                curso_actualizado['foto'] = upload_result['url']
+            except Exception as e:
+                flash('Error al subir la foto. Por favor, intenta de nuevo.')
+                return redirect(url_for('dashboard_bp.editarcurso', curso_id=curso_id))
+
+        for i, c in enumerate(cursos):
+            if c['id'] == curso_id:
+                cursos[i].update(curso_actualizado)
+                break
+
+        response = requests.put(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS, json={'record': cursos})
+        if response.status_code == 200:
+            flash('Curso actualizado correctamente.')
+            return redirect(url_for('dashboard_bp.get_curso_by_id', curso_id=curso_id))
+        else:
+            flash('Error al actualizar el curso.')
+
+    return render_template('dashboard/editarCurso.html', curso=curso)
+
 
 @dashboard_bp.route('/vercurso')
 def vercurso():
