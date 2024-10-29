@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 import requests
 from . import dashboard_bp
 from app.blueprints.auth.routes import cargar_users_jsonbin
-from config import JSONBIN_URL, HEADERS
+from config import JSONBIN_CURSOS_URL, HEADERS_CURSOS
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -58,7 +58,7 @@ def recetas():
 
 @dashboard_bp.route('/cursos')
 def cursos():
-    response = requests.get(JSONBIN_URL, headers=HEADERS)
+    response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
     cursos = response.json().get('record', {}).get('record', []) 
     return render_template('dashboard/cursos.html', cursosInfo=cursos)
 
@@ -66,7 +66,7 @@ def cursos():
 @dashboard_bp.route('/curso/<int:curso_id>', methods=['GET'])
 def get_curso_by_id(curso_id):
     try:
-        response = requests.get(JSONBIN_URL, headers=HEADERS)
+        response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
 
         if response.status_code != 200:
             print(f"Error al obtener datos de JSONBIN: {response.status_code} - {response.text}")
@@ -121,7 +121,7 @@ def validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, d
 
 def guardar_curso(cursos, nuevoCurso):
     cursos.append(nuevoCurso)
-    response = requests.put(JSONBIN_URL, json={'record': cursos}, headers=HEADERS)
+    response = requests.put(JSONBIN_CURSOS_URL, json={'record': cursos}, headers=HEADERS_CURSOS)
     if response.status_code == 200:
         return render_template("dashboard/cursos.html")
     else:
@@ -151,7 +151,7 @@ def subircurso():
         if error:
             return error, status_code
 
-        response = requests.get(JSONBIN_URL, headers=HEADERS)
+        response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
         try:
             cursos = response.json().get('record', {}).get('record', [])
         except ValueError:
