@@ -678,7 +678,9 @@ input[type="radio"] {
 
 .recetaTarjet img {
     width: 100%;
-    height: auto;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
 }
 
 .recetaTarjet h3 {
