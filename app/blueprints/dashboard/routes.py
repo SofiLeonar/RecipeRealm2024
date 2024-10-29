@@ -7,7 +7,6 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import uuid
-#faltan alertas
 cloudinary.config( 
     cloud_name = "dzjpeuzcn", 
     api_key = "859251897787294", 
