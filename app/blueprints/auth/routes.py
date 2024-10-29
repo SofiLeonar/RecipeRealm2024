@@ -116,6 +116,28 @@ def protected():
             return render_template('protected.html', email=session['email'])
     else:
         return redirect(url_for('auth.login'))
+    
+@auth_bp.route('/eliminarperfil', methods=['GET', 'POST'])
+def eliminarperfil():
+    if request.method == 'POST':
+        email = session.get('email')
+        users = cargar_users_jsonbin()
+        
+        updated_users = [user for user in users if user['email'] != email]
+
+        try:
+            update_data = {'record': updated_users}
+            response = requests.put(JSONBIN_USERS_URL, headers=HEADERS_USERS, json=update_data)
+            if response.status_code == 200:
+                flash('Cuenta eliminada correctamente.')
+                session.pop('email', None) 
+                return redirect(url_for('auth.register')) 
+            else:
+                flash('Error al eliminar la cuenta.')
+        except Exception as e:
+            flash(f'Error al eliminar la cuenta: {str(e)}')
+
+    return render_template('dashboard/miPerfil.html')
 
 @auth_bp.route('/logout')
 def logout():

@@ -21,8 +21,21 @@ content %}
     <p>{{user.bio}}</p>
     <a href="{{ url_for('dashboard_bp.editarperfil') }}">
       <button class="btnRojo">Editar</button></a
-    ><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
-    <a href="{{ url_for('dashboard_bp.miscursos') }}">Mis Cursos</a>
+    >
+    <a href="{{ url_for('dashboard_bp.miscursos') }}">
+      <button class="btnRojo">Mis Cursos</button>
+    </a>
+    ><a href="{{ url_for('auth.logout') }}">
+      <button class="btnRojo">Cerrar Sesión</button></a
+    >
+    <form
+      action="{{ url_for('auth.eliminarperfil') }}"
+      method="POST"
+      style="display: inline"
+      onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.');"
+    >
+      <button type="submit" class="btnRojo">Eliminar perfil</button>
+    </form>
   </div>
 </section>
 
