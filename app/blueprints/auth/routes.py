@@ -99,7 +99,7 @@ def login():
             if user['email'] == email and user['password'] == password: 
                 session['email'] = email 
                 session['userid'] = user['userid']
-                return redirect(url_for('auth.protected'))
+                return redirect(url_for('dashboard_bp.perfil'))
 
         flash('Correo o contraseña incorrectos.')
         return redirect(url_for('auth.login'))
