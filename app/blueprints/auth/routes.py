@@ -53,7 +53,7 @@ def register():
         chef = request.form['chef']
         bio = request.form['bio']
         foto = request.files.get('foto')
-        user_id = str(uuid.uuid4())
+        userid = str(uuid.uuid4())
 
         if foto:
             upload_result = cloudinary.uploader.upload(foto)
@@ -69,17 +69,17 @@ def register():
                 flash('Este correo ya está registrado. Intenta con otro.')
                 return redirect(url_for('auth.register'))
             
-       
 
         nuevo_usuario = {
-            'user_id': user_id,
             'email': email,
             'password': password,  
             'nombre': nombre,
             'usuario': usuario,
             'chef': is_chef,
             'bio': bio,
-            'foto': foto_url
+            'foto': foto_url,            
+            'userid': userid,
+
         }
 
         guardar_usuario_jsonbin(nuevo_usuario) 
@@ -98,6 +98,7 @@ def login():
         for user in users: 
             if user['email'] == email and user['password'] == password: 
                 session['email'] = email 
+                session['userid'] = user['userid']
                 return redirect(url_for('auth.protected'))
 
         flash('Correo o contraseña incorrectos.')
