@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash, Blueprint, jsonify
 import requests
 from . import dashboard_bp
-from app.blueprints.auth.routes import cargar_users_jsonbin
+from app.blueprints.auth.routes import cargar_users_jsonbin, guardar_usuario_jsonbin
 from config import JSONBIN_CURSOS_URL, HEADERS_CURSOS
 import cloudinary
 import cloudinary.uploader
@@ -51,6 +51,39 @@ def perfil():
             return render_template('dashboard/miPerfil.html', user=usuario_logueado)
     
     return redirect(url_for('auth.login'))
+
+@dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
+def editarperfil():
+    if request.method == 'POST':
+        print("Datos recibidos en POST:", request.form)
+        print("Archivos recibidos:", request.files)
+
+        usuario_logueado = next((user for user in cargar_users_jsonbin() if user['email'] == session['email']), None)
+        
+        if usuario_logueado:
+            usuario_logueado['nombre'] = request.form['nombre']
+            usuario_logueado['usuario'] = request.form['usuario']
+            usuario_logueado['bio'] = request.form['bio']
+            usuario_logueado['chef'] = 'Chef' if request.form['chef'] == 'True' else 'Aficionado'
+            
+            foto = request.files.get('foto')
+            if foto:
+                print("Subiendo foto...")
+                upload_result = cloudinary.uploader.upload(foto)
+                usuario_logueado['foto'] = upload_result['url']  
+                print("URL de la foto subida:", usuario_logueado['foto'])
+
+            guardar_usuario_jsonbin(usuario_logueado)
+            flash('Perfil actualizado correctamente.')
+            return redirect(url_for('dashboard_bp.perfil'))  
+        else:
+            print("Usuario no encontrado en JSONBIN.")
+            flash('No se pudo encontrar el usuario.')
+
+    users = cargar_users_jsonbin()
+    usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
+    
+    return render_template('dashboard/editarPerfil.html', user=usuario_logueado)
 
 @dashboard_bp.route('/recetas')
 def recetas():
