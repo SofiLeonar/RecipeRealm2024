@@ -16,13 +16,19 @@
             <div >
                 <h2>{{curso.titulo}}</h2>
                 <div class="flex preguntas">
-                    <span>Dificultad: {{ curso.dificultad}} </span> 
+                    <span>Dificultad: {{ curso.dificultad }} </span> 
                     <div class="espada">
-                        <img src="/static/img/espada.png" alt="Espada">
-                        <img src="/static/img/espada.png" alt="Espada">
-                        <img src="/static/img/espada.png" alt="Espada">
+                        {% if curso.dificultad == 'Principiante' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% elif curso.dificultad == 'Intermedio' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% elif curso.dificultad == 'Avanzado' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% endif %}
                     </div>
-                    <p>3</p>
                 </div>
 
                 <div class="cursoInfo preguntas">
@@ -47,7 +53,7 @@
                 </div>
 
                 <div>
-                    <p class="espacioAbajo">¡Apúrate! Quedan {{curso.cupos}} cupos disponibles.</p>
+                    <p class="espacioAbajo">¡Apúrate! Quedan {{curso.cupos_disponibles}} cupos disponibles.</p>
                     <button class="btnRojo">Inscribirme</button>
                 </div>
             </div>
