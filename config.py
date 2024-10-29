@@ -10,3 +10,5 @@ JSONBIN_CURSOS_URL = 'https://api.jsonbin.io/v3/b/671fd915e41b4d34e44a5268'
 HEADERS_CURSOS = {
     'X-Master-Key': '$2a$10$5JBDXm2EeTkVYtrUY/NQwOPPwqJ9/G.CCVNHkwYCtM4Yna4/6jUye'
 }
+
+JSONBIN_RECETAS_URL = 'https://api.jsonbin.io/v3/b/6720f237e41b4d34e44acab8'

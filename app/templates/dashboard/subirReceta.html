@@ -8,7 +8,7 @@
     <div class="dialogo">
         <h1>Subir receta</h1>
     </div>
-        <form class="containerRegistro flex">
+        <form class="containerRegistro flex" action="{{ url_for('dashboard_bp.subirreceta') }}" method="POST" enctype="multipart/form-data">
             <div class="formDerechaRegistro" >
             <div class="formRegistro">
                 <label for="titulo">Titulo</label>
@@ -25,7 +25,9 @@
                     <input type="text" id="cantidad" name="cantidad" placeholder="300gr">
                 </div>
                 <div>
-                    <button id="agregarIngrediente" class="btnAmarillo"><img src="/static/img/upIngredientes.png" alt=""></button>
+                    <button id="agregarIngrediente" class="btnAmarillo">
+                        <img src="/static/img/upIngredientes.png" alt="">
+                    </button>
                 </div>
             </div>
 
@@ -63,7 +65,7 @@
             <div  class="formDerechaRegistro">
                 <div>
                     <label for="bio">Procedimiento</label>
-                    <textarea id="bio" name="bio" placeholder="1- poner el agua a hervir" class="textareaRegistro"></textarea>
+                    <textarea id="bio" name="descripcion" placeholder="1- poner el agua a hervir" class="textareaRegistro"></textarea>
                 </div>
                 <div class="formRegistro">
                     <label for="foto">Foto del plato terminado</label>
