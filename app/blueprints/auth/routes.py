@@ -3,6 +3,7 @@ import requests
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from . import auth_bp
 import uuid
 import re
 import mysql.connector
@@ -142,10 +143,9 @@ def register():
         is_chef = 'Chef' if chef == 'True' else 'Aficionado'
 
         try:
-            cursor.execute("""
-                INSERT INTO usuarios (email, password, nombre, usuario, chef, bio, foto) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, (email, password, nombre, usuario, is_chef, bio, foto_url))
+            cursor.execute(
+                "INSERT INTO usuarios (email, password, nombre, usuario, chef, bio, foto) VALUES (%s, %s, %s, %s, %s, %s, %s)", (email, password, nombre, usuario, is_chef, bio, foto_url)
+                )
             mysql.connection.commit()
         except Exception as e:
             mysql.connection.rollback()
@@ -154,7 +154,7 @@ def register():
         finally:
             cursor.close()
 
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('auth_bp.login'))
 
     return render_template('auth/register.html')
 
