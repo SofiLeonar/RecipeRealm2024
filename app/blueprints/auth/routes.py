@@ -3,12 +3,12 @@ import requests
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from config import JSONBIN_USERS_URL, HEADERS_USERS
 import uuid
 import re
 import mysql.connector
 from flask_mysqldb import MySQL
 from app import mysql
+
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -18,35 +18,6 @@ cloudinary.config(
     api_secret = "4_eMIemyI3f04WuqopVeqdqMUKQ", 
     secure=True
 )
-
-def cargar_users_jsonbin():
-    try:
-        response = requests.get(JSONBIN_USERS_URL, headers=HEADERS_USERS)
-        if response.status_code == 200:
-            data = response.json()
-            users = data.get('record', {}).get('record', []) 
-            return users 
-        else:
-            flash('Error al cargar usuarios del JSONBin.')
-            return []
-    except Exception as e:
-        flash(f'Error al acceder a JSONBin: {str(e)}')
-        return []
-
-
-def guardar_usuario_jsonbin(nuevo_usuario):
-    try:
-        users = cargar_users_jsonbin()  
-        users.append(nuevo_usuario)
-        update_data = {'record': users} 
-        response = requests.put(JSONBIN_USERS_URL, headers=HEADERS_USERS, json=update_data)
-        if response.status_code == 200:
-            print('Usuario registrado correctamente.')
-        else:
-            print('Error al guardar el nuevo usuario.')
-    except Exception as e:
-        flash(f'Error al guardar usuario en JSONBin: {str(e)}')
-
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     error_nombre = None
@@ -64,101 +35,51 @@ def register():
         chef = request.form['chef']
         bio = request.form['bio']
         foto = request.files.get('foto')
-        userid = str(uuid.uuid4())
 
-        # validaciones
+        # Validaciones
         if len(usuario) <= 3:
             error_usuario = 'El pseudónimo debe tener más de 3 caracteres.'
-        
+
         if len(bio) <= 10:
             error_bio = 'La descripción debe tener más de 10 caracteres.'
-        
+
         if len(nombre) <= 3:
             error_nombre = 'El nombre debe tener más de 3 caracteres.'
-        
+
         if len(password) < 8 or not re.search(r'[A-Z]', password):
             error_password = 'La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula.'
-        
+
+        foto_url = None
         if foto:
             upload_result = cloudinary.uploader.upload(foto)
             foto_url = upload_result['url']
-        else:
-            foto_url = None
-        
+
         is_chef = 'Chef' if chef == 'True' else 'Aficionado'
 
-        ##aca va la conexion a la base de datos
-        
-       # cursor = mysql.connection.cursor()
+        cursor = mysql.connection.cursor()
 
-        # cursor.execute ("INSERT INTO usuarios (userid, email, password, nombre, usuario, chef, bio, foto) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (userid, email, password, nombre, usuario, is_chef, bio, foto_url))
-        # mysql.connection.commit()
-        # cursor.close()
-        """
-          cursor.execute("SELECT * FROM usuarios WHERE email = %s", (email,))
+        cursor.execute("SELECT * FROM usuarios WHERE email = %s", (email,))
         usuario_existente = cursor.fetchone()
         if usuario_existente:
             error_email = 'Este correo ya está registrado. Intenta con otro.'
 
         if error_nombre or error_usuario or error_email or error_password or error_bio:
-            return render_template('auth/register.html', 
-                                   error_nombre=error_nombre, 
-                                   error_usuario=error_usuario, 
-                                   error_email=error_email, 
-                                   error_password=error_password, 
-                                   error_bio=error_bio, 
+            return render_template('auth/register.html',
+                                   error_nombre=error_nombre,
+                                   error_usuario=error_usuario,
+                                   error_email=error_email,
+                                   error_password=error_password,
+                                   error_bio=error_bio,
                                    error_foto=error_foto)
-
-
 
         cursor.execute("""
-          #  INSERT INTO usuarios (userid, email, password, nombre, usuario, chef, bio, foto) 
-          #  VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, (userid, email, password, nombre, usuario, is_chef, bio, foto_url))
-        connection.commit()
+            INSERT INTO usuarios (email, password, nombre, usuario, chef, bio, foto) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (email, password, nombre, usuario, is_chef, bio, foto_url))
+        mysql.connection.commit()
 
-        # Cerrar la conexión
         cursor.close()
-        connection.close()
 
-        return redirect(url_for('auth.login'))
-
-    return render_template('auth/register.html')
-        
-        
-        """
-        
-        
-        
-        users = cargar_users_jsonbin()
-        for user in users: 
-            if user['email'] == email: 
-                error_email = 'Este correo ya está registrado. Intenta con otro.'
-                break
-        
-        
-        
-        if error_nombre or error_usuario or error_email or error_password or error_bio:
-            return render_template('auth/register.html', 
-                                   error_nombre=error_nombre, 
-                                   error_usuario=error_usuario, 
-                                   error_email=error_email, 
-                                   error_password=error_password, 
-                                   error_bio=error_bio, 
-                                   error_foto=error_foto)
-
-        nuevo_usuario = {
-            'email': email,
-            'password': password,  
-            'nombre': nombre,
-            'usuario': usuario,
-            'chef': is_chef,
-            'bio': bio,
-            'foto': foto_url,            
-            'userid': userid,
-        }
-
-        guardar_usuario_jsonbin(nuevo_usuario) 
         return redirect(url_for('auth.login'))
 
     return render_template('auth/register.html')
@@ -170,7 +91,6 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        users = cargar_users_jsonbin()
 
         for user in users: 
             if user['email'] == email and user['password'] == password: 
@@ -186,7 +106,6 @@ def login():
 @auth_bp.route('/protected')
 def protected():
     if 'email' in session:
-        users = cargar_users_jsonbin()
         usuario_logueado= next((user for user in users if user['email'] == session['email']), None)
 
         if usuario_logueado:
@@ -198,7 +117,6 @@ def protected():
 def eliminarperfil():
     if request.method == 'POST':
         email = session.get('email')
-        users = cargar_users_jsonbin()
         
         updated_users = [user for user in users if user['email'] != email]
 

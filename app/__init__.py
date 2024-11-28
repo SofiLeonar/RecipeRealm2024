@@ -1,12 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
-from app.blueprints.auth.routes import auth_bp
-from app.blueprints.dashboard.routes import dashboard_bp
+from flask import Flask, render_template
 from flask_mysqldb import MySQL
 import os
 from dotenv import load_dotenv
 
+mysql = MySQL()  
 
-mysql = MySQL()
 
 def create_app():
     app = Flask(__name__)
@@ -20,12 +18,13 @@ def create_app():
 
     mysql.init_app(app)
 
+    with app.app_context():
+        from app.blueprints.auth.routes import auth_bp
+        from app.blueprints.dashboard.routes import dashboard_bp
+        app.register_blueprint(auth_bp)
+        app.register_blueprint(dashboard_bp)
 
-    #app.config['SECRET_KEY'] = 'vacac'
-
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(dashboard_bp)
-
+    # Ruta principal
     @app.route('/')
     def index():
         return render_template('index.html')

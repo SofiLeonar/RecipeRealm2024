@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash, Blueprint, jsonify
 import requests
 from . import dashboard_bp
-from app.blueprints.auth.routes import cargar_users_jsonbin, guardar_usuario_jsonbin
 from config import JSONBIN_CURSOS_URL, HEADERS_CURSOS, JSONBIN_USERS_URL, HEADERS_USERS, JSONBIN_RECETAS_URL
 import cloudinary
 import cloudinary.uploader
@@ -17,7 +16,6 @@ cloudinary.config(
 dashboard_bp = Blueprint('dashboard_bp', __name__)
 def guardar_usuario_actualizado(email, usuario_actualizado):
     try:
-        users = cargar_users_jsonbin()
         usuario_existente = next((user for user in users if user['email'] == email), None)
 
         if usuario_existente:
@@ -62,7 +60,6 @@ def login():
 @dashboard_bp.route('/perfil')
 def perfil():
     if 'email' in session:
-        users = cargar_users_jsonbin()
         usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
 
         if usuario_logueado:
@@ -73,7 +70,6 @@ def perfil():
 @dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
 def editarperfil():
     if request.method == 'POST':
-        users = cargar_users_jsonbin()
         usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
 
         if usuario_logueado:
@@ -97,7 +93,6 @@ def editarperfil():
 
             return redirect(url_for('dashboard_bp.perfil'))
 
-    users = cargar_users_jsonbin()
     usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
 
     if not usuario_logueado:
