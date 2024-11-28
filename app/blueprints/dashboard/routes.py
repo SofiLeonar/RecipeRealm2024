@@ -17,6 +17,7 @@ cloudinary.config(
 )
 
 dashboard_bp = Blueprint('dashboard_bp', __name__)
+"""
 def guardar_usuario_actualizado(email, usuario_actualizado):
     try:
         usuario_existente = next((user for user in users if user['email'] == email), None)
@@ -34,7 +35,7 @@ def guardar_usuario_actualizado(email, usuario_actualizado):
             flash('Usuario no encontrado.')
 
     except Exception as e:
-        flash(f'Error al actualizar el usuario en JSONBin: {str(e)}')
+        flash(f'Error al actualizar el usuario en JSONBin: {str(e)}')"""
 
 @dashboard_bp.route('/')
 def home():
@@ -60,6 +61,7 @@ def registro():
 def login():
     return render_template('auth/login.html')
 
+"""
 @dashboard_bp.route('/perfil')
 def perfil():
     if 'email' in session:
@@ -68,8 +70,37 @@ def perfil():
         if usuario_logueado:
             return render_template('dashboard/miPerfil.html', user=usuario_logueado)
     
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth.login'))"""
+@dashboard_bp.route('/perfil')
+def perfil():
+    if 'userid' in session:
+        user_id = session['userid']
+        
+        cursor = mysql.connection.cursor()
 
+        try:
+            cursor.execute("SELECT id, email, nombre, usuario, chef, bio, foto FROM usuarios WHERE id = %s", (user_id,))
+            usuario_logueado = cursor.fetchone()
+        except Exception as e:
+            flash(f'Error al cargar el perfil: {str(e)}')
+            usuario_logueado = None
+        finally:
+            cursor.close()
+
+        if usuario_logueado:
+            user_data = {
+                'id': usuario_logueado[0],
+                'email': usuario_logueado[1],
+                'nombre': usuario_logueado[2],
+                'usuario': usuario_logueado[3],
+                'chef': usuario_logueado[4],
+                'bio': usuario_logueado[5],
+                'foto': usuario_logueado[6],
+            }
+            return render_template('dashboard/miPerfil.html', user=user_data)
+    
+    return redirect(url_for('auth.login'))
+"""
 @dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
 def editarperfil():
     if request.method == 'POST':
@@ -103,6 +134,75 @@ def editarperfil():
         return redirect(url_for('auth.login'))
 
     return render_template('dashboard/editarPerfil.html', user=usuario_logueado)
+"""
+
+@dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
+def editarperfil():
+    if 'userid' not in session: 
+        flash('Por favor, inicia sesión para editar tu perfil.')
+        return redirect(url_for('auth.login'))
+
+    user_id = session['userid']
+
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        usuario = request.form['usuario']
+        bio = request.form['bio']
+        chef = 'Chef' if request.form.get('chef') == 'True' else 'Aficionado'
+
+        foto_url = None
+        foto = request.files.get('foto')
+
+        if foto:
+            try:
+                upload_result = cloudinary.uploader.upload(foto)
+                foto_url = upload_result['url']
+            except Exception as e:
+                flash(f'Error al subir la foto: {str(e)}')
+                return redirect(url_for('dashboard_bp.editarperfil'))
+
+        cursor = mysql.connection.cursor()
+
+        try:
+            if foto_url: 
+                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, chef = %s, foto = %s WHERE id = %s", (nombre, usuario, bio, chef, foto_url, user_id))
+            else:  
+                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, chef = %s WHERE id = %s", (nombre, usuario, bio, chef, user_id))
+            mysql.connection.commit()
+            flash('Perfil actualizado con éxito.')
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f'Error al actualizar el perfil: {str(e)}')
+        finally:
+            cursor.close()
+
+        return redirect(url_for('dashboard_bp.perfil'))
+
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute("SELECT id, email, nombre, usuario, bio, chef, foto FROM usuarios WHERE id = %s", (user_id,))
+        usuario_logueado = cursor.fetchone()
+    except Exception as e:
+        flash(f'Error al cargar los datos del usuario: {str(e)}')
+        usuario_logueado = None
+    finally:
+        cursor.close()
+
+    if not usuario_logueado:
+        flash('No se pudo cargar el perfil del usuario.')
+        return redirect(url_for('auth.login'))
+
+    user_data = {
+        'id': usuario_logueado[0],
+        'email': usuario_logueado[1],
+        'nombre': usuario_logueado[2],
+        'usuario': usuario_logueado[3],
+        'bio': usuario_logueado[4],
+        'chef': usuario_logueado[5],
+        'foto': usuario_logueado[6],
+    }
+
+    return render_template('dashboard/editarPerfil.html', user=user_data)
 
 
 @dashboard_bp.route('/recetas')
