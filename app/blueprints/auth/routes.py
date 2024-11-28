@@ -154,10 +154,9 @@ def register():
         finally:
             cursor.close()
 
-        return redirect(url_for('auth_bp.login'))
+        return redirect(url_for('auth.login'))
 
     return render_template('auth/register.html')
-
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -212,6 +211,35 @@ def eliminarperfil():
             flash(f'Error al eliminar la cuenta: {str(e)}')
 
     return render_template('dashboard/miPerfil.html')"""
+
+@auth_bp.route('/eliminarperfil', methods=['GET', 'POST'])
+def eliminarperfil():
+    if 'userid' not in session:  
+        flash('Por favor, inicia sesión para eliminar tu perfil.')
+        return redirect(url_for('auth.login'))
+
+    user_id = session['userid']  
+
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor()
+
+        try:
+            cursor.execute("DELETE FROM usuarios WHERE id = %s", (user_id,))
+            mysql.connection.commit()
+
+            session.pop('userid', None)
+            session.pop('email', None)
+
+            flash('Tu cuenta ha sido eliminada exitosamente.')
+            return redirect(url_for('auth.register'))  
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f'Error al eliminar la cuenta: {str(e)}')
+        finally:
+            cursor.close()
+
+    return render_template('dashboard/miPerfil.html')
+
 
 @auth_bp.route('/logout')
 def logout():
