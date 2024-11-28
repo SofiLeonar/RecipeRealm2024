@@ -1,11 +1,14 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash, Blueprint, jsonify
 import requests
+import json
 from . import dashboard_bp
 from config import JSONBIN_CURSOS_URL, HEADERS_CURSOS, JSONBIN_USERS_URL, HEADERS_USERS, JSONBIN_RECETAS_URL
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-import uuid
+from flask_mysqldb import MySQL
+from app import mysql
+
 cloudinary.config( 
     cloud_name = "dzjpeuzcn", 
     api_key = "859251897787294", 
@@ -302,15 +305,15 @@ def validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcio
 
     return None, 200
 
-def guardar_receta(recetas, nuevaReceta):
+"""def guardar_receta(recetas, nuevaReceta):
     recetas.append(nuevaReceta)
     response = requests.put(JSONBIN_RECETAS_URL, json={'record': recetas}, headers=HEADERS_CURSOS)
     if response.status_code == 200:
         return redirect(url_for('dashboard_bp.recetas'))
     else:
-        return jsonify({'mensaje': 'No se pudo añadir la receta'}), 500
+        return jsonify({'mensaje': 'No se pudo añadir la receta'}), 500"""
 
-@dashboard_bp.route('/subirreceta',  methods=['POST', 'GET'])
+"""@dashboard_bp.route('/subirreceta',  methods=['POST', 'GET'])
 def subirreceta():
     if request.method == 'POST':
         titulo_receta = request.form['titulo']
@@ -354,7 +357,50 @@ def subirreceta():
         }
 
         return guardar_receta(recetas, nuevaReceta)
+    return render_template('dashboard/subirReceta.html')"""
+
+@dashboard_bp.route('/subirreceta', methods=['POST', 'GET'])
+def subirreceta():
+    if request.method == 'POST':
+        titulo_receta = request.form['titulo']
+        listaIngredientes = request.form['listaIngredientes'].split(',')
+        listaCategorias = request.form['listaCategorias'].split(',')
+        descripcion = request.form['descripcion']
+        foto = request.files.get('foto')
+
+        if foto:
+            upload_result = cloudinary.uploader.upload(foto)
+            foto_url = upload_result['url']
+        else:
+            foto_url = None
+
+        error, status_code = validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcion)
+        if error:
+            return error, status_code
+
+        userid = session.get('userid')
+        if not userid:
+            return jsonify({"error": "Usuario no autenticado"}), 401
+
+        listaIngredientes = json.dumps(listaIngredientes)
+        listaCategorias = json.dumps(listaCategorias)
+
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                "INSERT INTO recetas (titulo_receta, listaIngredientes, listaCategorias, descripcion, foto, userid) VALUES (%s, %s, %s, %s, %s, %s)",
+                (titulo_receta, listaIngredientes, listaCategorias, descripcion, foto_url, userid)
+            )
+            mysql.connection.commit()
+        except Exception as e:
+            mysql.connection.rollback()
+            return jsonify({"error": "Error al guardar la receta", "detalles": str(e)}), 500
+        finally:
+            cursor.close()
+
+        return jsonify({"mensaje": "Receta guardada exitosamente"}), 201
     return render_template('dashboard/subirReceta.html')
+
 
 
 def validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, desCurso):
