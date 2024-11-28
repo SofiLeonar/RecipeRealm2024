@@ -6,6 +6,9 @@ import cloudinary.api
 from config import JSONBIN_USERS_URL, HEADERS_USERS
 import uuid
 import re
+import mysql.connector
+from flask_mysqldb import MySQL
+from app import mysql
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -83,12 +86,57 @@ def register():
             foto_url = None
         
         is_chef = 'Chef' if chef == 'True' else 'Aficionado'
+
+        ##aca va la conexion a la base de datos
+        
+       # cursor = mysql.connection.cursor()
+
+        # cursor.execute ("INSERT INTO usuarios (userid, email, password, nombre, usuario, chef, bio, foto) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (userid, email, password, nombre, usuario, is_chef, bio, foto_url))
+        # mysql.connection.commit()
+        # cursor.close()
+        """
+          cursor.execute("SELECT * FROM usuarios WHERE email = %s", (email,))
+        usuario_existente = cursor.fetchone()
+        if usuario_existente:
+            error_email = 'Este correo ya está registrado. Intenta con otro.'
+
+        if error_nombre or error_usuario or error_email or error_password or error_bio:
+            return render_template('auth/register.html', 
+                                   error_nombre=error_nombre, 
+                                   error_usuario=error_usuario, 
+                                   error_email=error_email, 
+                                   error_password=error_password, 
+                                   error_bio=error_bio, 
+                                   error_foto=error_foto)
+
+
+
+        cursor.execute("""
+          #  INSERT INTO usuarios (userid, email, password, nombre, usuario, chef, bio, foto) 
+          #  VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (userid, email, password, nombre, usuario, is_chef, bio, foto_url))
+        connection.commit()
+
+        # Cerrar la conexión
+        cursor.close()
+        connection.close()
+
+        return redirect(url_for('auth.login'))
+
+    return render_template('auth/register.html')
+        
+        
+        """
+        
+        
         
         users = cargar_users_jsonbin()
         for user in users: 
             if user['email'] == email: 
                 error_email = 'Este correo ya está registrado. Intenta con otro.'
                 break
+        
+        
         
         if error_nombre or error_usuario or error_email or error_password or error_bio:
             return render_template('auth/register.html', 
