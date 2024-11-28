@@ -18,6 +18,7 @@ cloudinary.config(
     api_secret = "4_eMIemyI3f04WuqopVeqdqMUKQ", 
     secure=True
 )
+"""
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     error_nombre = None
@@ -72,10 +73,10 @@ def register():
                                    error_bio=error_bio,
                                    error_foto=error_foto)
 
-        cursor.execute("""
+        cursor.execute("
             INSERT INTO usuarios (email, password, nombre, usuario, chef, bio, foto) 
             VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """, (email, password, nombre, usuario, is_chef, bio, foto_url))
+        ", (email, password, nombre, usuario, is_chef, bio, foto_url))
         mysql.connection.commit()
 
         cursor.close()
@@ -101,9 +102,90 @@ def login():
         flash('Correo o contraseña incorrectos.')
         return redirect(url_for('auth.login'))
 
+    return render_template('auth/login.html')"""
+
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        nombre = request.form['nombre']
+        usuario = request.form['usuario']
+        chef = request.form['chef']
+        bio = request.form['bio']
+        foto = request.files.get('foto')
+
+        # Validaciones
+        errores = {}
+        if len(usuario) <= 3:
+            errores['error_usuario'] = 'El pseudónimo debe tener más de 3 caracteres.'
+        if len(bio) <= 10:
+            errores['error_bio'] = 'La descripción debe tener más de 10 caracteres.'
+        if len(nombre) <= 3:
+            errores['error_nombre'] = 'El nombre debe tener más de 3 caracteres.'
+        if len(password) < 8 or not re.search(r'[A-Z]', password):
+            errores['error_password'] = 'La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula.'
+
+        foto_url = None
+        if foto:
+            upload_result = cloudinary.uploader.upload(foto)
+            foto_url = upload_result['url']
+
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM usuarios WHERE email = %s", (email,))
+        if cursor.fetchone():
+            errores['error_email'] = 'Este correo ya está registrado. Intenta con otro.'
+
+        if errores:
+            return render_template('auth/register.html', **errores)
+
+        is_chef = 'Chef' if chef == 'True' else 'Aficionado'
+
+        try:
+            cursor.execute("""
+                INSERT INTO usuarios (email, password, nombre, usuario, chef, bio, foto) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, (email, password, nombre, usuario, is_chef, bio, foto_url))
+            mysql.connection.commit()
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f'Ocurrió un error al registrar el usuario: {str(e)}')
+            return render_template('auth/register.html', **errores)
+        finally:
+            cursor.close()
+
+        return redirect(url_for('auth.login'))
+
+    return render_template('auth/register.html')
+
+
+
+@auth_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        cursor = mysql.connection.cursor()
+
+        cursor.execute("SELECT id, email FROM usuarios WHERE email = %s AND password = %s", (email, password))
+        usuario = cursor.fetchone()
+
+        cursor.close()
+
+        if usuario:
+            user_id, db_email = usuario
+
+            session['email'] = db_email
+            session['userid'] = user_id
+            return redirect(url_for('dashboard_bp.perfil'))
+
+        flash('Correo o contraseña incorrectos.')
+        return redirect(url_for('auth.login'))
+
     return render_template('auth/login.html')
 
-@auth_bp.route('/protected')
+"""@auth_bp.route('/protected')
 def protected():
     if 'email' in session:
         usuario_logueado= next((user for user in users if user['email'] == session['email']), None)
@@ -111,9 +193,9 @@ def protected():
         if usuario_logueado:
             return render_template('protected.html', email=session['email'])
     else:
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('auth.login'))"""
     
-@auth_bp.route('/eliminarperfil', methods=['GET', 'POST'])
+"""@auth_bp.route('/eliminarperfil', methods=['GET', 'POST'])
 def eliminarperfil():
     if request.method == 'POST':
         email = session.get('email')
@@ -129,7 +211,7 @@ def eliminarperfil():
         except Exception as e:
             flash(f'Error al eliminar la cuenta: {str(e)}')
 
-    return render_template('dashboard/miPerfil.html')
+    return render_template('dashboard/miPerfil.html')"""
 
 @auth_bp.route('/logout')
 def logout():
