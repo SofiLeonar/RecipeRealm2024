@@ -126,6 +126,8 @@ def register():
             errores['error_nombre'] = 'El nombre debe tener más de 3 caracteres.'
         if len(password) < 8 or not re.search(r'[A-Z]', password):
             errores['error_password'] = 'La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula.'
+        if 'chef' not in request.form:
+            errores['error_chef'] = 'Debes seleccionar si eres Chef o Aficionado.'
 
         foto_url = None
         if foto:
@@ -140,11 +142,10 @@ def register():
         if errores:
             return render_template('auth/register.html', **errores)
 
-        is_chef = 'Chef' if chef == 'True' else 'Aficionado'
 
         try:
             cursor.execute(
-                "INSERT INTO usuarios (email, password, nombre, usuario, chef, bio, foto) VALUES (%s, %s, %s, %s, %s, %s, %s)", (email, password, nombre, usuario, is_chef, bio, foto_url)
+                "INSERT INTO usuarios (email, password, nombre, usuario, chef, bio, foto) VALUES (%s, %s, %s, %s, %s, %s, %s)", (email, password, nombre, usuario, chef, bio, foto_url)
                 )
             mysql.connection.commit()
         except Exception as e:
