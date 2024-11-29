@@ -167,6 +167,44 @@ def eliminarcurso():
     return redirect(url_for('dashboard_bp.cursos'))
 
 
+@dashboard_bp.route('/eliminarreceta', methods=['POST', 'GET'])
+def eliminarreceta():
+    if 'userid' not in session:
+        flash('Debes iniciar sesión para realizar esta acción.', 'error')
+        return redirect(url_for('auth.login'))
+
+    receta_id = request.form.get('receta_id')
+
+    if not receta_id:
+        flash('No se especificó la receta a eliminar.', 'error')
+        return redirect(url_for('dashboard_bp.recetas'))
+
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute("SELECT id FROM recetas WHERE id = %s AND userid = %s", (receta_id, session['userid']))
+        receta = cursor.fetchone()
+
+        if receta:
+            print(f"recerta encontrada: {receta}")
+        else:
+            print("receta no encontrada o no pertenece al usuario.")
+            flash('No tienes permiso para eliminar esta receta o no existe.', 'error')
+            return redirect(url_for('dashboard_bp.recetas'))
+
+        cursor.execute("DELETE FROM recetas WHERE id = %s AND userid = %s", (receta_id, session['userid']))
+        mysql.connection.commit()
+
+        flash('receta eliminada correctamente.', 'success')
+
+    except Exception as e:
+        mysql.connection.rollback()
+        flash(f'Ocurrió un error al eliminar la receta: {str(e)}', 'error')
+    finally:
+        cursor.close()
+
+    return redirect(url_for('dashboard_bp.misrecetas'))
+
+
 @dashboard_bp.route('/editarcurso/<int:curso_id>', methods=['GET', 'POST'])
 def editarcurso(curso_id):
     response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
@@ -287,39 +325,109 @@ def miscursos():
     flash('Debes iniciar sesión para ver tus cursos.')
     return redirect(url_for('auth.login'))
 
+
 @dashboard_bp.route('/misrecetas')
 def misrecetas():
-    if 'userid' in session:
-        user_id = session['userid']
-        print(f'User ID en sesión: {user_id}') 
+    if 'userid' not in session:
+        flash('Debes iniciar sesión para ver tus recetas.')
+        return redirect(url_for('auth.login'))
+
+    user_id = session['userid']
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT id, titulo_receta, lista_ingredientes, lista_categorias, descripcion, foto FROM recetas WHERE userid = %s", (user_id,))
+        recetas_usuario = cursor.fetchall()
+        cursor.close()
+
+        if recetas_usuario:
+            recetas_info = []
+            for receta in recetas_usuario:
+                receta_data = {
+                    'id': receta[0],
+                    'titulo_receta': receta[1],
+                    'lista_ingredientes': receta[2],
+                    'lista_categorias': receta[3],
+                    'descripcion': receta[4],
+                    'foto': receta[5]
+                }
+                recetas_info.append(receta_data)
+
+            return render_template('dashboard/misRecetas.html', recetasInfo=recetas_info)
+    except Exception as e:
+        flash(f'Ocurrió un error: {e}')
+        return redirect(url_for('dashboard.index'))
+
+@dashboard_bp.route('/editarreceta/<int:receta_id>', methods=['GET', 'POST'])
+def editarreceta(receta_id):
+    if 'userid' not in session: 
+        flash('Por favor, inicia sesión para editar una receta.')
+        return redirect(url_for('auth.login'))
+
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        ingredientes = request.form['ingredientes']
+        categoria = request.form['categoria']
+        descripcion = request.form['descripcion']
+        foto_url = None
+        foto = request.files.get('foto')
+
+        if foto:
+            try:
+                upload_result = cloudinary.uploader.upload(foto)
+                foto_url = upload_result['url']
+            except Exception as e:
+                flash(f'Error al subir la foto: {str(e)}')
+                return redirect(url_for('dashboard_bp.editarreceta', receta_id=receta_id))
         
         cursor = mysql.connection.cursor()
-        
+
         try:
-            cursor.execute("SELECT id, titulo_receta, foto FROM recetas WHERE userid = %s", (user_id,))
-            recetas_info = cursor.fetchall()
-
-            recetas_info = [{'id': receta[0], 'titulo_receta': receta[1], 'foto': receta[2]} for receta in recetas_info]
+            if foto_url:
+                cursor.execute("""
+                    UPDATE recetas 
+                    SET nombre = %s, ingredientes = %s, categoria = %s, descripcion = %s, foto = %s 
+                    WHERE id = %s
+                """, (nombre, ingredientes, categoria, descripcion, foto_url, receta_id))
+            else:
+                cursor.execute("""
+                    UPDATE recetas 
+                    SET nombre = %s, ingredientes = %s, categoria = %s, descripcion = %s
+                    WHERE id = %s
+                """, (nombre, ingredientes, categoria, descripcion, receta_id))
             
-            
-            if not recetas_info:
-                flash('No se encontraron recetas para este usuario.', 'warning')
-                print('No se encontraron recetas para este usuario.')  
-            
+            mysql.connection.commit()
+            flash('Receta actualizada con éxito.')
+            return redirect(url_for('dashboard_bp.get_receta_by_id', receta_id=receta_id))
         except Exception as e:
-            flash(f'Error al cargar las recetas: {str(e)}', 'error')
-            print(f'Error al cargar las recetas: {str(e)}') 
-            recetas_info = []
-
+            mysql.connection.rollback()
+            flash(f'Error al actualizar la receta: {str(e)}')
         finally:
             cursor.close()
 
-        return render_template('dashboard/recetas.html', recetasInfo=recetas_info)
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute("SELECT id, nombre, ingredientes, categoria, descripcion, foto FROM recetas WHERE id = %s", (receta_id,))
+        receta = cursor.fetchone()
+    except Exception as e:
+        flash(f'Error al cargar los datos de la receta: {str(e)}')
+        receta = None
+    finally:
+        cursor.close()
     
-    print("No se encontró el User ID en la sesión, redirigiendo al login.") 
-    return redirect(url_for('auth.login'))
+    if not receta:
+        flash('No se encontró la receta.')
+        return redirect(url_for('dashboard_bp.recetas'))
+    
+    receta_data = {
+        'id': receta[0],
+        'nombre': receta[1],
+        'ingredientes': receta[2],
+        'categoria': receta[3],
+        'descripcion': receta[4],
+        'foto': receta[5],
+    }
 
-
+    return render_template('dashboard/editarReceta.html', receta=receta_data)
 
 def validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcion):
     error_messages = []

@@ -1,0 +1,83 @@
+{% extends "layout.html" %} {% block title %}Editar Receta{% endblock %} {%
+block content %}
+<div class="container">
+  <h1>Editar Receta</h1>
+
+  <form method="POST">
+    <div class="form-group">
+      <label for="nombre">Nombre de la receta:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nombre"
+        name="nombre"
+        value="{{ receta.nombre }}"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="ingredientes">Ingredientes:</label>
+      <textarea
+        class="form-control"
+        id="ingredientes"
+        name="ingredientes"
+        rows="4"
+        required
+      >
+{{ receta.ingredientes }}</textarea
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="categoria">Categoría:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="categoria"
+        name="categoria"
+        value="{{ receta.categoria }}"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <textarea
+        class="form-control"
+        id="descripcion"
+        name="descripcion"
+        rows="4"
+        required
+      >
+{{ receta.descripcion }}</textarea
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="imagen">URL de la imagen:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="imagen"
+        name="imagen"
+        value="{{ receta.imagen }}"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="porciones">Porciones:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="porciones"
+        name="porciones"
+        value="{{ receta.porciones }}"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+  </form>
+</div>
+{% endblock %}
