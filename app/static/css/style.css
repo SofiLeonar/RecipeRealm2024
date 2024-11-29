@@ -818,7 +818,7 @@ input[type="radio"] {
 
 .cursoInfo {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 20px 0;
 }
 
@@ -1035,4 +1035,8 @@ footer {
   background-color: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
+}
+
+.recetaDescripcion {
+  margin-left: 20px;
 }
