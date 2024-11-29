@@ -76,41 +76,7 @@ def perfil():
             return render_template('dashboard/miPerfil.html', user=user_data)
     
     return redirect(url_for('auth.login'))
-"""
-@dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
-def editarperfil():
-    if request.method == 'POST':
-        usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
 
-        if usuario_logueado:
-            usuario_actualizado = {
-                'nombre': request.form['nombre'],
-                'usuario': request.form['usuario'],
-                'bio': request.form['bio'],
-                'chef': 'Chef' if request.form['chef'] == 'True' else 'Aficionado',
-            }
-
-            foto = request.files.get('foto')
-            if foto:
-                try:
-                    upload_result = cloudinary.uploader.upload(foto)
-                    usuario_actualizado['foto'] = upload_result['url']
-                except Exception as e:
-                    flash('Error al subir la foto. Por favor, intentá de nuevo.')
-                    return redirect(url_for('dashboard_bp.editarperfil'))
-
-            guardar_usuario_actualizado(usuario_logueado['email'], usuario_actualizado)
-
-            return redirect(url_for('dashboard_bp.perfil'))
-
-    usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
-
-    if not usuario_logueado:
-        flash('No se pudo cargar el perfil del usuario.')
-        return redirect(url_for('auth.login'))
-
-    return render_template('dashboard/editarPerfil.html', user=usuario_logueado)
-"""
 
 @dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
 def editarperfil():
@@ -233,35 +199,6 @@ def cursos():
     except Exception as e:
         flash(f'Error al obtener los cursos: {str(e)}')
         return render_template('dashboard/cursos.html', cursosInfo=[])
-
-"""
-@dashboard_bp.route('/curso/<int:curso_id>', methods=['GET'])
-def get_curso_by_id(curso_id):
-    try:
-        response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
-
-        if response.status_code != 200:
-            print(f"Error al obtener datos de JSONBIN: {response.status_code} - {response.text}")
-            return jsonify({"error": "Error al obtener datos de JSONBIN"}), 500
-
-        data = response.json()
-
-        print("Contenido de la respuesta JSON:", data)
-
-        records = data.get('record', {}).get('record', [])
-
-        for curso in records:
-            if curso.get('id') == curso_id:
-                print(f"Curso encontrado: {curso}")
-                return render_template('dashboard/verCurso.html', curso=curso)
-        
-        print(f"Curso con ID {curso_id} no encontrado.")
-        return jsonify({"error": "Curso no encontrado"}), 404
-
-    except Exception as e:
-        print(f"Error: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-    """
 
 
 @dashboard_bp.route('/eliminarcurso', methods=['POST'])
@@ -519,8 +456,6 @@ def miscursos():
         flash(f'Error al obtener los cursos: {str(e)}')
         return render_template('dashboard/misCursos.html', cursosInfo=[])
 
-    flash('Debes iniciar sesión para ver tus cursos.')
-    return redirect(url_for('auth.login'))
 
 @dashboard_bp.route('/misrecetas')
 def misrecetas():
@@ -555,7 +490,6 @@ def misrecetas():
     
     print("No se encontró el User ID en la sesión, redirigiendo al login.") 
     return redirect(url_for('auth.login'))
-
 
 
 def validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcion):
@@ -639,70 +573,9 @@ def validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, d
 
     return None, 200
 
-"""def guardar_curso(cursos, nuevoCurso):
-    cursos.append(nuevoCurso)
-    response = requests.put(JSONBIN_CURSOS_URL, json={'record': cursos}, headers=HEADERS_CURSOS)
-    if response.status_code == 200:
-        return redirect(url_for('dashboard_bp.cursos'))
-    else:
-        return jsonify({'mensaje': 'No se pudo añadir el curso'}), 500
-"""
+
 @dashboard_bp.route('/subircurso', methods=['POST', 'GET'])
 def subircurso():
-    """
-    if request.method == 'POST':
-        titulo_curso = request.form['titulo_curso']
-        lugar = request.form['lugar']
-        cupos = request.form['cupos']
-        precio = request.form['precio']
-        fecha = request.form['fecha']
-        hora = request.form['hora']
-        dificultad = request.form.get('dificultad', None)
-        desCurso = request.form['desCurso']
-        foto = request.files.get('foto')
-
-        if foto:
-            upload_result = cloudinary.uploader.upload(foto)
-            foto_url = upload_result['url']
-        else:
-            foto_url = None
-
-        
-        error, status_code = validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, desCurso)
-        if error:
-            return error, status_code
-
-        response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
-        try:
-            cursos = response.json().get('record', {}).get('record', [])
-        except ValueError:
-            return jsonify({"error": "Error al obtener los datos"}), 500
-
-
-        if cursos:
-            nuevo_id = max(int(curso.get('id', 0)) for curso in cursos if 'id' in curso) + 1
-        else:
-            nuevo_id = 1
-
-        userid = session.get('userid')
-        nuevoCurso = {
-            'id': nuevo_id,
-            'titulo': titulo_curso,
-            'lugar': lugar,
-            'cupos_disponibles': cupos,
-            'precio': precio,
-            'fecha': fecha, 
-            'descripcion': desCurso,
-            'hora': hora,
-            'dificultad': dificultad,
-            'foto': foto_url,
-            'userid': userid
-        }
-
-        return guardar_curso(cursos, nuevoCurso)
-
-    return render_template('dashboard/subirCurso.html')
-    """
     if 'userid' not in session:
         flash('Por favor, inicia sesión para subir un curso.')
         return redirect(url_for('auth.login')) 
