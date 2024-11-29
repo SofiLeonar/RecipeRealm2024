@@ -455,6 +455,26 @@ def get_receta_by_id(receta_id):
             (receta_id,)
         )
         result = cursor.fetchone()
+        
+        cursor.execute(
+            """
+            SELECT 
+                c.idcomentario,
+                c.comentario,
+                c.estrellas,
+                c.fecha,
+                c.hora,
+                u.usuario AS nombre_usuario,
+                u.foto AS foto_usuario
+            FROM comentarios c
+            JOIN usuarios u ON c.iduser = u.id
+            WHERE c.idreceta = %s
+            ORDER BY c.fecha DESC, c.hora DESC
+            """,
+            (receta_id,)
+        )
+        comentarios_result = cursor.fetchall()
+
         cursor.close()
         if result:
             receta_info = {
@@ -470,6 +490,29 @@ def get_receta_by_id(receta_id):
                     'foto': result[8]
                 }
             }
+            
+            comentarios = [
+            {
+                'idcomentario': comentario[0],
+                'comentario': comentario[1],
+                'estrellas': comentario[2],
+                'fecha': comentario[3],
+                'hora': comentario[4],
+                'usuario': {
+                    'nombre': comentario[5],
+                    'foto': comentario[6]
+                }
+            }
+            for comentario in comentarios_result
+        ]
+
+            nuevos_cursos = obtener_cursos_nuevos(limit=3)
+            return render_template(
+                'dashboard/verReceta.html',
+                receta=receta_info,
+                nuevosCursos=nuevos_cursos,
+                comentarios=comentarios
+            )
             nuevos_cursos = obtener_cursos_nuevos(limit=3) 
             return render_template('dashboard/verReceta.html', receta=receta_info, nuevosCursos=nuevos_cursos)
         else:
@@ -482,6 +525,39 @@ def get_receta_by_id(receta_id):
 
 def verreceta():
     return render_template('dashboard/verReceta.html')
+
+@dashboard_bp.route('/agregar_comentario', methods=['POST'])
+def agregar_comentario():
+    if 'userid' not in session:
+        flash('Debes iniciar sesión para comentar.', 'error')
+        return redirect(url_for('auth.login'))
+
+    comentario = request.form.get('comentario')
+    estrellas = request.form.get('estrellas')
+    idreceta = request.form.get('idreceta')
+    userid = session['userid']
+
+    if not (comentario and estrellas and idreceta):
+        flash('Faltan campos obligatorios.', 'error')
+        return redirect(request.referrer)
+
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute("""
+            INSERT INTO comentarios (iduser, idreceta, comentario, estrellas, fecha, hora) 
+            VALUES (%s, %s, %s, %s, CURDATE(), CURTIME())
+        """, (userid, idreceta, comentario, estrellas))
+        mysql.connection.commit()
+        flash('Comentario agregado correctamente.', 'success')
+    except Exception as e:
+        mysql.connection.rollback()
+        flash(f'Error al agregar el comentario: {str(e)}', 'error')
+    finally:
+        cursor.close()
+
+    return redirect(request.referrer)
+
+
 
 @dashboard_bp.route('/miscursos')
 def miscursos():

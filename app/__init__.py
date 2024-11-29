@@ -79,6 +79,18 @@ def initialize_database():
         userid INT,
         FOREIGN KEY (userid) REFERENCES usuarios(id) ON DELETE CASCADE
     );
+    
+    CREATE TABLE IF NOT EXISTS comentarios (
+        idcomentario INT AUTO_INCREMENT PRIMARY KEY,
+        iduser INT,
+        idreceta INT,
+        comentario TEXT NOT NULL,
+        estrellas INT CHECK (estrellas BETWEEN 1 AND 5),
+        fecha DATE DEFAULT CURRENT_DATE,
+        hora TIME DEFAULT CURRENT_TIME,
+        FOREIGN KEY (iduser) REFERENCES usuarios(id) ON DELETE CASCADE,
+        FOREIGN KEY (idreceta) REFERENCES recetas(id) ON DELETE CASCADE
+    );
     """
 
     try:
