@@ -1,2 +1,5 @@
 
 .env
+app/blueprints/auth/__pycache__/routes.cpython-311.pyc
+app/blueprints/dashboard/__pycache__/__init__.cpython-311.pyc
+app/blueprints/dashboard/__pycache__/routes.cpython-311.pyc
