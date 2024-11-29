@@ -27,6 +27,23 @@ content %}
       <img src="{{ receta.foto }}" alt="Receta" />
     </a>
     <h3>{{ receta.titulo_receta }}</h3>
+    <div class="caja-botones">
+      <form
+        action="{{ url_for('dashboard_bp.eliminarreceta') }}"
+        method="POST"
+        style="display: inline"
+        onsubmit="return confirm('¿Estás seguro de que deseas eliminar la receta? Esta acción no se puede deshacer.');"
+      >
+        <input type="hidden" name="receta_id" value="{{ receta.id }}" />
+        <button type="submit" class="btnRojo">Eliminar receta</button>
+      </form>
+      <a
+        href="{{ url_for('dashboard_bp.editarreceta', receta_id=receta.id) }}"
+        class="btnRojo"
+      >
+        Editar receta
+      </a>
+    </div>
   </div>
   {% endfor %}
 </section>
