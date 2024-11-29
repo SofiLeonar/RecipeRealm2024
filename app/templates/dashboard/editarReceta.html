@@ -1,67 +1,71 @@
 {% extends "layout.html" %} {% block title %} Editar Receta {% endblock %} {%
 block content %}
-<h1>Editar Receta</h1>
 
-<form method="POST" enctype="multipart/form-data">
-  <div class="form-group">
-    <label for="titulo_receta">Título de la receta:</label>
-    <input
-      type="text"
-      class="form-control"
-      id="titulo_receta"
-      name="titulo_receta"
-      value="{{ receta.titulo }}"
-      required
-    />
+<section class="">
+  <div class="dialogo">
+    <h1>Editar receta</h1>
   </div>
+  <form
+    class="containerRegistro flex"
+    action="{{ url_for('dashboard_bp.editarreceta', receta_id=receta.id) }}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="formDerechaRegistro">
+      <div class="formRegistro">
+        <label for="tituloReceta">Título</label>
+        <input
+          type="text"
+          id="tituloReceta"
+          name="titulo_receta"
+          value="{{ receta.titulo }}"
+        />
+      </div>
 
-  <div class="form-group">
-    <label for="lista_ingredientes">Ingredientes:</label>
-    <textarea
-      class="form-control"
-      id="lista_ingredientes"
-      name="lista_ingredientes"
-      rows="4"
-      required
-    >
+      <div class="formRegistro">
+        <label for="ingredientes">Ingredientes</label>
+        <textarea
+          id="ingredientes"
+          name="lista_ingredientes"
+          placeholder="Ejemplo: 500g de arroz, 1 litro de agua"
+          class="textareaRegistro"
+        >
 {{ receta.lista_ingredientes }}</textarea
-    >
-  </div>
+        >
+      </div>
 
-  <div class="form-group">
-    <label for="lista_categorias">Categorías:</label>
-    <input
-      type="text"
-      class="form-control"
-      id="lista_categorias"
-      name="lista_categorias"
-      value="{{ receta.lista_categorias }}"
-      required
-    />
-  </div>
+      <div class="formRegistro">
+        <label for="categorias">Categorías</label>
+        <input
+          type="text"
+          id="categorias"
+          name="lista_categorias"
+          value="{{ receta.lista_categorias }}"
+        />
+      </div>
 
-  <div class="form-group">
-    <label for="descripcion">Descripción:</label>
-    <textarea
-      class="form-control"
-      id="descripcion"
-      name="descripcion"
-      rows="4"
-      required
-    >
+      <div class="formRegistro">
+        <label for="descripcion">Descripción</label>
+        <textarea
+          id="descripcion"
+          name="descripcion"
+          placeholder="Escribe la preparación paso a paso"
+          class="textareaRegistro"
+        >
 {{ receta.descripcion }}</textarea
-    >
-  </div>
+        >
+      </div>
 
-  <div class="form-group">
-    <label for="foto">Foto (opcional):</label>
-    <input type="file" class="form-control" id="foto" name="foto" />
-    {% if receta.foto %}
-    <img src="{{ receta.foto }}" alt="Foto actual" width="100" />
-    {% endif %}
-  </div>
+      <div class="formRegistro">
+        <label for="foto">Foto de la receta</label>
+        <input type="file" id="foto" name="foto" accept="image/*" />
+      </div>
+    </div>
 
-  <button type="submit" class="btn btn-primary">Guardar cambios</button>
-</form>
+    <div class="formDerechaRegistro">
+      <button type="submit" class="btnRojo">Actualizar receta</button>
+    </div>
+  </form>
+</section>
 
 {% endblock %}
