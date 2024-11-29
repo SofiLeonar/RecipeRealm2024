@@ -269,30 +269,41 @@ def get_curso_by_id(curso_id):
         return jsonify({"error": str(e)}), 500
     """
 
-@dashboard_bp.route('/eliminarcurso', methods=['POST', 'GET'])
+
+@dashboard_bp.route('/eliminarcurso', methods=['POST'])
 def eliminarcurso():
+    if 'userid' not in session:
+        flash('Debes iniciar sesión para realizar esta acción.', 'error')
+        return redirect(url_for('auth.login'))
+
     curso_id = request.form.get('curso_id')
+
     if not curso_id:
         flash('No se especificó el curso a eliminar.', 'error')
         return redirect(url_for('dashboard_bp.cursos'))
 
+    cursor = mysql.connection.cursor()
     try:
-        response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
-        data = response.json()
-        cursos = data.get('record', {}).get('record', []) 
+        cursor.execute("SELECT id FROM cursos WHERE id = %s AND userid = %s", (curso_id, session['userid']))
+        curso = cursor.fetchone()
 
-        updated_cursos = [curso for curso in cursos if str(curso.get('id')) != curso_id]
-
-        update_data = {'record': updated_cursos}
-        response = requests.put(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS, json=update_data)
-
-        if response.status_code == 200:
-            flash('Curso eliminado correctamente.', 'success')
+        if curso:
+            print(f"Curso encontrado: {curso}")
         else:
-            flash('Error al eliminar el curso.', 'error')
+            print("Curso no encontrado o no pertenece al usuario.")
+            flash('No tienes permiso para eliminar este curso o no existe.', 'error')
+            return redirect(url_for('dashboard_bp.cursos'))
+
+        cursor.execute("DELETE FROM cursos WHERE id = %s AND userid = %s", (curso_id, session['userid']))
+        mysql.connection.commit()
+
+        flash('Curso eliminado correctamente.', 'success')
 
     except Exception as e:
-        flash(f'Error al eliminar el curso: {str(e)}', 'error')
+        mysql.connection.rollback()
+        flash(f'Ocurrió un error al eliminar el curso: {str(e)}', 'error')
+    finally:
+        cursor.close()
 
     return redirect(url_for('dashboard_bp.cursos'))
 
