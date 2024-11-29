@@ -1045,6 +1045,13 @@ footer {
 
 .recetaDescripcion {
   margin-left: 20px;
+  font-family: "Fira Code", monospace;
+  font-size: 12px;
+}
+
+.ingredientes{
+  font-family: "Fira Code", monospace;
+  font-size: 12px;
 }
 
 a {
