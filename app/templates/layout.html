@@ -27,10 +27,8 @@
                 <img src="/static/img/Logo.png" alt="Logo">
             </a>
         </div>
-        <div class="botones">
-            <a href="{{ url_for('dashboard_bp.login') }}" class="btn iniciarSesion">Iniciar sesión</a>
-            <a href="{{ url_for('dashboard_bp.registro') }}" class="btn registro">Registro</a>
-
+        <div class="botones"> 
+            {% if 'email' in session %}
                 <div class="desplegable">
                     <button class="btn btnUser usuario" onclick="alternarDesplegable()">Usuario</button>
                     <div id="menuUsuario" class="contenidoDesplegable">
@@ -39,11 +37,18 @@
                         <a href="{{ url_for('dashboard_bp.subirreceta') }}">Subir receta</a>
                         <a href="{{ url_for('dashboard_bp.misrecetas') }}">Mis recetas</a>
                         <a href="{{ url_for('dashboard_bp.cursos') }}">Cursos</a>
-                        <a href="{{ url_for('dashboard_bp.subircurso') }}">Subir curso</a>
-                        <a href="{{ url_for('dashboard_bp.miscursos') }}">Mis cursos</a>
+                        {% if session.get('chef') == 'Chef' %}
+                            <a href="{{ url_for('dashboard_bp.subircurso') }}">Subir curso</a>
+                            <a href="{{ url_for('dashboard_bp.miscursos') }}">Mis cursos</a>
+                        {% endif %}
+                        <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
                     </div>
                 </div>
-            </div>
+            {% else %}
+                <a href="{{ url_for('dashboard_bp.login') }}" class="btn iniciarSesion">Iniciar sesión</a>
+                <a href="{{ url_for('dashboard_bp.registro') }}" class="btn registro">Registro</a>
+            {% endif %}
+        </div>  
     </nav>
 
     <div class="content">
