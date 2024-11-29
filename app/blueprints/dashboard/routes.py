@@ -233,7 +233,6 @@ def cursos():
             }
             cursos_info.append(curso_data)
         cursor.close()
-        
 
         return render_template('dashboard/cursos.html', cursosInfo=cursos_info)
 
@@ -241,7 +240,7 @@ def cursos():
         flash(f'Error al obtener los cursos: {str(e)}')
         return render_template('dashboard/cursos.html', cursosInfo=[])
 
-
+"""
 @dashboard_bp.route('/curso/<int:curso_id>', methods=['GET'])
 def get_curso_by_id(curso_id):
     try:
@@ -268,7 +267,7 @@ def get_curso_by_id(curso_id):
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
-    
+    """
 
 @dashboard_bp.route('/eliminarcurso', methods=['POST', 'GET'])
 def eliminarcurso():
@@ -346,9 +345,45 @@ def editarcurso(curso_id):
     return render_template('dashboard/editarCurso.html', curso=curso)
 
 
-@dashboard_bp.route('/vercurso')
-def vercurso():
-    return render_template('dashboard/verCurso.html')
+@dashboard_bp.route('/curso/<int:curso_id>')
+def get_curso_by_id(curso_id):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute(
+            "SELECT c.id, c.titulo, c.descripcion, c.precio, c.dificultad, c.fecha, c.hora, c.lugar, c.foto, c.cupos_disponibles, u.id as instructor_id, u.nombre as instructor_nombre, u.foto as instructor_foto FROM cursos c JOIN usuarios u ON c.userid = u.id WHERE c.id = %s", 
+            (curso_id,)
+        )
+        result = cursor.fetchone()
+        cursor.close()
+
+        if result:
+            curso_info = {
+                'id': result[0],
+                'titulo': result[1],
+                'descripcion': result[2],
+                'precio': result[3],
+                'dificultad': result[4],
+                'fecha': result[5],
+                'hora': result[6],
+                'lugar': result[7],
+                'foto': result[8],
+                'cupos_disponibles': result[9],
+                'instructor': {
+                    'id': result[10],
+                    'nombre': result[11],
+                    'foto': result[12]
+                }
+            }
+            return render_template('dashboard/verCurso.html', curso=curso_info)
+
+        else:
+            flash('Curso no encontrado.')
+            return redirect(url_for('dashboard_bp.cursos'))
+
+    except Exception as e:
+        flash(f'Error al obtener el curso: {str(e)}')
+        return redirect(url_for('dashboard_bp.cursos'))
+
 
 @dashboard_bp.route('/receta/<int:receta_id>', methods=['GET'])
 def get_receta_by_id(receta_id):
