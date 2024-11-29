@@ -206,31 +206,30 @@ def editarperfil():
 
 @dashboard_bp.route('/recetas')
 def recetas():
-    if 'userid' in session:
-        user_id = session['userid']
-        
-        cursor = mysql.connection.cursor()
-        
-        try:
-            # Consulta para obtener las recetas del usuario logueado
-            cursor.execute("SELECT id, titulo_receta, foto FROM recetas WHERE user_id = %s", (user_id,))
-            recetas_info = cursor.fetchall()
-            print(f'Recetas cargadas: {recetas_info}')
-
-            # Si no hay recetas
-            if not recetas_info:
-                flash('No se encontraron recetas para este usuario.', 'warning')
-
-        except Exception as e:
-            flash(f'Error al cargar las recetas: {str(e)}', 'error')
-            recetas_info = []
-
-        finally:
-            cursor.close()
-
-        return render_template('dashboard/recetas.html', recetasInfo=recetas_info)
+    cursor = mysql.connection.cursor()
     
-    return redirect(url_for('auth.login'))
+    try:
+        cursor.execute("SELECT id, titulo_receta, foto FROM recetas")
+        recetas_info = cursor.fetchall()
+
+        recetas_info = [{'id': receta[0], 'titulo_receta': receta[1], 'foto': receta[2]} for receta in recetas_info]
+        
+        print(f'Recetas cargadas: {recetas_info}')
+        
+        if not recetas_info:
+            flash('No se encontraron recetas disponibles.', 'warning')
+            print('No se encontraron recetas disponibles.')
+            
+    except Exception as e:
+        flash(f'Error al cargar las recetas: {str(e)}', 'error')
+        print(f'Error al cargar las recetas: {str(e)}') 
+        recetas_info = []
+
+    finally:
+        cursor.close()
+
+    print(f'Información de recetas a pasar al template: {recetas_info}')
+    return render_template('dashboard/recetas.html', recetasInfo=recetas_info)
 
 
 @dashboard_bp.route('/cursos')
@@ -392,6 +391,7 @@ def miscursos():
 
     flash('Debes iniciar sesión para ver tus cursos.')
     return redirect(url_for('auth.login'))
+
 @dashboard_bp.route('/misrecetas')
 def misrecetas():
     if 'userid' in session:
@@ -404,7 +404,6 @@ def misrecetas():
             cursor.execute("SELECT id, titulo_receta, foto FROM recetas WHERE userid = %s", (user_id,))
             recetas_info = cursor.fetchall()
 
-            # Manually convert tuples into dictionaries
             recetas_info = [{'id': receta[0], 'titulo_receta': receta[1], 'foto': receta[2]} for receta in recetas_info]
             
             print(f'Recetas cargadas: {recetas_info}')
