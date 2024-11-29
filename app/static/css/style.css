@@ -1,8 +1,7 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /*
@@ -13,389 +12,385 @@ font-family: "K2D", sans-serif; ----------- Nav/Footer
 */
 
 body {
-    background-color: #E4FDE1;
+  background-color: #e4fde1;
 }
 
 .navbar {
-    background-color: #223490; 
-    display: flex;
-    justify-content: space-between;
-    font-family: "K2D", sans-serif;
-    align-items: center;
-    padding: 25px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  background-color: #223490;
+  display: flex;
+  justify-content: space-between;
+  font-family: "K2D", sans-serif;
+  align-items: center;
+  padding: 25px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .navbar::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 1.5px;
-    background-color: #223490;
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    z-index: 1;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: #223490;
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  z-index: 1;
 }
 
 .navLinks {
-    display: flex;
-    list-style: none;
+  display: flex;
+  list-style: none;
 }
 
 .navLinks li {
-    margin-right: 30px;
+  margin-right: 30px;
 }
 
 .navLinks a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .navLinks a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
 }
 
 .logo img {
-    height: 150px;
-    margin-top: 68px;
+  height: 150px;
+  margin-top: 68px;
 }
 
 .botones {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .botones .btn {
-    padding: 5px 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    text-decoration: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-decoration: none;
 }
 
 .botones .iniciarSesion {
-    background-color: #FFD8D2;
-    color: black;
-    border: 2px solid rgba(255, 87, 87, 0.8);
-    box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
-    font-weight: bold;
+  background-color: #ffd8d2;
+  color: black;
+  border: 2px solid rgba(255, 87, 87, 0.8);
+  box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
+  font-weight: bold;
 }
 
 .botones .registro {
-    background-color: #2caf3d; 
-    border: 2px solid #2E6A27;
-    color: white;
-    border: none;
-    box-shadow: 4px 4px 0px #2E6A27;
-    font-weight: bold;
+  background-color: #2caf3d;
+  border: 2px solid #2e6a27;
+  color: white;
+  border: none;
+  box-shadow: 4px 4px 0px #2e6a27;
+  font-weight: bold;
 }
 
 .registro:hover {
-    background-color: #429638;
+  background-color: #429638;
 }
 .iniciarSesion:hover {
-    background-color: #EF4423;
+  background-color: #ef4423;
 }
-.iniciarSesion:active{
-    box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
-    transform: translateY(2px);
+.iniciarSesion:active {
+  box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
+  transform: translateY(2px);
 }
-.registro:active{
-    box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
-    transform: translateY(2px);
+.registro:active {
+  box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
+  transform: translateY(2px);
 }
 
 /*----------------------------------- CONTENIDO SECCIONES... que me pierdo entre tanto xd ------------------------------------*/
 .popular {
-    margin: 30px 0;
+  margin: 30px 0;
 }
 
 h2 {
-    font-size: 28px;
-    margin-bottom: 40px;
+  font-size: 28px;
+  margin-bottom: 40px;
 }
 .popularReceta {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    text-align: left;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 .popularReceta img {
-    width: 120px;
-    height: 120px;
+  width: 120px;
+  height: 120px;
 }
 
 .cursosNuevos {
-    margin: 30px 0;
+  margin: 30px 0;
 }
 
 .cursosNuevos h2 {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
-    font-family: "Nova Mono", monospace;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-family: "Nova Mono", monospace;
 }
 
 .cursoTarjet {
-    display: inline-block;
-    width: 30%;
-    text-align: left;
-    margin: 10px;
-    vertical-align: top;
-    background-color: #FFFCC0;
-    padding: 30px;
-    border-radius: 10px;
-    cursor: pointer;
-    height: 350px;
+  display: inline-block;
+  width: 30%;
+  text-align: left;
+  margin: 10px;
+  vertical-align: top;
+  background-color: #fffcc0;
+  padding: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 350px;
 }
 
-.cursoTarjet:hover{
-    transform: scale(1.1);
-    background-color: #4FAF44;
+.cursoTarjet:hover {
+  transform: scale(1.1);
+  background-color: #4faf44;
 }
 
 .cursoTarjet img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
 }
 
 .cursoTarjet h3 {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .cursoTarjet p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 .btnNosotros {
-    justify-content: center;
-
+  justify-content: center;
 }
 .btnVerdeNosotros {
-    height: 42px;
-    width: 212px;
-    margin-bottom: 10px;
-    font-family: "Fira Code", monospace;
-    margin-top: -8px;
-    border: #2E6A27;
-    cursor: pointer;
-    align-items: center;
-    box-shadow: 4px 4px 0px #2E6A27;
+  height: 42px;
+  width: 212px;
+  margin-bottom: 10px;
+  font-family: "Fira Code", monospace;
+  margin-top: -8px;
+  border: #2e6a27;
+  cursor: pointer;
+  align-items: center;
+  box-shadow: 4px 4px 0px #2e6a27;
 }
 
-.btnVerdeNosotros:active{
-    box-shadow: 0px 0px 0px #2E6A27;
-    transform: translateY(2px);
+.btnVerdeNosotros:active {
+  box-shadow: 0px 0px 0px #2e6a27;
+  transform: translateY(2px);
 }
 .btnRojo {
-    background-color: #FFD8D2;
-    color: black;
-    border: 2px solid #F47878;
-    font-family: "Fira Code", monospace;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
+  background-color: #ffd8d2;
+  color: black;
+  border: 2px solid #f47878;
+  font-family: "Fira Code", monospace;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px rgba(255, 87, 87, 0.8);
 }
 .btnRojo:hover {
-    background-color: #EF4423;
+  background-color: #ef4423;
 }
 .btnRojo:active {
-    box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
-    transform: translateY(2px);
+  box-shadow: 0px 0px 0px rgba(255, 87, 87, 0.8);
+  transform: translateY(2px);
 }
 .btnAmarillo {
-    background-color: #ECF39B;
-    border: 2px solid #bcb72d;
-    background-repeat: no-repeat;
-    background-size: contain;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 3px 8px;
-    box-shadow: 4px 4px 0px #bcb72d;
-    margin-top: 17px;
+  background-color: #ecf39b;
+  border: 2px solid #bcb72d;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 3px 8px;
+  box-shadow: 4px 4px 0px #bcb72d;
+  margin-top: 17px;
 }
 .btnAmarillo:hover {
-    background-color: #faf560;
+  background-color: #faf560;
 }
 .btnAmarillo:active {
-    box-shadow: 0px 0px 0px #bcb72d;
-    transform: translateY(2px);
+  box-shadow: 0px 0px 0px #bcb72d;
+  transform: translateY(2px);
 }
 .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 0 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 20px;
 }
 
-section{
-    padding-top: 80px;
+section {
+  padding-top: 80px;
 }
-p{
-    font-size: 18px;
-    font-style: normal;
-    font-family: "Fira Code", monospace;
-
+p {
+  font-size: 18px;
+  font-style: normal;
+  font-family: "Fira Code", monospace;
 }
-h1{
-    font-family: "Nova Mono", monospace;
+h1 {
+  font-family: "Nova Mono", monospace;
 }
 
 .dialogo {
-    background-image: url('/static/img/dialogo.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 160px;
-    width: 300px;
-    color: black;
-    text-align: center;
-    font-family: "Fira Code", monospace;
-    padding-top: 20px;
-    margin: 0 auto;
-    margin-bottom: -50px;
+  background-image: url("/static/img/dialogo.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 160px;
+  width: 300px;
+  color: black;
+  text-align: center;
+  font-family: "Fira Code", monospace;
+  padding-top: 20px;
+  margin: 0 auto;
+  margin-bottom: -50px;
 }
 
-.sectionBlanco{
-    background-color: white;
-    display: flex;
-    padding-bottom: 30px;
-    padding-top: 30px;
-    margin-bottom: 30px;
-    justify-content: space-between;
-    
+.sectionBlanco {
+  background-color: white;
+  display: flex;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  margin-bottom: 30px;
+  justify-content: space-between;
 }
 
-.caja{
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 600px;
-    font-family: "Fira Code", monospace;
-    text-align: left;
+.caja {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  font-family: "Fira Code", monospace;
+  text-align: left;
 }
 
-.flex{
-    display: flex;
+.flex {
+  display: flex;
 }
 
-.preguntas{
-    margin-top: 10px;
-    text-align: left;
+.preguntas {
+  margin-top: 10px;
+  text-align: left;
 }
 
-.preguntas h1, .caja h1{
-    font-family: "Nova Square", sans-serif;
-    font-size: 20px;
+.preguntas h1,
+.caja h1 {
+  font-family: "Nova Square", sans-serif;
+  font-size: 20px;
 }
 
-.opinion{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 65vh;
+.opinion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 65vh;
 }
 
 .opinionContainer {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .opinionContainer p {
-    font-size: 16px;
-    margin-bottom: 20px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .textareaPreguntas {
-    width: 300px;
-    height: 120px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: 'Fira Code', monospace;
-    resize: none;
+  width: 300px;
+  height: 120px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: "Fira Code", monospace;
+  resize: none;
 }
 .enviar {
-    background-color: #2caf3d;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 4px 4px 0px #2E6A27;
+  background-color: #2caf3d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #2e6a27;
 }
 
-.enviar:active{
-    box-shadow: 0px 0px 0px #2E6A27;
-    transform: translateY(2px);
+.enviar:active {
+  box-shadow: 0px 0px 0px #2e6a27;
+  transform: translateY(2px);
 }
-
 
 .enviar:hover {
-    background-color:  #429638;
+  background-color: #429638;
 }
 
-.espacioAbajo{
-    margin-bottom: 10px;
+.espacioAbajo {
+  margin-bottom: 10px;
 }
 
 .cuadroCompras {
-    background-image: url(/static/img/cuadro.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 364px;
-    height: 310px;
-    color: black;
+  background-image: url(/static/img/cuadro.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 364px;
+  height: 310px;
+  color: black;
 }
 
-.pPequeño{
-    max-width: 280px;
+.pPequeño {
+  max-width: 280px;
 }
 
 .barraBusqueda {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-    
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 .barraBusqueda input {
-    width: 40%;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding-right: 40px;
+  width: 40%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding-right: 40px;
 }
 
 .barraBusqueda button {
-    background-color: transparent;
-    border: none;
+  background-color: transparent;
+  border: none;
 }
 /*
 .custom_input {
@@ -437,49 +432,50 @@ h1{
 }
 */
 .supermercados {
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-.supermercados a:hover img{
-    transform: scale(1.1);
+.supermercados a:hover img {
+  transform: scale(1.1);
 }
 
 /*-------------------------------------- REGISTRO Y LOGIN ---------------------------------------*/
 .containerRegistro {
-    justify-content: space-between; 
-    width: 50%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 1000px;
-    margin: 0 auto;
-    box-shadow: 6px 6px 0px #F6EB14;
-    margin-bottom: 50px;
+  justify-content: space-between;
+  width: 50%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-shadow: 6px 6px 0px #f6eb14;
+  margin-bottom: 50px;
+  padding-top: 55px;
 }
 
 .formIzquierdaRegistro {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
+  display: flex;
+  flex-direction: column;
+  width: 45%;
 }
 
 .formDerechaRegistro {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left: 20px;
 }
 
 .formRegistro {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .formRegistro label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #333;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
 }
 
 .formRegistro input[type="text"],
@@ -487,508 +483,519 @@ h1{
 .formRegistro input[type="password"],
 .formRegistro input[type="file"],
 textarea {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .textareaRegistro {
-    resize: none;
-    height: 330px;
+  resize: none;
+  height: 330px;
 }
 
 input[type="radio"] {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .formRegistro label[for="aficionado"],
 .formRegistro label[for="chef"] {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 /*-------------------------------------- MY PERFIL ---------------------------------------*/
 .perfil {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .perfil img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 3px solid white;
-    margin-right: 20px;
-    margin-bottom: -30px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid white;
+  margin-right: 20px;
+  margin-bottom: -30px;
 }
 
 .perfilInfo h2 {
-    margin: 0;
-    color: black;
+  margin: 0;
+  color: black;
 }
-.perfilInfo{
-    background-color: white;
-    padding: 10px;
-    text-align: left;
-    margin-top: 30px;
+.perfilInfo {
+  background-color: white;
+  padding: 10px;
+  text-align: left;
+  margin-top: 30px;
 }
 
 .sobreMi {
-    position:absolute;
-    background-image: url(/static/img/dialogo.png);
-    background-repeat: no-repeat;
-    height: 60px;
-    width: 120px;
-    background-size: contain;
-    text-align: center;
-    font-family: "Fira Code", monospace;
-    margin: 0 auto;
-    padding-top: 4px;
+  position: absolute;
+  background-image: url(/static/img/dialogo.png);
+  background-repeat: no-repeat;
+  height: 60px;
+  width: 120px;
+  background-size: contain;
+  text-align: center;
+  font-family: "Fira Code", monospace;
+  margin: 0 auto;
+  padding-top: 4px;
 }
 
 /*-------------------------------------- MENU DE USUARIO ---------------------------------------*/
 
-.btnUser{
-    color: black;
+.btnUser {
+  color: black;
 }
 
 .desplegable {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .contenidoDesplegable {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-image: url('/static/img/fondoDesplegables.png');
-    background-repeat: repeat;
-    background-size: cover;
-    padding: 30px;
-    min-width: 300px;
-    z-index: 999;
-    border-radius: 10px;
+  display: none;
+  position: absolute;
+  right: 0;
+  background-image: url("/static/img/fondoDesplegables.png");
+  background-repeat: repeat;
+  background-size: cover;
+  padding: 30px;
+  min-width: 300px;
+  z-index: 999;
+  border-radius: 10px;
 }
 
 .contenidoDesplegable a {
-    color: black;
-    padding: 15px;
-    text-decoration: none;
-    background-image: url('/static/img/opcionesMenu.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    text-align: center;
-    display: block;
-    margin-bottom: 5px;
+  color: black;
+  padding: 15px;
+  text-decoration: none;
+  background-image: url("/static/img/opcionesMenu.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  text-align: center;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .contenidoDesplegable a:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
-
 
 /*-------------------------------------- RECETAS / FILTROS ---------------------------------------*/
 
 .filtros {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  justify-content: center;
 }
-.filtro:hover{
-    transform: scale(1.1);
+.filtro:hover {
+  transform: scale(1.1);
 }
 
 .filtro {
-    text-align: center;
-    cursor: pointer;
-    flex-wrap: wrap;
-    justify-content: space-around; 
+  text-align: center;
+  cursor: pointer;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .filtroIcono {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #f3f3f3;
-    display: block;
-    margin: 0 auto;
-    align-content: center;
-    margin-left: 30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #f3f3f3;
+  display: block;
+  margin: 0 auto;
+  align-content: center;
+  margin-left: 30px;
 }
 .filtritos {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: #f3f3f3;
-    display: block;
-    margin: 0 auto;
-    align-content: center;
-    margin-left: 30px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f3f3f3;
+  display: block;
+  margin: 0 auto;
+  align-content: center;
+  margin-left: 30px;
 }
-
 
 .filtrosCuadro {
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    background-image: url('/static/img/fondoDesplegables.png');
-    background-repeat: repeat;
-    background-size: contain;
-    max-width: 800px;
-    margin: 0 auto;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-image: url("/static/img/fondoDesplegables.png");
+  background-repeat: repeat;
+  background-size: contain;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-
 .filtroItem {
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 0px #ccc;
-    cursor: pointer;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 0px #ccc;
+  cursor: pointer;
 }
 
 .oculto {
-    display: none;
+  display: none;
 }
 
 .recetaTarjet {
-    display: inline-block;
-    width: 20%;
-    text-align: left;
-    margin: 0 1%;
-    vertical-align: top;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-bottom: 25px;
-    height: 250px;
+  display: inline-block;
+  width: 20%;
+  text-align: left;
+  margin: 0 1%;
+  vertical-align: top;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  height: 250px;
 }
 
-.recetaTarjet:hover{
-    transform: scale(1.1);
+.recetaTarjet:hover {
+  transform: scale(1.1);
 }
 
 .recetaTarjet img {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
 }
 
 .recetaTarjet h3 {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .recetaTarjet p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
 .tarjetLargo {
-    text-align: left;
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    width: 100%;
+  text-align: left;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .tarjetImg img {
-    width: 150px;
-    height: 150px;
-    border-radius: 5px;
-    object-fit: cover;
-    margin-right: 30px;
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-right: 30px;
 }
 .tarjetIconos {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* ------ CATEGORIAS DE "SUBIR RECETA" ------- */
 .custom-select {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: "Fira Code", monospace;
-    appearance: none;
-    background-color: #fff;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"%3E%3Cpath fill="%23000000" d="M2 0L0 2h4zM0 3l2 2 2-2z"/%3E%3C/svg%3E');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 10px;
-    transition: border-color 0.3s ease;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Fira Code", monospace;
+  appearance: none;
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"%3E%3Cpath fill="%23000000" d="M2 0L0 2h4zM0 3l2 2 2-2z"/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+  transition: border-color 0.3s ease;
 }
 
 .custom-select:focus {
-    border-color: #aaa;
-    outline: none;
+  border-color: #aaa;
+  outline: none;
 }
 
-#listaIngredientes, #listaCategorias{
-    height: 120px;
-    resize: none;
+#listaIngredientes,
+#listaCategorias {
+  height: 120px;
+  resize: none;
 }
 /*-------------------------------------- CURSOS ---------------------------------------*/
 
 .cursoNivel {
-    display: inline-block;
-    padding: 10px 30px;
-    border-radius: 15px;
-    font-weight: bold;
-    margin-right: 10px;
-    margin-top: 10px;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Fira Code", monospace;
+  display: inline-block;
+  padding: 10px 30px;
+  border-radius: 15px;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-top: 10px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Fira Code", monospace;
 }
 
 .cursoNivel:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .cursoPrincipiante {
-    background-color: #FFD966;
-    color: black;
-    box-shadow: 4px 4px 0px #c6a84c;
+  background-color: #ffd966;
+  color: black;
+  box-shadow: 4px 4px 0px #c6a84c;
 }
 
 .cursoIntermedio {
-    background-color: #FF9C59;
-    color: black;
-    box-shadow: 4px 4px 0px #ab673a;
+  background-color: #ff9c59;
+  color: black;
+  box-shadow: 4px 4px 0px #ab673a;
 }
 
 .cursoAvanzado {
-    background-color: #FF6E6E;
-    color: black;
-    box-shadow: 4px 4px 0px #8c3737;
+  background-color: #ff6e6e;
+  color: black;
+  box-shadow: 4px 4px 0px #8c3737;
 }
 
 .cursoNivel img {
-    width: 30px;
-    height: auto;
+  width: 30px;
+  height: auto;
 }
-.dificultad{
-    padding: 8px;
-    border-radius: 15px;
-    margin-right: 10px;
-    font-weight: bold;
-    margin-top: 10px;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Fira Code", monospace;
-    font-size: 12px;
-}
-
-.cursoPrincipiante:active, .cursoIntermedio:active,.cursoAvanzado:active{
-    box-shadow: 0px 0px 0px #2E6A27;
-    transform: translateY(2px);
+.dificultad {
+  padding: 8px;
+  border-radius: 15px;
+  margin-right: 10px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-family: "Fira Code", monospace;
+  font-size: 12px;
 }
 
-.dificultad img{
-    width: 30px;
-    height: auto;
+.cursoPrincipiante:active,
+.cursoIntermedio:active,
+.cursoAvanzado:active {
+  box-shadow: 0px 0px 0px #2e6a27;
+  transform: translateY(2px);
 }
-.dificultad:hover{
-    filter: brightness(0.9);
+
+.dificultad img {
+  width: 30px;
+  height: auto;
+}
+.dificultad:hover {
+  filter: brightness(0.9);
 }
 .dificultad.seleccionado {
-    border: 2px solid #000000;
-    filter: brightness(0.5);
-    box-shadow: 0px 0px 0px #2E6A27;
-    transform: translateY(2px);    
+  border: 2px solid #000000;
+  filter: brightness(0.5);
+  box-shadow: 0px 0px 0px #2e6a27;
+  transform: translateY(2px);
 }
 /*-------------------------------------- VER CURSO ---------------------------------------*/
 
 .espada img {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .cursoInfo {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
 }
 
 .cursoImagen img {
-    width: 300px;
-    height: auto;
-    border-radius: 10px;
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
 }
 
 .cursoDescripcion {
-    max-width: 400px;
+  max-width: 400px;
 }
 
 .cursoInstructor {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
 }
 
 .cursoInstructor img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
-
 .comentario {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .comentarioEstrellas img {
-    width: 20px;
-    height: 20px;
-    margin-right: 2px;
+  width: 20px;
+  height: 20px;
+  margin-right: 2px;
 }
 
 .comentarioFecha {
-    color: #666;
-    font-size: 12px;
+  color: #666;
+  font-size: 12px;
 }
 
 .cursoResena textarea {
-    width: 100%;
-    height: 80px;
-    border-radius: 5px;
-    padding: 10px;
-    resize: none;
+  width: 100%;
+  height: 80px;
+  border-radius: 5px;
+  padding: 10px;
+  resize: none;
 }
 
 .cursoPuntaje {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .puntajeEstrellas img {
-    width: 25px;
-    height: 25px;
-    margin-right: 5px;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
 }
-
 
 /*-------------------------------------- FOOTER... que me pierdo entre tanto xd ---------------------------------------*/
 
 .footerBlanco {
-    background-color: white;
-    text-align: center;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+  background-color: white;
+  text-align: center;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
-footer{
-    padding-top: 50px;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: white;
+footer {
+  padding-top: 50px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
 }
 
 .arbustos {
-    position: relative;
-    width: 100%;
-    text-align: center;
-    z-index: 2;
-    margin-bottom: -5px;
-    left: 0;
-    bottom: 0;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  margin-bottom: -5px;
+  left: 0;
+  bottom: 0;
 }
 
 .arbustos img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .contenido {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    margin: 30px auto;
-    padding-bottom: 30px;
-    color: #2A3492;
-    font-family: "K2D", sans-serif;
-    border-top: 2px solid #2A3492;
-    border-bottom: 2px solid #2A3492;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 30px auto;
+  padding-bottom: 30px;
+  color: #2a3492;
+  font-family: "K2D", sans-serif;
+  border-top: 2px solid #2a3492;
+  border-bottom: 2px solid #2a3492;
 }
 
 .logoFooter {
-    margin: 20px 0 20px;
-    height: 250px;
+  margin: 20px 0 20px;
+  height: 250px;
 }
 
 .footer-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .redes {
-    margin-top: 10px;
-    display: flex;
-    justify-content: flex-start;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
 }
 
-.redes p{
-    margin-left: 30px;
-    
+.redes p {
+  margin-left: 30px;
 }
 
-.redes a{
-    text-decoration: none;
-    color: #2A3492;
+.redes a {
+  text-decoration: none;
+  color: #2a3492;
 }
 
 .redes img {
-    margin-left: 30px;
-    margin-right: 10px;
+  margin-left: 30px;
+  margin-right: 10px;
 }
 
 .footer-nav {
-    margin-top: 20px;
-    display: flex;
-    justify-content: left;
-    gap: 15px;
-    padding: 0 30px 0 30px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: left;
+  gap: 15px;
+  padding: 0 30px 0 30px;
 }
 
 .footer-nav a {
-    text-decoration: none;
-    color: rgb(51, 50, 50);
-    font-size: 14px;
+  text-decoration: none;
+  color: rgb(51, 50, 50);
+  font-size: 14px;
 }
 
 .footer-nav a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-.copy{
-    display: flex;
-    justify-content: right;
-    padding: 0 30px 30px;
-    font-size: 10px !important;
-    margin-top: -18px;
+.copy {
+  display: flex;
+  justify-content: right;
+  padding: 0 30px 30px;
+  font-size: 10px !important;
+  margin-top: -18px;
 }
 
-.top{
-    margin-top: 20px;
+.top {
+  margin-top: 20px;
+}
+
+.containerBotones {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.containerDatosPerfil {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 10px;
 }
