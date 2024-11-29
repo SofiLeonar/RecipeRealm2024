@@ -444,7 +444,7 @@ def get_receta_by_id(receta_id):
                 r.descripcion, 
                 r.foto, 
                 u.id as creador_id, 
-                u.nombre as creador_nombre, 
+                u.usuario as creador_nombre, 
                 u.foto as creador_foto 
             FROM recetas r 
             JOIN usuarios u ON r.userid = u.id 
@@ -464,7 +464,7 @@ def get_receta_by_id(receta_id):
                 'foto': result[5],
                 'creador': {
                     'id': result[6],
-                    'nombre': result[7],
+                    'usuario': result[7],
                     'foto': result[8]
                 }
             }

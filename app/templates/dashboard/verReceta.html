@@ -8,24 +8,23 @@
         <div class="container">
             <div >
                 <h1>{{ receta.titulo_receta }}</h1>
-                <p>Autor: {{ receta.nombre_autor }}</p>
+                <p>Autor: {{ receta.creador.usuario }}</p>
 
                 <div class="cursoInfo preguntas">
                     <div class="cursoImagen">
                         <img src="{{ receta.foto }}" alt="Tapas españolas">
                     </div>
                     <div class="recetaDescripcion">
-                       
-                   <h4>{{receta.descripcion}}</h4>
-                      
+                        <h4>{{receta.descripcion}}</h4> 
                     </div>
                 </div>
-
                 <div class="preguntas">
                     <h2>Ingredientes</h2>
-
-                     {{receta.lista_ingredientes}}
-                
+                    {{receta.lista_ingredientes}}
+                </div>
+                <div class="preguntas">
+                    <h2>Categorías</h2>
+                    {{receta.lista_categorias}}
                 </div>
             </div>
         </div>
