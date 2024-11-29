@@ -586,9 +586,17 @@ def subircurso():
     if 'userid' not in session:
         flash('Por favor, inicia sesión para subir un curso.')
         return redirect(url_for('auth.login')) 
-
+    
     user_id = session['userid']
+    
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT chef FROM usuarios WHERE id = %s", (user_id,))
+    user_role = cursor.fetchone()
+    cursor.close()
 
+    if user_role is None or user_role[0] != 'Chef':
+        flash('Solo los usuarios con rol de chef pueden subir un curso.')
+        return redirect(url_for('dashboard_bp.cursos'))
 
     if request.method == 'POST':
         titulo_curso = request.form['titulo_curso']
