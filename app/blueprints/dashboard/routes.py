@@ -45,11 +45,35 @@ def obtener_cursos_nuevos(limit=5):
     except Exception as e:
         print(f"Error al obtener los cursos nuevos: {str(e)}")
         return []
+    
+
+def obtener_recetas_nuevas(limit=5):
+    try:
+        cursor = mysql.connection.cursor()
+        query = "SELECT id, titulo_receta, descripcion, foto FROM recetas ORDER BY id DESC LIMIT %s"
+        cursor.execute(query, (limit,))
+        recetas = cursor.fetchall()
+        cursor.close()
+
+        recetas_info = []
+        for receta in recetas:
+            receta_data = {
+                'id': receta[0],
+                'titulo': receta[1],
+                'descripcion': receta[2],
+                'foto': receta[3],
+            }
+            recetas_info.append(receta_data)
+        return recetas_info
+    except Exception as e:
+        print(f"Error al obtener las recetas nuevas: {str(e)}")
+        return []
 
 @dashboard_bp.route('/')
 def home():
     nuevos_cursos = obtener_cursos_nuevos(limit=3)
-    return render_template('dashboard/index.html', nuevosCursos=nuevos_cursos)
+    nuevas_recetas = obtener_recetas_nuevas(limit=3)
+    return render_template('dashboard/index.html', nuevosCursos=nuevos_cursos, recetasNuevas=nuevas_recetas)
 
 
 @dashboard_bp.route('/nosotros')
@@ -386,6 +410,43 @@ def editarcurso(curso_id):
 
     return render_template('dashboard/editarCurso.html', curso=curso_data)
 
+def obtener_cursos_usuario(user_id, exclude_curso_id=None, limit=3):
+    try:
+        cursor = mysql.connection.cursor()
+        query = (
+            "SELECT id, titulo, descripcion, precio, dificultad, fecha, foto "
+            "FROM cursos WHERE userid = %s"
+        )
+        params = [user_id]
+
+        if exclude_curso_id:
+            query += " AND id != %s"
+            params.append(exclude_curso_id)
+
+        query += " LIMIT %s"
+        params.append(limit)
+
+        cursor.execute(query, tuple(params))
+        cursos = cursor.fetchall()
+        cursor.close()
+
+        cursos_resultado = [
+            {
+                'id': curso[0],
+                'titulo': curso[1],
+                'descripcion': curso[2],
+                'precio': curso[3],
+                'dificultad': curso[4],
+                'fecha': curso[5],
+                'foto': curso[6],
+            }
+            for curso in cursos
+        ]
+        return cursos_resultado
+
+    except Exception as e:
+        print(f"Error al obtener los cursos del usuario: {str(e)}")
+        return []
 
 @dashboard_bp.route('/curso/<int:curso_id>')
 def get_curso_by_id(curso_id):
@@ -416,7 +477,9 @@ def get_curso_by_id(curso_id):
                     'foto': result[12]
                 }
             }
-            return render_template('dashboard/verCurso.html', curso=curso_info)
+            cursos_adicionales = obtener_cursos_usuario(user_id=curso_info['instructor']['id'], exclude_curso_id=curso_id, limit=3)
+            nuevos_cursos = obtener_cursos_nuevos(limit=3)
+            return render_template('dashboard/verCurso.html', curso=curso_info, nuevosCursos=nuevos_cursos, masCursos=cursos_adicionales)
 
         else:
             flash('Curso no encontrado.')
@@ -430,6 +493,37 @@ def get_curso_by_id(curso_id):
 @dashboard_bp.route('/vercurso')
 def vercurso():
     return render_template('dashboard/verCurso.html')
+
+def obtener_recetas_usuario(user_id, exclude_receta_id=None, limit=3):
+    try:
+        cursor = mysql.connection.cursor()
+        query = "SELECT id, titulo_receta, descripcion, foto FROM recetas WHERE userid = %s"
+        params = [user_id]
+
+        if exclude_receta_id:
+            query += " AND id != %s"
+            params.append(exclude_receta_id)
+
+        query += " ORDER BY id DESC LIMIT %s"
+        params.append(limit)
+
+        cursor.execute(query, params)
+        recetas = cursor.fetchall()
+        cursor.close()
+
+        recetas_info = []
+        for receta in recetas:
+            receta_data = {
+                'id': receta[0],
+                'titulo': receta[1],
+                'descripcion': receta[2],
+                'foto': receta[3],
+            }
+            recetas_info.append(receta_data)
+        return recetas_info
+    except Exception as e:
+        print(f"Error al obtener recetas del usuario: {str(e)}")
+        return []
 
 
 @dashboard_bp.route('/receta/<int:receta_id>')
@@ -505,16 +599,15 @@ def get_receta_by_id(receta_id):
             }
             for comentario in comentarios_result
         ]
+            mas_recetas = obtener_recetas_usuario(user_id=receta_info['creador']['id'], exclude_receta_id=receta_id, limit=3)
 
             nuevos_cursos = obtener_cursos_nuevos(limit=3)
             return render_template(
                 'dashboard/verReceta.html',
                 receta=receta_info,
                 nuevosCursos=nuevos_cursos,
-                comentarios=comentarios
+                comentarios=comentarios, masRecetas=mas_recetas
             )
-            nuevos_cursos = obtener_cursos_nuevos(limit=3) 
-            return render_template('dashboard/verReceta.html', receta=receta_info, nuevosCursos=nuevos_cursos)
         else:
             flash('Receta no encontrada.')
             return redirect(url_for('dashboard_bp.recetas'))

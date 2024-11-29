@@ -36,39 +36,33 @@
             
             <section class="sectionBlanco">
                 <div class="container">
-                    <h2>Lo más popular</h2>
-                <div class="popularReceta ">
-                    <img src="/static/img/espada.png" alt="Receta1">
-                    <div>
-                        <h3>Title</h3>
-                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
-                        <button class="btnRojo btnDerecha">Ver más</button>
-                    </div>
+                    <h2>Lo más reciente</h2>
+                    {% if recetasNuevas %}
+                        {% for receta in recetasNuevas %}
+                        <a href="{{ url_for('dashboard_bp.get_receta_by_id', receta_id=receta.id) }}">
+                            <div class="popularReceta">
+                                <img src="{{ receta['foto'] }}" alt="Imagen de {{ receta['titulo'] }}">
+                                <div>
+                                    <h3>{{ receta['titulo'] }}</h3>
+                                    <p>{{ receta['descripcion'] | truncate(150) }}</p>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                        <p>Próximamente se vendrá un mundo de recetas...</p>
+                    {% endif %}
                 </div>
-                <div class="popularReceta">
-                    <img src="/static/img/espada.png" alt="Receta2">
-                    <div>
-                        <h3>Title</h3>
-                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
-                        <button class="btnRojo">Ver más</button>
-                    </div>
-                </div>
-                <div class="popularReceta">
-                    <img src="/static/img/espada.png" alt="Receta3">
-                    <div>
-                        <h3>Title</h3>
-                        <p>Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.</p>
-                        <button class="btnRojo">Ver más</button>
-                    </div>
-                </div>
-            </div>
             </section>
         
             <section class="cursosNuevos container">
                 <h2>Cursos Nuevos</h2>
                 {% for curso in nuevosCursos %}
                     <div class="cursoTarjet">
-                        <img src="{{ curso['foto'] }}" alt="{{ curso['titulo'] }}" class="curso-imagen" />
+                        <a href="{{ url_for('dashboard_bp.get_curso_by_id', curso_id=curso.id) }}">
+                            <img src="{{ curso['foto'] }}" alt="Curso imagen">
+                        </a>
                         <h3>{{ curso['titulo'] }}</h3>
                         <p><strong>Precio:</strong> ${{ curso['precio'] }}</p>
                         <p>{{ curso['dificultad'] }}</p>

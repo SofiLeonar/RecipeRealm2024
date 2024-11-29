@@ -56,50 +56,7 @@
                     <p class="espacioAbajo">¡Apúrate! Quedan {{curso.cupos_disponibles}} cupos disponibles.</p>
                     <button class="btnRojo">Inscribirme</button>
                 </div>
-            </div>
-
-            <div class="preguntas">
-                <h3>Comentarios</h3>
-                <div class="comentario">
-                    <p><strong>Tia Paola</strong></p>
-                    <div class="comentarioEstrellas">
-                        <img src="/static/img/estrellaAmarilla.png" alt="1 estrella">
-                        <img src="/static/img/estrellaAmarilla.png" alt="2 estrellas">
-                        <img src="/static/img/estrellaAmarilla.png" alt="3 estrellas">
-                        <img src="/static/img/estrellaAmarilla.png" alt="4 estrellas">
-                        <img src="/static/img/estrellaAmarilla.png" alt="5 estrellas">
-                    </div>
-                    <p>Tremendo curso. Me conseguí novia cocinando esto. Recomiendo.</p>
-                    <p class="comentarioFecha">28/07/2024</p>
-                </div>
-
-                <div class="comentario">
-                    <p><strong>Ricardo</strong></p>
-                    <div class="comentarioEstrellas">
-                        <img src="/static/img/estrellaAmarilla.png" alt="1 estrella">
-                        <img src="/static/img/estrellaAmarilla.png" alt="2 estrellas">
-                        <img src="/static/img/estrellaAmarilla.png" alt="3 estrellas">
-                    </div>
-                    <p>No me gustan las tapas españolas. Así que ni idea por qué hice este curso.</p>
-                    <p class="comentarioFecha">28/07/2024</p>
-                </div>
-            </div>
-
-            <div class="cursoResena preguntas">
-                <h4>Deja tu comentario</h4>
-                <textarea placeholder="Ingresa tu comentario..."></textarea>
-                <div class="cursoPuntaje">
-                    <p>Selecciona un puntaje</p>
-                    <div class="puntajeEstrellas">
-                        <img src="/static/img/estrellaGris.png" alt="1 estrella">
-                        <img src="/static/img/estrellaGris.png" alt="2 estrellas">
-                        <img src="/static/img/estrellaGris.png" alt="3 estrellas">
-                        <img src="/static/img/estrellaGris.png" alt="4 estrellas">
-                        <img src="/static/img/estrellaGris.png" alt="5 estrellas">
-                    </div>
-                </div>
-                <button class="enviar">Enviar</button>
-            </div>
+            </div> 
         </div>
     </section>
 </section>
@@ -110,78 +67,62 @@
 
 
 <section class="container top">
-    <div class="tarjetLargo container">
-        <div class="flex">
-        <div class="tarjetImg">
-            <img src="/static/img/estrellaGris.png" alt="Imagen">
-        </div>
-        <div class="tarjetContenido">
-            <h2>Title</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab possimus ex itaque laudantium optio rem, impedit quidem voluptatem nihil commodi voluptas, dignissimos, enim quo ratione praesentium repellat et sapiente in?
-            </p>
-            
-        </div>
-        </div>
-        <div class="flex">
-            <div class="container">
-                <button class="btnRojo top">Ver más</button>
+    {% if masCursos %}
+        {% for curso in masCursos %}
+        <div class="tarjetLargo container">
+            <div class="flex">
+                <div class="tarjetImg">
+                    <img src="{{ curso['foto'] }}" alt="Imagen de {{ curso['titulo'] }}">
+                </div>
+                <div class="tarjetContenido">
+                    <h2>{{ curso['titulo'] }}</h2>
+                    <p>
+                        {{ curso['descripcion'] | truncate(150) }}
+                    </p>
+                    <div class="espada">
+                        {% if curso.dificultad == 'Principiante' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% elif curso.dificultad == 'Intermedio' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% elif curso.dificultad == 'Avanzado' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-
-        </div>
-        <div class="tarjetIconos espada">
-            <img src="/static/img/espada.png" alt="espada">
-            <img src="/static/img/espada.png" alt="espada">
-        </div>
-    </div>    
+        </div>    
+        {% endfor %}
+    {% else %}
+        <p>No hay más cursos disponibles de este instructor.</p>
+    {% endif %}
 </section>
-<section class="container top">
-    <div class="tarjetLargo">
-        <div class="flex">
-        <div class="tarjetImg">
-            <img src="/static/img/estrellaGris.png" alt="Imagen">
-        </div>
-        <div class="tarjetContenido">
-            <h2>Title</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab possimus ex itaque laudantium optio rem, impedit quidem voluptatem nihil commodi voluptas, dignissimos, enim quo ratione praesentium repellat et sapiente in?
-            </p>
-            
-        </div>
-        </div>
-        <div class="flex">
-            <div class="container">
-                <button class="btnRojo top">Ver más</button>
-            </div>
 
-        </div>
-        <div class="tarjetIconos espada">
-            <img src="/static/img/espada.png" alt="espada">
-            <img src="/static/img/espada.png" alt="espada">
-        </div>
-    </div>   
-    </section> 
 
-<section class="cursosNuevos container top">
+<section class="cursosNuevos container">
     <h2>Cursos Nuevos</h2>
-    <div class="cursoTarjet">
-        <img src="/static/img/espada.png" alt="Curso1">
-        <h3>Text</h3>
-        <p>$0</p>
-        <p>Body text.</p>
-    </div>
-    <div class="cursoTarjet">
-        <img src="/static/img/espada.png" alt="Curso2">
-        <h3>Text</h3>
-        <p>$0</p>
-        <p>Body text.</p>
-    </div>
-    <div class="cursoTarjet">
-        <img src="/static/img/espada.png" alt="Curso3">
-        <h3>Text</h3>
-        <p>$0</p>
-        <p>Body text.</p>
-    </div>
+    {% for curso in nuevosCursos %}
+        <div class="cursoTarjet">
+            <img src="{{ curso['foto'] }}" alt="{{ curso['titulo'] }}" class="curso-imagen" />
+            <h3>{{ curso['titulo'] }}</h3>
+            <p><strong>Precio:</strong> ${{ curso['precio'] }}</p>
+            <p>{{ curso['dificultad'] }}</p>
+        <div class="espada">
+            {% if curso.dificultad == 'Principiante' %}
+                <img src="/static/img/espada.png" alt="Espada">
+            {% elif curso.dificultad == 'Intermedio' %}
+                <img src="/static/img/espada.png" alt="Espada">
+                <img src="/static/img/espada.png" alt="Espada">
+            {% elif curso.dificultad == 'Avanzado' %}
+                <img src="/static/img/espada.png" alt="Espada">
+                <img src="/static/img/espada.png" alt="Espada">
+                <img src="/static/img/espada.png" alt="Espada">
+            {% endif %}
+        </div>
+        </div>
+    {% endfor %}
 </section>
 
 {% endblock %}
