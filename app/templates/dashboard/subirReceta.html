@@ -1,80 +1,99 @@
 {% extends "layout.html" %}
 
-{% block title %} Subir receta {% endblock %}
+{% block title %}
+    Subir receta
+{% endblock %}
 
 {% block content %}
-
 <section class="">
-    <div class="dialogo">
-        <h1>Subir receta</h1>
+  <div class="dialogo">
+    <h1>Subir receta</h1>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="alert-container">
+        {% for category, message in messages %}
+          {% if category == 'error' %}
+            <div class="alert alert-danger">{{ message }}</div>
+          {% elif category == 'success' %}
+            <div class="alert alert-success">{{ message }}</div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form class="containerRegistro flex" action="{{ url_for('dashboard_bp.subirreceta') }}" method="POST" enctype="multipart/form-data">
+    <div class="formDerechaRegistro">
+      <div class="formRegistro">
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" name="titulo" placeholder="Fideos hervidos" />
+      </div>
+
+      <div class="formRegistro flex">
+        <div>
+          <label for="ingrediente">Ingrediente</label>
+          <input type="text" id="ingrediente" name="ingrediente" placeholder="Pasta" />
+        </div>
+        <div>
+          <label for="cantidad">Cantidad</label>
+          <input type="text" id="cantidad" name="cantidad" placeholder="300gr" />
+        </div>
+        <div>
+          <button id="agregarIngrediente" class="btnAmarillo">
+            <img src="/static/img/upIngredientes.png" alt="" />
+          </button>
+        </div>
+      </div>
+
+      <div class="formRegistro">
+        <textarea id="listaIngredientes" name="listaIngredientes" placeholder="Sus ingredientes aparecerán aquí" readonly></textarea>
+      </div>
+
+      <div class="formRegistro flex">
+        <div>
+          <label for="categorias">Categorías</label>
+          <select id="categorias" name="categorias" class="custom-select">
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option value="italia">Italia</option>
+            <option value="china">China</option>
+            <option value="mexico">México</option>
+            <option value="argentina">Argentina</option>
+            <option value="brasil">Brasil</option>
+            <option value="colombia">Colombia</option>
+            <option value="dulces">Dulces</option>
+            <option value="japon">Japón</option>
+            <option value="españa">España</option>
+            <option value="bebidas">Bebidas</option>
+          </select>
+        </div>
+        <div>
+          <button id="agregarCategoria" class="btnAmarillo">
+            <img src="/static/img/upIngredientes.png" alt="" />
+          </button>
+        </div>
+      </div>
+
+      <div class="formRegistro">
+        <textarea id="listaCategorias" name="listaCategorias" placeholder="Sus categorías aparecerán aquí" readonly></textarea>
+      </div>
     </div>
-        <form class="containerRegistro flex" action="{{ url_for('dashboard_bp.subirreceta') }}" method="POST" enctype="multipart/form-data">
-            <div class="formDerechaRegistro" >
-            <div class="formRegistro">
-                <label for="titulo">Titulo</label>
-                <input type="text" id="titulo" name="titulo" placeholder="Fideos hervidos">
-            </div>
-    
-            <div class="formRegistro flex">
-                <div>
-                    <label for="ingrediente">Ingrediente</label>
-                    <input type="text" id="ingrediente" name="ingrediente" placeholder="Pasta">
-                </div>
-                <div>
-                    <label for="cantidad">Cantidad</label>
-                    <input type="text" id="cantidad" name="cantidad" placeholder="300gr">
-                </div>
-                <div>
-                    <button id="agregarIngrediente" class="btnAmarillo">
-                        <img src="/static/img/upIngredientes.png" alt="">
-                    </button>
-                </div>
-            </div>
 
-            <div class="formRegistro">
-                <textarea id="listaIngredientes" name="listaIngredientes" placeholder="Sus ingredientes aparecerán aquí" readonly></textarea>
-            </div>
-    
-            <div class="formRegistro flex">
-                <div>
-                    <label for="ingrediente">Categorías</label>
-                    <select id="categorias" name="categorias" class="custom-select">
-                        <option value="" disabled selected>Selecciona una categoría</option>
-                        <option value="italia">Italia</option>
-                        <option value="china">China</option>
-                        <option value="mexico">México</option>
-                        <option value="argentina">Argentina</option>
-                        <option value="brasil">Brasil</option>
-                        <option value="colombia">Colombia</option>
-                        <option value="dulces">Dulces</option>
-                        <option value="japon">Japón</option>
-                        <option value="españa">España</option>
-                        <option value="bebidas">Bebidas</option>
-                    </select>
-                </div>
-                <div>
-                    <button id="agregarCategoria" class="btnAmarillo"><img src="/static/img/upIngredientes.png" alt=""></button>
-                </div>
-            </div>
+    <div class="formDerechaRegistro">
+      <div>
+        <label for="bio">Procedimiento</label>
+        <textarea id="bio" name="descripcion" placeholder="1- poner el agua a hervir" class="textareaRegistro"></textarea>
+      </div>
 
-            <div class="formRegistro">
-                <textarea id="listaCategorias" name="listaCategorias" placeholder="Sus categorías aparecerán aquí" readonly></textarea>
-            </div>
-            </div>
-    
-            <div  class="formDerechaRegistro">
-                <div>
-                    <label for="bio">Procedimiento</label>
-                    <textarea id="bio" name="descripcion" placeholder="1- poner el agua a hervir" class="textareaRegistro"></textarea>
-                </div>
-                <div class="formRegistro">
-                    <label for="foto">Foto del plato terminado</label>
-                    <input type="file" id="foto" name="foto">
-                </div>
-        
-                <button type="submit" class="btnRojo">Subir receta</button>
-            </div>
-        </form>
+      <div class="formRegistro">
+        <label for="foto">Foto del plato terminado</label>
+        <input type="file" id="foto" name="foto" />
+      </div>
+
+      <button type="submit" class="btnRojo">Subir receta</button>
+    </div>
+  </form>
 </section>
 
 {% endblock %}

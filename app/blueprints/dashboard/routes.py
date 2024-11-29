@@ -205,12 +205,34 @@ def editarperfil():
 
     return render_template('dashboard/editarPerfil.html', user=user_data)
 
-
 @dashboard_bp.route('/recetas')
 def recetas():
-    response = requests.get(JSONBIN_RECETAS_URL, headers=HEADERS_CURSOS)
-    recetas = response.json().get('record', {}).get('record', []) 
-    return render_template('dashboard/recetas.html', recetasInfo=recetas)
+    if 'userid' in session:
+        user_id = session['userid']
+        
+        cursor = mysql.connection.cursor()
+        
+        try:
+            # Consulta para obtener las recetas del usuario logueado
+            cursor.execute("SELECT id, titulo_receta, foto FROM recetas WHERE user_id = %s", (user_id,))
+            recetas_info = cursor.fetchall()
+            print(f'Recetas cargadas: {recetas_info}')
+
+            # Si no hay recetas
+            if not recetas_info:
+                flash('No se encontraron recetas para este usuario.', 'warning')
+
+        except Exception as e:
+            flash(f'Error al cargar las recetas: {str(e)}', 'error')
+            recetas_info = []
+
+        finally:
+            cursor.close()
+
+        return render_template('dashboard/recetas.html', recetasInfo=recetas_info)
+    
+    return redirect(url_for('auth.login'))
+
 
 @dashboard_bp.route('/cursos')
 def cursos():
@@ -371,23 +393,39 @@ def miscursos():
 
     flash('Debes iniciar sesión para ver tus cursos.')
     return redirect(url_for('auth.login'))
-
 @dashboard_bp.route('/misrecetas')
 def misrecetas():
     if 'userid' in session:
-        response = requests.get(JSONBIN_RECETAS_URL, headers=HEADERS_CURSOS)
-        if response.status_code != 200:
-            flash('Error al obtener las recetas.')
-            return render_template('dashboard/misRecetas.html', recetasInfo=[])
+        user_id = session['userid']
+        print(f'User ID en sesión: {user_id}') 
+        
+        cursor = mysql.connection.cursor()
+        
+        try:
+            cursor.execute("SELECT id, titulo_receta, foto FROM recetas WHERE userid = %s", (user_id,))
+            recetas_info = cursor.fetchall()
 
-        recetas = response.json().get('record', {}).get('record', [])
+            # Manually convert tuples into dictionaries
+            recetas_info = [{'id': receta[0], 'titulo_receta': receta[1], 'foto': receta[2]} for receta in recetas_info]
+            
+            print(f'Recetas cargadas: {recetas_info}')
+            
+            if not recetas_info:
+                flash('No se encontraron recetas para este usuario.', 'warning')
+                print('No se encontraron recetas para este usuario.')  
+            
+        except Exception as e:
+            flash(f'Error al cargar las recetas: {str(e)}', 'error')
+            print(f'Error al cargar las recetas: {str(e)}') 
+            recetas_info = []
 
-        userid = session['userid']
-        recetas_usuario = [receta for receta in recetas if receta.get('userid') == userid]
+        finally:
+            cursor.close()
 
-        return render_template('dashboard/misRecetas.html', recetasInfo=recetas_usuario)
-
-    flash('Debes iniciar sesión para ver tus recetas.')
+        print(f'Información de recetas a pasar al template: {recetas_info}')
+        return render_template('dashboard/recetas.html', recetasInfo=recetas_info)
+    
+    print("No se encontró el User ID en la sesión, redirigiendo al login.") 
     return redirect(url_for('auth.login'))
 
 
@@ -396,112 +434,69 @@ def verreceta():
     return render_template('dashboard/verReceta.html')
 
 def validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcion):
-    if not titulo_receta  or not listaIngredientes or not listaCategorias or not descripcion:
-        return jsonify({'mensaje': 'Todos los campos son obligatorios'}), 400
+    error_messages = []
+
+    if not titulo_receta or not listaIngredientes or not listaCategorias or not descripcion:
+        error_messages.append('Todos los campos son obligatorios.')
 
     if len(titulo_receta) > 100:
-        return jsonify({'mensaje': 'El título del curso es demasiado largo'}), 400
+        error_messages.append('El título de la receta es demasiado largo.')
+
     if len(descripcion) > 2000:
-        return jsonify({'mensaje': 'La descripción se excede de 2000 caracteres'}), 400
+        error_messages.append('La descripción se excede de 2000 caracteres.')
 
-    return None, 200
+    if error_messages:
+        return error_messages
 
-"""def guardar_receta(recetas, nuevaReceta):
-    recetas.append(nuevaReceta)
-    response = requests.put(JSONBIN_RECETAS_URL, json={'record': recetas}, headers=HEADERS_CURSOS)
-    if response.status_code == 200:
-        return redirect(url_for('dashboard_bp.recetas'))
-    else:
-        return jsonify({'mensaje': 'No se pudo añadir la receta'}), 500"""
-
-"""@dashboard_bp.route('/subirreceta',  methods=['POST', 'GET'])
-def subirreceta():
-    if request.method == 'POST':
-        titulo_receta = request.form['titulo']
-        listaIngredientes = request.form['listaIngredientes'].split(',')
-        listaCategorias = request.form['listaCategorias'].split(',')
-        descripcion = request.form['descripcion']
-        foto = request.files.get('foto')
-
-        if foto:
-            upload_result = cloudinary.uploader.upload(foto)
-            foto_url = upload_result['url']
-        else:
-            foto_url = None
-
-        
-        error, status_code = validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcion)
-        if error:
-            return error, status_code
-
-        response = requests.get(JSONBIN_RECETAS_URL, headers=HEADERS_CURSOS)
-        try:
-            recetas = response.json().get('record', {}).get('record', [])
-        except ValueError:
-            return jsonify({"error": "Error al obtener los datos"}), 500
-
-
-        if recetas:
-            nuevo_id = max(int(receta.get('id', 0)) for receta in recetas if 'id' in receta) + 1
-        else:
-            nuevo_id = 1
-
-        userid = session.get('userid')
-        nuevaReceta = {
-            'id': nuevo_id,
-            'titulo_receta': titulo_receta,
-            'listaIngredientes': listaIngredientes,
-            'listaCategorias': listaCategorias,
-            'descripcion': descripcion,
-            'foto': foto_url,
-            'userid': userid
-        }
-
-        return guardar_receta(recetas, nuevaReceta)
-    return render_template('dashboard/subirReceta.html')"""
+    return None
 
 @dashboard_bp.route('/subirreceta', methods=['POST', 'GET'])
 def subirreceta():
     if request.method == 'POST':
         titulo_receta = request.form['titulo']
-        listaIngredientes = request.form['listaIngredientes'].split(',')
-        listaCategorias = request.form['listaCategorias'].split(',')
+        lista_ingredientes = request.form['listaIngredientes']
+        lista_categorias = request.form['listaCategorias']
         descripcion = request.form['descripcion']
         foto = request.files.get('foto')
 
-        if foto:
+        validation_errors = validar_receta(titulo_receta, lista_ingredientes, lista_categorias, descripcion)
+        
+        if validation_errors:
+            for error in validation_errors:
+                flash(error, 'error')
+            return render_template('dashboard/subirReceta.html')
+
+        if not foto:
+            flash("La foto es obligatoria.", 'error')
+            return render_template('dashboard/subirReceta.html')
+
+        try:
             upload_result = cloudinary.uploader.upload(foto)
             foto_url = upload_result['url']
-        else:
-            foto_url = None
-
-        error, status_code = validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcion)
-        if error:
-            return error, status_code
+        except Exception as e:
+            flash(f"Error al subir la imagen: {str(e)}", 'error')
+            return render_template('dashboard/subirReceta.html')
 
         userid = session.get('userid')
         if not userid:
-            return jsonify({"error": "Usuario no autenticado"}), 401
-
-        listaIngredientes = json.dumps(listaIngredientes)
-        listaCategorias = json.dumps(listaCategorias)
+            flash("Usuario no autenticado.", 'error')
+            return render_template('dashboard/subirReceta.html')
 
         try:
             cursor = mysql.connection.cursor()
             cursor.execute(
-                "INSERT INTO recetas (titulo_receta, listaIngredientes, listaCategorias, descripcion, foto, userid) VALUES (%s, %s, %s, %s, %s, %s)",
-                (titulo_receta, listaIngredientes, listaCategorias, descripcion, foto_url, userid)
+                "INSERT INTO recetas (titulo_receta, lista_ingredientes, lista_categorias, descripcion, foto, userid) VALUES (%s, %s, %s, %s, %s, %s)",
+                (titulo_receta, lista_ingredientes, lista_categorias, descripcion, foto_url, userid)
             )
             mysql.connection.commit()
+            flash('¡Tu receta se subió con éxito!', 'success')
         except Exception as e:
             mysql.connection.rollback()
-            return jsonify({"error": "Error al guardar la receta", "detalles": str(e)}), 500
+            flash(f'Error al guardar la receta: {str(e)}', 'error')
         finally:
             cursor.close()
 
-        return jsonify({"mensaje": "Receta guardada exitosamente"}), 201
     return render_template('dashboard/subirReceta.html')
-
 
 
 def validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, desCurso):
