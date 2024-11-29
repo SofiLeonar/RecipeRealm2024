@@ -157,7 +157,7 @@ h2 {
   padding: 30px;
   border-radius: 10px;
   cursor: pointer;
-  height: 350px;
+  height: 360px;
 }
 
 .cursoTarjet:hover {
@@ -808,6 +808,11 @@ input[type="radio"] {
   filter: brightness(0.5);
   box-shadow: 0px 0px 0px #2e6a27;
   transform: translateY(2px);
+}
+.btnMisCursos{
+  margin-left: 10px;
+  font-size: 12px;
+  text-decoration: none;
 }
 /*-------------------------------------- VER CURSO ---------------------------------------*/
 

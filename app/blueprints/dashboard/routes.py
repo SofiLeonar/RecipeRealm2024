@@ -7,6 +7,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import mysql.connector
+import pymysql
 from flask_mysqldb import MySQL
 from app import mysql
 
@@ -356,21 +357,42 @@ def get_receta_by_id(receta_id):
 
 @dashboard_bp.route('/miscursos')
 def miscursos():
-    if 'userid' in session:
-        response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
-        if response.status_code != 200:
-            flash('Error al obtener los cursos.')
+    if 'userid' not in session:
+        flash('Debes iniciar sesión para ver tus cursos.')
+        return redirect(url_for('auth.login'))
+
+    user_id = session['userid']
+
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT id, titulo, descripcion, precio, dificultad, fecha, foto FROM cursos WHERE userid = %s", (user_id,))
+        cursos_usuario = cursor.fetchall()
+        cursor.close()
+        
+        if cursos_usuario:
+            cursos_info = []
+            for curso in cursos_usuario:
+                curso_data = {
+                    'id': curso[0],
+                    'titulo': curso[1],
+                    'descripcion': curso[2],
+                    'precio': curso[3],
+                    'dificultad': curso[4],
+                    'fecha': curso[5],
+                    'foto': curso[6]
+                }
+                cursos_info.append(curso_data)
+
+            return render_template('dashboard/misCursos.html', cursosInfo=cursos_info)
+
+        else:
+            flash('No tienes cursos publicados.')
             return render_template('dashboard/misCursos.html', cursosInfo=[])
 
-        cursos = response.json().get('record', {}).get('record', [])
+    except Exception as e:
+        flash(f'Error al obtener los cursos: {str(e)}')
+        return render_template('dashboard/misCursos.html', cursosInfo=[])
 
-        userid = session['userid']
-        cursos_usuario = [curso for curso in cursos if curso.get('userid') == userid]
-
-        return render_template('dashboard/misCursos.html', cursosInfo=cursos_usuario)
-
-    flash('Debes iniciar sesión para ver tus cursos.')
-    return redirect(url_for('auth.login'))
 
 @dashboard_bp.route('/misrecetas')
 def misrecetas():
@@ -519,14 +541,14 @@ def validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, d
 
     return None, 200
 
-def guardar_curso(cursos, nuevoCurso):
+"""def guardar_curso(cursos, nuevoCurso):
     cursos.append(nuevoCurso)
     response = requests.put(JSONBIN_CURSOS_URL, json={'record': cursos}, headers=HEADERS_CURSOS)
     if response.status_code == 200:
         return redirect(url_for('dashboard_bp.cursos'))
     else:
         return jsonify({'mensaje': 'No se pudo añadir el curso'}), 500
-
+"""
 @dashboard_bp.route('/subircurso', methods=['POST', 'GET'])
 def subircurso():
     """

@@ -14,22 +14,33 @@
 
 <section class="cursosNuevos container">
     <h2>Mis Cursos</h2>
-    {% for curso in cursosInfo %}
-    <div class="cursoTarjet">
-        <a href="{{ url_for('dashboard_bp.get_curso_by_id', curso_id=curso.id) }}">
-            <img src="{{ curso.foto }}" alt="Curso imagen">
-        </a>
-        <h3>{{ curso.titulo }}</h3>
-        <p>${{ curso.precio }}</p>
-        <p>{{ curso.fecha }}</p>
-        <p>{{ curso.dificultad }}</p>
-        <form action="{{ url_for('dashboard_bp.eliminarcurso') }}" method="POST" style="display: inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar el curso? Esta acción no se puede deshacer.');">
-            <input type="hidden" name="curso_id" value="{{ curso.id }}">
-            <button type="submit" class="btnRojo">Eliminar curso</button>
-        </form>
-        <a href="{{ url_for('dashboard_bp.editarcurso',curso_id=curso.id) }}" class="btnRojo">Editar curso</a>
-    </div>
-    {% endfor %}
+
+    {% if cursosInfo %}
+        {% for curso in cursosInfo %}
+        <div class="cursoTarjet">
+            <div>
+            <a href="{{ url_for('dashboard_bp.get_curso_by_id', curso_id=curso.id) }}">
+                <img src="{{ curso['foto'] }}" alt="Curso imagen">
+            </a>
+            <h3>{{ curso['titulo'] }}</h3>
+            <p>${{ curso['precio'] }}</p>
+            <p>{{ curso['fecha'] }}</p>
+            <p>{{ curso['dificultad'] }}</p>
+            </div>
+            <div class="flex">
+                <form action="{{ url_for('dashboard_bp.eliminarcurso') }}" method="POST" style="display: inline"
+                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar el curso? Esta acción no se puede deshacer.');">
+                    <input type="hidden" name="curso_id" value="{{ curso['id'] }}">
+                    <button type="submit" class="btnRojo btnMisCursos">Eliminar</button>
+                </form>
+                <a href="{{ url_for('dashboard_bp.editarcurso', curso_id=curso['id']) }}" class="btnRojo btnMisCursos">Editar</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No tienes cursos publicados.</p>
+    {% endif %}
 </section>
+
 
     {% endblock %}
