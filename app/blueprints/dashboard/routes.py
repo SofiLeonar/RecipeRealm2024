@@ -21,16 +21,16 @@ cloudinary.config(
 
 dashboard_bp = Blueprint('dashboard_bp', __name__)
 
-
-@dashboard_bp.route('/')
-def home():
+def obtener_cursos_nuevos(limit=5):
     try:
         cursor = mysql.connection.cursor()
-        cursor.execute("SELECT id, titulo, descripcion, precio, dificultad, fecha, foto FROM cursos ORDER BY id DESC LIMIT 3")
-        nuevos_cursos = cursor.fetchall()
+        query = "SELECT id, titulo, descripcion, precio, dificultad, fecha, foto FROM cursos ORDER BY id DESC LIMIT %s"
+        cursor.execute(query, (limit,))
+        cursos = cursor.fetchall()
+        cursor.close()
 
         cursos_info = []
-        for curso in nuevos_cursos:
+        for curso in cursos:
             curso_data = {
                 'id': curso[0],
                 'titulo': curso[1],
@@ -41,13 +41,15 @@ def home():
                 'foto': curso[6]
             }
             cursos_info.append(curso_data)
-        cursor.close()
-
-        return render_template('dashboard/index.html', nuevosCursos=cursos_info)
-
+        return cursos_info
     except Exception as e:
-        flash(f'Error al cargar los cursos nuevos: {str(e)}')
-        return render_template('dashboard/index.html', nuevosCursos=[])
+        print(f"Error al obtener los cursos nuevos: {str(e)}")
+        return []
+
+@dashboard_bp.route('/')
+def home():
+    nuevos_cursos = obtener_cursos_nuevos(limit=3)
+    return render_template('dashboard/index.html', nuevosCursos=nuevos_cursos)
 
 
 @dashboard_bp.route('/nosotros')
@@ -468,7 +470,8 @@ def get_receta_by_id(receta_id):
                     'foto': result[8]
                 }
             }
-            return render_template('dashboard/verReceta.html', receta=receta_info)
+            nuevos_cursos = obtener_cursos_nuevos(limit=3) 
+            return render_template('dashboard/verReceta.html', receta=receta_info, nuevosCursos=nuevos_cursos)
         else:
             flash('Receta no encontrada.')
             return redirect(url_for('dashboard_bp.recetas'))
