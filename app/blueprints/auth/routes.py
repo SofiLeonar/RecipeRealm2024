@@ -168,16 +168,17 @@ def login():
 
         cursor = mysql.connection.cursor()
 
-        cursor.execute("SELECT id, email FROM usuarios WHERE email = %s AND password = %s", (email, password))
+        cursor.execute("SELECT id, email,chef FROM usuarios WHERE email = %s AND password = %s", (email, password))
         usuario = cursor.fetchone()
 
         cursor.close()
 
         if usuario:
-            user_id, db_email = usuario
+            user_id, db_email, chef = usuario
 
             session['email'] = db_email
             session['userid'] = user_id
+            session['chef'] = chef
             return redirect(url_for('dashboard_bp.perfil'))
 
         flash('Correo o contraseña incorrectos.')
@@ -245,4 +246,5 @@ def eliminarperfil():
 @auth_bp.route('/logout')
 def logout():
     session.pop('email', None)
+    session.clear() 
     return redirect(url_for('auth.login'))
