@@ -215,9 +215,31 @@ def recetas():
 
 @dashboard_bp.route('/cursos')
 def cursos():
-    response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
-    cursos = response.json().get('record', {}).get('record', []) 
-    return render_template('dashboard/cursos.html', cursosInfo=cursos)
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT id, titulo, descripcion, precio, dificultad, fecha, foto FROM cursos") 
+        cursos = cursor.fetchall()
+        
+        cursos_info = []
+        for curso in cursos:
+            curso_data = {
+                'id': curso[0],
+                'titulo': curso[1],
+                'descripcion': curso[2],
+                'precio': curso[3],
+                'dificultad': curso[4],
+                'fecha': curso[5],
+                'foto': curso[6]
+            }
+            cursos_info.append(curso_data)
+        cursor.close()
+        
+
+        return render_template('dashboard/cursos.html', cursosInfo=cursos_info)
+
+    except Exception as e:
+        flash(f'Error al obtener los cursos: {str(e)}')
+        return render_template('dashboard/cursos.html', cursosInfo=[])
 
 
 @dashboard_bp.route('/curso/<int:curso_id>', methods=['GET'])

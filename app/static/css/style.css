@@ -810,7 +810,7 @@ input[type="radio"] {
   transform: translateY(2px);
 }
 .btnMisCursos{
-  margin-left: 10px;
+  margin-right: 10px;
   font-size: 12px;
   text-decoration: none;
 }
