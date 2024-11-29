@@ -9,6 +9,7 @@ import cloudinary.api
 from flask_mysqldb import MySQL
 from app import mysql
 
+
 cloudinary.config( 
     cloud_name = "dzjpeuzcn", 
     api_key = "859251897787294", 
