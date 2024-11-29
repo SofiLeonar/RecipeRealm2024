@@ -101,109 +101,7 @@ def perfil():
             return render_template('dashboard/miPerfil.html', user=user_data)
     
     return redirect(url_for('auth.login'))
-"""
-@dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
-def editarperfil():
-    if request.method == 'POST':
-        usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
 
-        if usuario_logueado:
-            usuario_actualizado = {
-                'nombre': request.form['nombre'],
-                'usuario': request.form['usuario'],
-                'bio': request.form['bio'],
-                'chef': 'Chef' if request.form['chef'] == 'True' else 'Aficionado',
-            }
-
-            foto = request.files.get('foto')
-            if foto:
-                try:
-                    upload_result = cloudinary.uploader.upload(foto)
-                    usuario_actualizado['foto'] = upload_result['url']
-                except Exception as e:
-                    flash('Error al subir la foto. Por favor, intentá de nuevo.')
-                    return redirect(url_for('dashboard_bp.editarperfil'))
-
-            guardar_usuario_actualizado(usuario_logueado['email'], usuario_actualizado)
-
-            return redirect(url_for('dashboard_bp.perfil'))
-
-    usuario_logueado = next((user for user in users if user['email'] == session['email']), None)
-
-    if not usuario_logueado:
-        flash('No se pudo cargar el perfil del usuario.')
-        return redirect(url_for('auth.login'))
-
-    return render_template('dashboard/editarPerfil.html', user=usuario_logueado)
-"""
-
-@dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
-def editarperfil():
-    if 'userid' not in session: 
-        flash('Por favor, inicia sesión para editar tu perfil.')
-        return redirect(url_for('auth.login'))
-
-    user_id = session['userid']
-
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        usuario = request.form['usuario']
-        bio = request.form['bio']
-        chef = 'Chef' if request.form.get('chef') == 'True' else 'Aficionado'
-
-        foto_url = None
-        foto = request.files.get('foto')
-
-        if foto:
-            try:
-                upload_result = cloudinary.uploader.upload(foto)
-                foto_url = upload_result['url']
-            except Exception as e:
-                flash(f'Error al subir la foto: {str(e)}')
-                return redirect(url_for('dashboard_bp.editarperfil'))
-
-        cursor = mysql.connection.cursor()
-
-        try:
-            if foto_url: 
-                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, chef = %s, foto = %s WHERE id = %s", (nombre, usuario, bio, chef, foto_url, user_id))
-            else:  
-                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, chef = %s WHERE id = %s", (nombre, usuario, bio, chef, user_id))
-            mysql.connection.commit()
-            flash('Perfil actualizado con éxito.')
-        except Exception as e:
-            mysql.connection.rollback()
-            flash(f'Error al actualizar el perfil: {str(e)}')
-        finally:
-            cursor.close()
-
-        return redirect(url_for('dashboard_bp.perfil'))
-
-    cursor = mysql.connection.cursor()
-    try:
-        cursor.execute("SELECT id, email, nombre, usuario, bio, chef, foto FROM usuarios WHERE id = %s", (user_id,))
-        usuario_logueado = cursor.fetchone()
-    except Exception as e:
-        flash(f'Error al cargar los datos del usuario: {str(e)}')
-        usuario_logueado = None
-    finally:
-        cursor.close()
-
-    if not usuario_logueado:
-        flash('No se pudo cargar el perfil del usuario.')
-        return redirect(url_for('auth.login'))
-
-    user_data = {
-        'id': usuario_logueado[0],
-        'email': usuario_logueado[1],
-        'nombre': usuario_logueado[2],
-        'usuario': usuario_logueado[3],
-        'bio': usuario_logueado[4],
-        'chef': usuario_logueado[5],
-        'foto': usuario_logueado[6],
-    }
-
-    return render_template('dashboard/editarPerfil.html', user=user_data)
 
 @dashboard_bp.route('/recetas')
 def recetas():
@@ -374,7 +272,6 @@ def get_receta_by_id(receta_id):
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
-
 @dashboard_bp.route('/miscursos')
 def miscursos():
     if 'userid' in session:
@@ -407,7 +304,6 @@ def misrecetas():
 
             recetas_info = [{'id': receta[0], 'titulo_receta': receta[1], 'foto': receta[2]} for receta in recetas_info]
             
-            print(f'Recetas cargadas: {recetas_info}')
             
             if not recetas_info:
                 flash('No se encontraron recetas para este usuario.', 'warning')
@@ -421,12 +317,10 @@ def misrecetas():
         finally:
             cursor.close()
 
-        print(f'Información de recetas a pasar al template: {recetas_info}')
         return render_template('dashboard/recetas.html', recetasInfo=recetas_info)
     
     print("No se encontró el User ID en la sesión, redirigiendo al login.") 
     return redirect(url_for('auth.login'))
-
 
 @dashboard_bp.route('/verreceta')
 def verreceta():
@@ -520,6 +414,63 @@ def guardar_curso(cursos, nuevoCurso):
         return redirect(url_for('dashboard_bp.cursos'))
     else:
         return jsonify({'mensaje': 'No se pudo añadir el curso'}), 500
+
+@dashboard_bp.route('/editarperfil', methods=['GET', 'POST'])
+def editarperfil():
+    if 'userid' not in session: 
+        flash('Por favor, inicia sesión para editar tu perfil.')
+        return redirect(url_for('auth.login'))
+    user_id = session['userid']
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        usuario = request.form['usuario']
+        bio = request.form['bio']
+        chef = 'Chef' if request.form.get('chef') == 'True' else 'Aficionado'
+        foto_url = None
+        foto = request.files.get('foto')
+        if foto:
+            try:
+                upload_result = cloudinary.uploader.upload(foto)
+                foto_url = upload_result['url']
+            except Exception as e:
+                flash(f'Error al subir la foto: {str(e)}')
+                return redirect(url_for('dashboard_bp.editarperfil'))
+        cursor = mysql.connection.cursor()
+        try:
+            if foto_url: 
+                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, chef = %s, foto = %s WHERE id = %s", (nombre, usuario, bio, chef, foto_url, user_id))
+            else:  
+                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, chef = %s WHERE id = %s", (nombre, usuario, bio, chef, user_id))
+            mysql.connection.commit()
+            flash('Perfil actualizado con éxito.')
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f'Error al actualizar el perfil: {str(e)}')
+        finally:
+            cursor.close()
+        return redirect(url_for('dashboard_bp.perfil'))
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute("SELECT id, email, nombre, usuario, bio, chef, foto FROM usuarios WHERE id = %s", (user_id,))
+        usuario_logueado = cursor.fetchone()
+    except Exception as e:
+        flash(f'Error al cargar los datos del usuario: {str(e)}')
+        usuario_logueado = None
+    finally:
+        cursor.close()
+    if not usuario_logueado:
+        flash('No se pudo cargar el perfil del usuario.')
+        return redirect(url_for('auth.login'))
+    user_data = {
+        'id': usuario_logueado[0],
+        'email': usuario_logueado[1],
+        'nombre': usuario_logueado[2],
+        'usuario': usuario_logueado[3],
+        'bio': usuario_logueado[4],
+        'chef': usuario_logueado[5],
+        'foto': usuario_logueado[6],
+    }
+    return render_template('dashboard/editarPerfil.html', user=user_data)
 
 @dashboard_bp.route('/subircurso', methods=['POST', 'GET'])
 def subircurso():
