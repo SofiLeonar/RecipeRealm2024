@@ -526,23 +526,25 @@ def misrecetas():
     except Exception as e:
         flash(f'Ocurrió un error: {e}')
         return redirect(url_for('dashboard.index'))
-
+    
+    
 @dashboard_bp.route('/editarreceta/<int:receta_id>', methods=['GET', 'POST'])
 def editarreceta(receta_id):
+    print(f"Receta ID recibido: {receta_id}") 
     if 'userid' not in session: 
         flash('Por favor, inicia sesión para editar una receta.')
         return redirect(url_for('auth.login'))
 
     if request.method == 'POST':
-        titulo = request.form['titulo_receta']
+        titulo_receta = request.form['titulo_receta']
         lista_ingredientes = request.form['lista_ingredientes']
         lista_categorias = request.form['lista_categorias']
         descripcion = request.form['descripcion']
-        foto = request.form['foto']
-        
-        foto_url = None
+
         foto = request.files.get('foto')
         
+        foto_url = None
+
         if foto:
             try:
                 upload_result = cloudinary.uploader.upload(foto)
@@ -552,33 +554,33 @@ def editarreceta(receta_id):
                 return redirect(url_for('dashboard_bp.editarreceta', receta_id=receta_id))
         
         cursor = mysql.connection.cursor()
-        
+
         try:
-            if foto_url:
+            if foto_url: 
                 cursor.execute("""
                     UPDATE recetas 
-                    SET titulo = %s, lista_ingredientes = %s, lista_categorias = %s, descripcion = %s, foto = %s
+                    SET titulo_receta = %s, lista_ingredientes = %s, lista_categorias = %s, descripcion = %s, foto = %s
                     WHERE id = %s
-                """, (titulo, lista_ingredientes, lista_categorias, descripcion, foto, receta_id))
-            else:
+                """, (titulo_receta, lista_ingredientes, lista_categorias, descripcion, foto_url, receta_id))
+            else: 
                 cursor.execute("""
                     UPDATE recetas 
-                    SET titulo = %s, lista_ingredientes = %s, lista_categorias = %s, descripcion = %s, foto = %s
+                    SET titulo_receta = %s, lista_ingredientes = %s, lista_categorias = %s, descripcion = %s
                     WHERE id = %s
-                """, (titulo, lista_ingredientes, lista_categorias, descripcion, foto, receta_id))
-            
-            mysql.connection.commit()
+                """, (titulo_receta, lista_ingredientes, lista_categorias, descripcion, receta_id))
+
+            mysql.connection.commit() 
             flash('Receta actualizada con éxito.')
             return redirect(url_for('dashboard_bp.get_receta_by_id', receta_id=receta_id))
         except Exception as e:
-            mysql.connection.rollback()
+            mysql.connection.rollback() 
             flash(f'Error al actualizar la receta: {str(e)}')
         finally:
             cursor.close()
-    
+
     cursor = mysql.connection.cursor()
     try:
-        cursor.execute("SELECT id, titulo, lista_ingredientes, lista_categorias, descripcion, foto FROM recetas WHERE id = %s", (receta_id,))
+        cursor.execute("SELECT id, titulo_receta, lista_ingredientes, lista_categorias, descripcion, foto FROM recetas WHERE id = %s", (receta_id,))
         receta = cursor.fetchone()
     except Exception as e:
         flash(f'Error al cargar los datos de la receta: {str(e)}')
@@ -592,7 +594,7 @@ def editarreceta(receta_id):
     
     receta_data = {
         'id': receta[0],
-        'titulo': receta[1],
+        'titulo_receta': receta[1],
         'lista_ingredientes': receta[2],
         'lista_categorias': receta[3],
         'descripcion': receta[4],
@@ -600,6 +602,7 @@ def editarreceta(receta_id):
     }
 
     return render_template('dashboard/editarReceta.html', receta=receta_data)
+
 
 
 def validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcion):
