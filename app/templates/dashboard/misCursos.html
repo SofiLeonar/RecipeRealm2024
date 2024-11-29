@@ -1,35 +1,46 @@
-{% extends "layout.html" %}
-
-{% block title %} Compras {% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} Compras {% endblock %} {% block
+content %}
 
 <section>
-    <div class="barraBusqueda">
-        <input type="text" placeholder="Buscar...">
-        <button><img src="{{ url_for('static', filename='img/search-icon.png') }}" alt="Buscar" width="20px"></button>
-    </div>
+  <div class="barraBusqueda">
+    <input type="text" placeholder="Buscar..." />
+    <button>
+      <img
+        src="{{ url_for('static', filename='img/search-icon.png') }}"
+        alt="Buscar"
+        width="20px"
+      />
+    </button>
+  </div>
 </section>
-
 
 <section class="cursosNuevos container">
-    <h2>Mis Cursos</h2>
-    {% for curso in cursosInfo %}
-    <div class="cursoTarjet">
-        <a href="{{ url_for('dashboard_bp.get_curso_by_id', curso_id=curso.id) }}">
-            <img src="{{ curso.foto }}" alt="Curso imagen">
-        </a>
-        <h3>{{ curso.titulo }}</h3>
-        <p>${{ curso.precio }}</p>
-        <p>{{ curso.fecha }}</p>
-        <p>{{ curso.dificultad }}</p>
-        <form action="{{ url_for('dashboard_bp.eliminarcurso') }}" method="POST" style="display: inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar el curso? Esta acción no se puede deshacer.');">
-            <input type="hidden" name="curso_id" value="{{ curso.id }}">
-            <button type="submit" class="btnRojo">Eliminar curso</button>
-        </form>
-        <a href="{{ url_for('dashboard_bp.editarcurso',curso_id=curso.id) }}" class="btnRojo">Editar curso</a>
-    </div>
-    {% endfor %}
+  <h2>Mis Cursos</h2>
+  {% for curso in cursosInfo %}
+  <div class="cursoTarjet">
+    <a href="{{ url_for('dashboard_bp.get_curso_by_id', curso_id=curso.id) }}">
+      <img src="{{ curso.foto }}" alt="Curso imagen" />
+    </a>
+    <h3>{{ curso.titulo }}</h3>
+    <p>${{ curso.precio }}</p>
+    <p>{{ curso.fecha }}</p>
+    <p>{{ curso.dificultad }}</p>
+    <form
+      action="{{ url_for('dashboard_bp.eliminarcurso') }}"
+      method="POST"
+      style="display: inline"
+      onsubmit="return confirm('¿Estás seguro de que deseas eliminar el curso? Esta acción no se puede deshacer.');"
+    >
+      <input type="hidden" name="curso_id" value="{{ curso.id }}" />
+      <button type="submit" class="btnRojo">Eliminar curso</button>
+    </form>
+    <a
+      href="{{ url_for('dashboard_bp.editarcurso',curso_id=curso.id) }}"
+      class="btnRojo"
+      >Editar curso</a
+    >
+  </div>
+  {% endfor %}
 </section>
 
-    {% endblock %}
+{% endblock %}
