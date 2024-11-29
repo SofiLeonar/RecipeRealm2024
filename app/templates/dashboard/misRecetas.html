@@ -1,38 +1,34 @@
-{% extends "layout.html" %}
-
-{% block title %} Nosotros {% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} Nosotros {% endblock %} {% block
+content %}
 
 <section>
-    <div class="barraBusqueda">
-        <input type="text" placeholder="Buscar...">
-        <button><img src="{{ url_for('static', filename='img/search-icon.png') }}" alt="Buscar" width="20px"></button>
-    </div>
+  <div class="barraBusqueda">
+    <input type="text" placeholder="Buscar..." />
+    <button>
+      <img
+        src="{{ url_for('static', filename='img/search-icon.png') }}"
+        alt="Buscar"
+        width="20px"
+      />
+    </button>
+  </div>
 </section>
 
 <section class="espacioAbajo">
-    <h1 class="container espacioAbajo">Mis Recetas</h1>
+  <h1 class="container espacioAbajo">Mis Recetas</h1>
 </section>
 
 <section class="cursosNuevos container">
-    {% for receta in recetasInfo %}
-    <div class="recetaTarjet">
-        <a href="{{ url_for('dashboard_bp.get_receta_by_id', receta_id=receta.id) }}">
-            <img src="{{ receta.foto }}" alt="Curso3">
-        </a>
-        <h3>{{ receta.titulo_receta }}</h3>
-        <!--
-        <div class="comentarioEstrellas flex">
-            <p>4</p>
-            <img src="/static/img/estrellaAmarilla.png" alt="estrella">
-        </div>
-        
-        <p class="comentarioFecha">{{ receta.titulo_receta }}</p>
-        <button class="btnRojo">Ver mas</button>
-        -->
-    </div>
-    {% endfor %}
+  {% for receta in recetasInfo %}
+  <div class="recetaTarjet">
+    <a
+      href="{{ url_for('dashboard_bp.get_receta_by_id', receta_id=receta.id) }}"
+    >
+      <img src="{{ receta.foto }}" alt="Receta" />
+    </a>
+    <h3>{{ receta.titulo_receta }}</h3>
+  </div>
+  {% endfor %}
 </section>
 
 {% endblock %}
