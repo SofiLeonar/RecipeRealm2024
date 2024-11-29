@@ -1,16 +1,18 @@
-{% extends "layout.html" %}
-
-{% block title %} Compras {% endblock %}
-
-{% block content %}
+{% extends "layout.html" %} {% block title %} Compras {% endblock %} {% block
+content %}
 
 <section>
-    <div class="barraBusqueda">
-        <input type="text" placeholder="Buscar...">
-        <button><img src="{{ url_for('static', filename='img/search-icon.png') }}" alt="Buscar" width="20px"></button>
-    </div>
+  <div class="barraBusqueda">
+    <input type="text" placeholder="Buscar..." />
+    <button>
+      <img
+        src="{{ url_for('static', filename='img/search-icon.png') }}"
+        alt="Buscar"
+        width="20px"
+      />
+    </button>
+  </div>
 </section>
-
 
 <section class="cursosNuevos container">
     <h2>Mis Cursos</h2>
@@ -43,4 +45,4 @@
 </section>
 
 
-    {% endblock %}
+{% endblock %}
