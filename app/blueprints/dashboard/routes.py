@@ -6,6 +6,7 @@ from config import JSONBIN_CURSOS_URL, HEADERS_CURSOS, JSONBIN_USERS_URL, HEADER
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import mysql.connector
 from flask_mysqldb import MySQL
 from app import mysql
 
@@ -529,6 +530,7 @@ def guardar_curso(cursos, nuevoCurso):
 
 @dashboard_bp.route('/subircurso', methods=['POST', 'GET'])
 def subircurso():
+    """
     if request.method == 'POST':
         titulo_curso = request.form['titulo_curso']
         lugar = request.form['lugar']
@@ -579,5 +581,51 @@ def subircurso():
         }
 
         return guardar_curso(cursos, nuevoCurso)
+
+    return render_template('dashboard/subirCurso.html')
+    """
+    if 'userid' not in session:
+        flash('Por favor, inicia sesión para subir un curso.')
+        return redirect(url_for('auth.login')) 
+
+    user_id = session['userid']
+
+
+    if request.method == 'POST':
+        titulo_curso = request.form['titulo_curso']
+        lugar = request.form['lugar']
+        cupos = request.form['cupos']
+        precio = request.form['precio']
+        fecha = request.form['fecha']
+        hora = request.form['hora']
+        dificultad = request.form.get('dificultad', None)
+        desCurso = request.form['desCurso']
+        foto = request.files.get('foto')
+
+        if foto:
+            upload_result = cloudinary.uploader.upload(foto)
+            foto_url = upload_result['url']
+        else:
+            foto_url = None
+
+        
+        error, status_code = validar_curso(titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, desCurso)
+        if error:
+            return error, status_code
+
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute(
+                "INSERT INTO cursos (titulo, lugar, cupos_disponibles, precio, fecha, hora, dificultad, descripcion, foto, userid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (titulo_curso, lugar, cupos, precio, fecha, hora, dificultad, desCurso, foto_url, user_id)
+                )
+            mysql.connection.commit()
+            flash('Curso subido exitosamente.')
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f'Error al subir el curso: {str(e)}')
+        finally:
+            cursor.close()
+
+        return redirect(url_for('dashboard_bp.miscursos'))
 
     return render_template('dashboard/subirCurso.html')
