@@ -11,31 +11,36 @@ content %}
       </div>
     </div>
     <div class="sobreMi">
-      <p>Sobre mi</p>
+      <p>Sobre mí</p>
     </div>
   </div>
 
   <div class="containerRegistro">
-    <p><strong>Nombre:</strong>{{user.nombre}}</p>
-    <p><strong>Descripción:</strong></p>
-    <p>{{user.bio}}</p>
-    <a href="{{ url_for('dashboard_bp.editarperfil') }}">
-      <button class="btnRojo">Editar</button></a
-    >
-    <a href="{{ url_for('dashboard_bp.miscursos') }}">
-      <button class="btnRojo">Mis Cursos</button>
-    </a>
-    <a href="{{ url_for('auth.logout') }}">
-      <button class="btnRojo">Cerrar Sesión</button></a
-    >
-    <form
-      action="{{ url_for('auth.eliminarperfil') }}"
-      method="POST"
-      style="display: inline"
-      onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.');"
-    >
-      <button type="submit" class="btnRojo">Eliminar perfil</button>
-    </form>
+    <div class="containerDatosPerfil">
+      <p><strong>Nombre:</strong>{{user.nombre}}</p>
+      <p><strong>Descripción:</strong></p>
+      <p>{{user.bio}}</p>
+    </div>
+    <div class="containerBotones">
+      <a href="{{ url_for('dashboard_bp.editarperfil') }}">
+        <button class="btnRojo">Editar</button></a
+      >
+      <a href="{{ url_for('dashboard_bp.miscursos') }}">
+        <button class="btnRojo">Mis Cursos</button>
+      </a>
+      <a href="{{ url_for('auth.logout') }}">
+        <button class="btnRojo">Cerrar Sesión</button></a
+      >
+
+      <form
+        action="{{ url_for('auth.eliminarperfil') }}"
+        method="POST"
+        style="display: inline"
+        onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.');"
+      >
+        <button type="submit" class="btnRojo">Eliminar perfil</button>
+      </form>
+    </div>
   </div>
 </section>
 
