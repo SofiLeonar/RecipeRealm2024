@@ -149,7 +149,6 @@ def editarperfil():
         nombre = request.form['nombre']
         usuario = request.form['usuario']
         bio = request.form['bio']
-        chef = 'Chef' if request.form.get('chef') == 'True' else 'Aficionado'
 
         foto_url = None
         foto = request.files.get('foto')
@@ -166,9 +165,9 @@ def editarperfil():
 
         try:
             if foto_url: 
-                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, chef = %s, foto = %s WHERE id = %s", (nombre, usuario, bio, chef, foto_url, user_id))
+                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, foto = %s WHERE id = %s", (nombre, usuario, bio, foto_url, user_id))
             else:  
-                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s, chef = %s WHERE id = %s", (nombre, usuario, bio, chef, user_id))
+                cursor.execute("UPDATE usuarios SET nombre = %s, usuario = %s, bio = %s,  WHERE id = %s", (nombre, usuario, bio, user_id))
             mysql.connection.commit()
             flash('Perfil actualizado con éxito.')
         except Exception as e:
