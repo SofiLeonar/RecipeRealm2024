@@ -34,49 +34,64 @@
     </section>
     <section class="sectionBlanco container">    
         <div class="preguntas">
-            <div class="comentario">
-                <p><strong>Tia Paola</strong></p>
-                <div class="comentarioEstrellas">
-                    <img src="/static/img/estrellaAmarilla.png" alt="1 estrella">
-                    <img src="/static/img/estrellaAmarilla.png" alt="2 estrellas">
-                    <img src="/static/img/estrellaAmarilla.png" alt="3 estrellas">
-                    <img src="/static/img/estrellaAmarilla.png" alt="4 estrellas">
-                    <img src="/static/img/estrellaAmarilla.png" alt="5 estrellas">
-                </div>
-                <p>Tremendo curso. Me conseguí novia cocinando esto. Recomiendo.</p>
-                <p class="comentarioFecha">28/07/2024</p>
-            </div>
-
-            <div class="comentario">
-                <p><strong>Ricardo</strong></p>
-                <div class="comentarioEstrellas">
-                    <img src="/static/img/estrellaAmarilla.png" alt="1 estrella">
-                    <img src="/static/img/estrellaAmarilla.png" alt="2 estrellas">
-                    <img src="/static/img/estrellaAmarilla.png" alt="3 estrellas">
-                </div>
-                <p>No me gustan las tapas españolas. Así que ni idea por qué hice este curso.</p>
-                <p class="comentarioFecha">28/07/2024</p>
-            </div>
+            <section class="comentarios container preguntas">
+                {% if comentarios %}
+                    {% for comentario in comentarios %}
+                    <div class="comentario">
+                        <p><strong>{{ comentario.usuario.nombre }}</strong></p>
+                    
+                        <div class="comentarioEstrellas">
+                            {% for i in range(1, comentario.estrellas + 1) %}
+                            <img src="/static/img/estrellaAmarilla.png" alt="{{ i }} estrella">
+                            {% endfor %}
+                        </div>
+                        <p>{{ comentario.comentario }}</p>
+                        <p class="comentarioFecha">{{ comentario.fecha }}</p>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+                {% endif %}
+            </section>
         </div>
-</section>
-<section class="container">
+    </section>
+    
+    <section class="container">
         <div class="cursoResena preguntas">
             <h4>Deja tu comentario</h4>
-            <textarea placeholder="Ingresa tu comentario..."></textarea>
-            <div class="cursoPuntaje">
-                <p>Selecciona un puntaje</p>
-                <div class="puntajeEstrellas">
-                    <img src="/static/img/estrellaGris.png" alt="1 estrella">
-                    <img src="/static/img/estrellaGris.png" alt="2 estrellas">
-                    <img src="/static/img/estrellaGris.png" alt="3 estrellas">
-                    <img src="/static/img/estrellaGris.png" alt="4 estrellas">
-                    <img src="/static/img/estrellaGris.png" alt="5 estrellas">
+            <form action="{{ url_for('dashboard_bp.agregar_comentario') }}" method="POST">
+                <textarea name="comentario" placeholder="Ingresa tu comentario..." required></textarea>
+                <div class="cursoPuntaje">
+                    <p>Selecciona un puntaje</p>
+                    <div class="puntajeEstrellas">
+                        <label>
+                            <span>1</span>
+                            <input type="radio" name="estrellas" value="1" required>
+                        </label>
+                        <label>
+                            <span>2</span>
+                            <input type="radio" name="estrellas" value="2" required>
+                        </label>
+                        <label>
+                            <span>3</span>
+                            <input type="radio" name="estrellas" value="3" required>
+                        </label>
+                        <label>
+                            <span>4</span>
+                            <input type="radio" name="estrellas" value="4" required>
+                        </label>
+                        <label>
+                            <span>5</span>
+                            <input type="radio" name="estrellas" value="5" required>
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <button class="enviar">Enviar</button>
+                <button type="submit" class="enviar">Enviar</button>
+                <input type="hidden" name="idreceta" value="{{ receta.id }}">
+            </form>
         </div>
-    </div>
-</section>
+    </section>
+    
 
 <section class="container">
     <h1>Más recetas de este usuario</h1>
