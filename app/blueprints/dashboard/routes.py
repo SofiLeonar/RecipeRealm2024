@@ -453,33 +453,55 @@ def get_curso_by_id(curso_id):
         return redirect(url_for('dashboard_bp.cursos'))
 
 
+@dashboard_bp.route('/vercurso')
+def vercurso():
+    return render_template('dashboard/verCurso.html')
+
 @dashboard_bp.route('/receta/<int:receta_id>', methods=['GET'])
 def get_receta_by_id(receta_id):
     try:
-        response = requests.get(JSONBIN_RECETAS_URL, headers=HEADERS_CURSOS)
+        receta = Receta.query.get(receta_id)  # Obtener la receta por ID
 
-        if response.status_code != 200:
-            print(f"Error al obtener datos de JSONBIN: {response.status_code} - {response.text}")
-            return jsonify({"error": "Error al obtener datos de JSONBIN"}), 500
+        if receta is None:
+            print(f"Receta con ID {receta_id} no encontrada.")
+            return jsonify({"error": "Receta no encontrada"}), 404
 
-        data = response.json()
+        # Preparar los datos de la receta
+        receta_info = {
+            "titulo_receta": receta.titulo_receta,
+            "nombre_autor": receta.nombre_autor,
+            "foto": receta.foto,
+            "listaIngredientes": receta.listaIngredientes.split(','),  # Suponiendo que los ingredientes están separados por coma
+            "descripcion": receta.descripcion
+        }
 
-        print("Contenido de la respuesta JSON:", data)
-
-        records = data.get('record', {}).get('record', [])
-
-        for receta in records:
-            if receta.get('id') == receta_id:
-                print(f"Curso encontrado: {receta}")
-                return render_template('dashboard/verReceta.html', receta=receta)
-        
-        print(f"Receta con ID {receta_id} no encontrado.")
-        return jsonify({"error": "Receta no encontrado"}), 404
+        # Mostrar la receta en la plantilla
+        return render_template('dashboard/verReceta.html', receta=receta_info)
 
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
+@dashboard_bp.route('/verreceta')
+def ver_receta(id):
+    # Conectar a la base de datos
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Ejecutar la consulta para obtener la receta por ID
+    cursor.execute('SELECT * FROM recetas WHERE id = %s', (id,))
+    receta = cursor.fetchone()  # Obtener solo un resultado (uno por ID)
+
+    cursor.close()
+    conn.close()
+
+    if receta is None:
+        # Si no se encuentra la receta, redirigir al índice o mostrar un error
+        return "Receta no encontrada", 404
+
+    # Mostrar la receta en una página
+    return render_template('ver_receta.html', receta=receta)
+   
 @dashboard_bp.route('/miscursos')
 def miscursos():
     if 'userid' not in session:
@@ -556,9 +578,6 @@ def misrecetas():
     return redirect(url_for('auth.login'))
 
 
-@dashboard_bp.route('/verreceta')
-def verreceta():
-    return render_template('dashboard/verReceta.html')
 
 def validar_receta(titulo_receta, listaIngredientes, listaCategorias, descripcion):
     error_messages = []
