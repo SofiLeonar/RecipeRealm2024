@@ -44,7 +44,7 @@
         <div class="botones"> 
             {% if 'email' in session %}
                 <div class="desplegable">
-                    <button class="btn btnUser usuario" onclick="alternarDesplegable()">Usuario</button>
+                    <button class="btn btnUser usuario iniciarSesion" onclick="alternarDesplegable()">Usuario</button>
                     <div id="menuUsuario" class="contenidoDesplegable">
                         <a href="{{ url_for('dashboard_bp.perfil') }}">Mi perfil</a>
                         <a href="{{ url_for('dashboard_bp.recetas') }}">Recetas</a>
