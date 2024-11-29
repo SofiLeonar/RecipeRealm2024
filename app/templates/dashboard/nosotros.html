@@ -42,12 +42,14 @@
     <section>
         <div class="container">
             <img src="/static/img/carpinchoConGorrito.png" alt="">
+            {% if 'email' not in session %}
             <div class="botones container btnNosotros">
-                <a href="{{ url_for('dashboard.registro') }}" class="registro btn btnVerdeNosotros">Registro</a>
+                <a href="{{ url_for('dashboard_bp.registro') }}" class="registro btn btnVerdeNosotros">Registro</a>
             </div>
             <div class="botones container btnNosotros">
-                <a href="{{ url_for('dashboard.login') }}" class="btnRojo btn">Iniciar sesión</a>
+                <a href="{{ url_for('dashboard_bp.login') }}" class="btnRojo btn">Iniciar sesión</a>
             </div>
+            {% endif %}
         </div>
     </section>
 

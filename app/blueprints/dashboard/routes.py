@@ -24,7 +24,31 @@ dashboard_bp = Blueprint('dashboard_bp', __name__)
 
 @dashboard_bp.route('/')
 def home():
-    return render_template('dashboard/index.html')
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT id, titulo, descripcion, precio, dificultad, fecha, foto FROM cursos ORDER BY id DESC LIMIT 3")
+        nuevos_cursos = cursor.fetchall()
+
+        cursos_info = []
+        for curso in nuevos_cursos:
+            curso_data = {
+                'id': curso[0],
+                'titulo': curso[1],
+                'descripcion': curso[2],
+                'precio': curso[3],
+                'dificultad': curso[4],
+                'fecha': curso[5],
+                'foto': curso[6]
+            }
+            cursos_info.append(curso_data)
+        cursor.close()
+
+        return render_template('dashboard/index.html', nuevosCursos=cursos_info)
+
+    except Exception as e:
+        flash(f'Error al cargar los cursos nuevos: {str(e)}')
+        return render_template('dashboard/index.html', nuevosCursos=[])
+
 
 @dashboard_bp.route('/nosotros')
 def nosotros():

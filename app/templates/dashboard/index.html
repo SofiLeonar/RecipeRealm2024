@@ -66,24 +66,26 @@
         
             <section class="cursosNuevos container">
                 <h2>Cursos Nuevos</h2>
-                <div class="cursoTarjet">
-                    <img src="/static/img/espada.png" alt="Curso1">
-                    <h3>Text</h3>
-                    <p>$0</p>
-                    <p>Body text.</p>
-                </div>
-                <div class="cursoTarjet">
-                    <img src="/static/img/espada.png" alt="Curso2">
-                    <h3>Text</h3>
-                    <p>$0</p>
-                    <p>Body text.</p>
-                </div>
-                <div class="cursoTarjet">
-                    <img src="/static/img/espada.png" alt="Curso3">
-                    <h3>Text</h3>
-                    <p>$0</p>
-                    <p>Body text.</p>
-                </div>
+                {% for curso in nuevosCursos %}
+                    <div class="cursoTarjet">
+                        <img src="{{ curso['foto'] }}" alt="{{ curso['titulo'] }}" class="curso-imagen" />
+                        <h3>{{ curso['titulo'] }}</h3>
+                        <p><strong>Precio:</strong> ${{ curso['precio'] }}</p>
+                        <p>{{ curso['dificultad'] }}</p>
+                    <div class="espada">
+                        {% if curso.dificultad == 'Principiante' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% elif curso.dificultad == 'Intermedio' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% elif curso.dificultad == 'Avanzado' %}
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                            <img src="/static/img/espada.png" alt="Espada">
+                        {% endif %}
+                    </div>
+                    </div>
+                {% endfor %}
             </section>
     </main>
 
