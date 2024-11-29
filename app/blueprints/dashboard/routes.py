@@ -310,50 +310,86 @@ def eliminarcurso():
 
 @dashboard_bp.route('/editarcurso/<int:curso_id>', methods=['GET', 'POST'])
 def editarcurso(curso_id):
-    response = requests.get(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS)
-    data = response.json()
-    cursos = data.get('record', {}).get('record', [])
-
-    curso = next((c for c in cursos if c['id'] == curso_id), None)
-    
-    if not curso:
-        flash('Curso no encontrado.')
-        return redirect(url_for('dashboard_bp.cursos'))
+    if 'userid' not in session: 
+        flash('Por favor, inicia sesión para editar un curso.')
+        return redirect(url_for('auth.login'))
 
     if request.method == 'POST':
-        curso_actualizado = {
-            'titulo': request.form['titulo_curso'],
-            'lugar': request.form['lugar'],
-            'cupos_disponibles': request.form['cupos'],
-            'precio': request.form['precio'],
-            'fecha': request.form['fecha'],
-            'descripcion': request.form['desCurso'],
-            'hora': request.form['hora'],
-            'dificultad': request.form['dificultad'],
-        }
-
+        titulo = request.form['titulo_curso']
+        lugar = request.form['lugar']
+        cupos_disponibles = request.form['cupos']
+        precio = request.form['precio']
+        fecha = request.form['fecha']
+        descripcion = request.form['desCurso']
+        hora = request.form['hora']
+        dificultad = request.form['dificultad']
+        
+        foto_url = None
         foto = request.files.get('foto')
+        
         if foto:
             try:
                 upload_result = cloudinary.uploader.upload(foto)
-                curso_actualizado['foto'] = upload_result['url']
+                foto_url = upload_result['url']
             except Exception as e:
-                flash('Error al subir la foto. Por favor, intenta de nuevo.')
+                flash(f'Error al subir la foto: {str(e)}')
                 return redirect(url_for('dashboard_bp.editarcurso', curso_id=curso_id))
-
-        for i, c in enumerate(cursos):
-            if c['id'] == curso_id:
-                cursos[i].update(curso_actualizado)
-                break
-
-        response = requests.put(JSONBIN_CURSOS_URL, headers=HEADERS_CURSOS, json={'record': cursos})
-        if response.status_code == 200:
-            flash('Curso actualizado correctamente.')
+        
+        cursor = mysql.connection.cursor()
+        
+        try:
+            if foto_url:
+                cursor.execute("""
+                    UPDATE cursos 
+                    SET titulo = %s, lugar = %s, cupos_disponibles = %s, precio = %s, fecha = %s, 
+                        descripcion = %s, hora = %s, dificultad = %s, foto = %s 
+                    WHERE id = %s
+                """, (titulo, lugar, cupos_disponibles, precio, fecha, descripcion, hora, dificultad, foto_url, curso_id))
+            else:
+                cursor.execute("""
+                    UPDATE cursos 
+                    SET titulo = %s, lugar = %s, cupos_disponibles = %s, precio = %s, fecha = %s, 
+                        descripcion = %s, hora = %s, dificultad = %s
+                    WHERE id = %s
+                """, (titulo, lugar, cupos_disponibles, precio, fecha, descripcion, hora, dificultad, curso_id))
+            
+            mysql.connection.commit()
+            flash('Curso actualizado con éxito.')
             return redirect(url_for('dashboard_bp.get_curso_by_id', curso_id=curso_id))
-        else:
-            flash('Error al actualizar el curso.')
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f'Error al actualizar el curso: {str(e)}')
+        finally:
+            cursor.close()
+    
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute("SELECT id, titulo, lugar, cupos_disponibles, precio, fecha, descripcion, hora, dificultad, foto FROM cursos WHERE id = %s", (curso_id,))
+        curso = cursor.fetchone()
+    except Exception as e:
+        flash(f'Error al cargar los datos del curso: {str(e)}')
+        curso = None
+    finally:
+        cursor.close()
+    
+    if not curso:
+        flash('No se encontró el curso.')
+        return redirect(url_for('dashboard_bp.cursos'))
+    
+    curso_data = {
+        'id': curso[0],
+        'titulo': curso[1],
+        'lugar': curso[2],
+        'cupos_disponibles': curso[3],
+        'precio': curso[4],
+        'fecha': curso[5],
+        'descripcion': curso[6],
+        'hora': curso[7],
+        'dificultad': curso[8],
+        'foto': curso[9],
+    }
 
-    return render_template('dashboard/editarCurso.html', curso=curso)
+    return render_template('dashboard/editarCurso.html', curso=curso_data)
 
 
 @dashboard_bp.route('/curso/<int:curso_id>')
